@@ -9,7 +9,7 @@ import java.lang.Math;
 public class math extends org.python.types.Module {
 
     @org.python.Method(
-            __doc__ = "Create and return a new object.  See help(type) for accurate signature.",
+            __doc__ = "Returns the smallest integer larger than or equal to 'value'.",
             args = {"value"}
     )
     public static org.python.types.Object ceil(org.python.types.Object value) {
@@ -21,7 +21,7 @@ public class math extends org.python.types.Module {
     }
 
     @org.python.Method(
-            __doc__ = "Create and return a new object.  See help(type) for accurate signature.",
+            __doc__ = "Returns the largest integer smaller than or equal to 'value'.",
             args = {"value"}
     )
     public static org.python.types.Object floor(org.python.types.Object value) {
@@ -33,14 +33,16 @@ public class math extends org.python.types.Module {
     }
     
     @org.python.Method(
-            __doc__ = "Create and return a new object.  See help(type) for accurate signature.",
+            __doc__ = "Returns the square-root of 'value'",
             args = {"value"}
     )
-    public static /*org.python.types.Object*/double sqrt(org.python.types.Object value) {
+    public static org.python.types.Object sqrt(org.python.types.Object value) {
         double val = 0; 
         if(value instanceof org.python.types.Float) {
             val = Math.sqrt(((org.python.types.Float) value).value);
+        } else if(value instanceof org.python.types.Int) {
+            val = Math.sqrt((double)((org.python.types.Int) value).value);
         }
-        return val;
+        return new org.python.types.Float(val);
     }
 }
