@@ -4,8 +4,6 @@ from unittest import expectedFailure
 from ..utils import TranspileTestCase
 
 
-#
-# "tt", 4, 123123552499881882, 0.0000000001, False
 class MathModuleTests(TranspileTestCase):
 
     #pow
