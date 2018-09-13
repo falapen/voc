@@ -2,6 +2,7 @@ from unittest import expectedFailure
 
 from ..utils import TranspileTestCase
 
+
 class MathModuleTests(TranspileTestCase):
     # Trigonometric functions
     def test_sin(self):
@@ -46,3 +47,23 @@ class MathModuleTests(TranspileTestCase):
             import math
             print(math.sqrt(1.44))
         """)
+
+    def test_degrees(self):
+    	self.assertCodeExecution("""
+    		import math
+    		print(math.degrees(1))
+    		""")
+
+    def test_radians(self):
+    	self.assertCodeExecution("""
+    		import math
+    		print(math.radians(180))
+    		""")
+
+    @expectedFailure
+    def test_hypot(self):
+    	self.assertCodeExecution("""
+    		import math
+    		print(math.hypot(3,4))
+    		""")
+    
