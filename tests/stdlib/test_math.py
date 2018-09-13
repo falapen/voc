@@ -33,3 +33,13 @@ class MathModuleTests(TranspileTestCase):
             for number in [3.0, 0, "tt", 4, 123123552499881882, 0.0000000001, false]:
                 print(math.exp(number))
             """)
+        
+            
+    #factorial
+    @expectedFailure
+    def test_exp(self):
+        self.assertCodeExecution("""
+            import math
+            for number in [3.0, 0, "tt", 4, 123123552499881882, 0.0000000001, false]:
+                print(math.factorial(number))
+            """)
