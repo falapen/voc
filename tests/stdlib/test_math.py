@@ -18,7 +18,6 @@ class MathModuleTests(TranspileTestCase):
 
 	#######################################################
 	# degrees
-	@expectedFailure
 	def test_degrees(self):
 		self.assertCodeExecution("""
 			import math
@@ -28,7 +27,6 @@ class MathModuleTests(TranspileTestCase):
 
 	#######################################################
 	# radians
-	@expectedFailure
 	def test_radians(self):
 		self.assertCodeExecution("""
 			import math
