@@ -45,3 +45,7 @@ class MathModuleTests(TranspileTestCase):
             import math
             print(math.sqrt(4))
         """)
+        self.assertCodeExecution("""
+            import math
+            print(math.sqrt(1.44))
+        """)
