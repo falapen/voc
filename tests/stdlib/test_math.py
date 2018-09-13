@@ -11,7 +11,9 @@ class MathModuleTests(TranspileTestCase):
     def test_pow(self):
         self.assertCodeExecution("""
             import math
-            print(math.pow(2,2))
+            for number in [3.0, 0, "tt", 4, 123123552499881882, 0.0000000001, True]:
+                print(math.pow(number,2))
+                print(math.pow(2,number))
             """)
     
     #log2
@@ -19,7 +21,8 @@ class MathModuleTests(TranspileTestCase):
     def test_log2(self):
         self.assertCodeExecution("""
             import math
-            print(math.log2(2))
+            for number in [3.0, 0, "tt", 4, 123123552499881882, 0.0000000001, False]:
+                print(math.log2(number))
             """)
     
     #exp
@@ -27,5 +30,6 @@ class MathModuleTests(TranspileTestCase):
     def test_exp(self):
         self.assertCodeExecution("""
             import math
-            print(math.exp(1))
+            for number in [3.0, 0, "tt", 4, 123123552499881882, 0.0000000001, false]:
+                print(math.exp(number))
             """)
