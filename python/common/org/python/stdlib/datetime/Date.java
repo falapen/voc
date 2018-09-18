@@ -109,4 +109,26 @@ public class Date extends org.python.types.Object {
         buffer.append(this.day);        
         return new org.python.types.Str(buffer.toString());
     }
+
+    @org.python.Method(
+            __doc__ = "timestamp -> local date from a POSIX timestamp (like time.time()).",
+            args = {"timestamp"}
+    )
+    public static org.python.Object fromtimestamp(org.python.Object timestamp) {
+        java.util.Date date;
+        java.util.Calendar calendar;
+
+        if((timestamp instanceof org.python.types.Int) || (timestamp instanceof org.python.types.Float)) {
+            date = new java.util.Date(((org.python.types.Int) timestamp.__int__()).value * 1000L);
+            calendar = java.util.Calendar.getInstance();
+            calendar.setTime(date);
+        } else {
+            throw new org.python.exceptions.TypeError("a float is required");
+        }
+
+        return new Date(
+            org.python.types.Int.getInt(Long.valueOf(calendar.get(java.util.Calendar.YEAR))), 
+            org.python.types.Int.getInt(Long.valueOf(calendar.get(java.util.Calendar.MONTH))), 
+            org.python.types.Int.getInt(Long.valueOf(calendar.get(java.util.Calendar.DAY_OF_MONTH))));
+    }
 }
