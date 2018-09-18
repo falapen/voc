@@ -70,3 +70,42 @@ class DatetimeModuleTests(TranspileTestCase):
             import datetime
             print(datetime.date(2018, -1, 16))
             """)
+
+    @expectedFailure
+    def test_date_fromtimestamp(self):
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.fromtimestamp(0))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.fromtimestamp(1537283188.184869))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.fromtimestamp(1537283188))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.fromtimestamp(-86400))
+            """)
+
+    @expectedFailure
+    def test_date_fromtimestamp_errors(self):
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.fromtimestamp('1'))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.fromtimestamp(1000000000000))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.fromtimestamp(-1000000000000))
+            """)
