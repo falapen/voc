@@ -1,15 +1,14 @@
 from unittest import expectedFailure
 from ..utils import TranspileTestCase
 
+
 class DatetimeModuleTests(TranspileTestCase): 
-    @expectedFailure
     def test_date_constructor_sanity(self):
         self.assertCodeExecution("""
             import datetime
             print(datetime.date(2018, 10, 10))
             """)
 
-    @expectedFailure
     def test_date_repr(self): 
         self.assertCodeExecution("""
             import datetime
@@ -24,7 +23,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.date(1, 1, 1).__repr__())
         """)    
     
-    @expectedFailure
     def test_date_constructor_thorough(self):
         self.assertCodeExecution("""
             import datetime
@@ -46,7 +44,6 @@ class DatetimeModuleTests(TranspileTestCase):
             import datetime
             print(datetime.date(1, 1, 1))
             """)
-
     
     @expectedFailure
     def test_date_constructor_errors_sanity(self):
