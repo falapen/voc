@@ -77,7 +77,7 @@ class DatetimeModuleTests(TranspileTestCase):
             import datetime
             print(datetime.date.fromtimestamp(0))
             """)
-
+    
         self.assertCodeExecution("""
             import datetime
             print(datetime.date.fromtimestamp(1537283188.184869))
