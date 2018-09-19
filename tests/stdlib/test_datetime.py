@@ -114,3 +114,11 @@ class DatetimeModuleTests(TranspileTestCase):
             for x in range (1, 8):
                 print(datetime.date(2018, 1, x).weekday())
             """)
+
+    @expectedFailure
+    def test_date_isoweekday(self):
+        self.assertCodeExecution("""
+            import datetime
+            for x in range (1, 8):
+                print(datetime.date(2018, 1, x).isoweekday())
+            """)
