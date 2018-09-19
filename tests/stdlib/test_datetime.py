@@ -107,3 +107,16 @@ class DatetimeModuleTests(TranspileTestCase):
             import datetime
             print(datetime.date.fromtimestamp(-1000000000000))
             """)
+
+    @expectedFailure
+    def test_date_weekday(self):
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.date(2018, 9, 17).weekday())
+            print(datetime.date(2018, 9, 18).weekday())
+            print(datetime.date(2018, 9, 19).weekday())
+            print(datetime.date(2018, 9, 20).weekday())
+            print(datetime.date(2018, 9, 21).weekday())
+            print(datetime.date(2018, 9, 22).weekday())
+            print(datetime.date(2018, 9, 23).weekday())
+            """)
