@@ -8,6 +8,43 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
+        __doc__ = "",
+        default_args = {"year", "month", "day"}
+    )
+    public Date(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
+        super();
+        if (args[0] != null) {
+            if(args[0] instanceof org.python.types.Int) {
+                if(((org.python.types.Int) args[0]).value > 0 || ((org.python.types.Int) args[0]).value < 10000) {
+                    this.year = ((org.python.types.Int) args[0]).value;
+                } else {
+                    throw new org.python.exceptions.ValueError("year " + Long.toString(((org.python.types.Int) args[0]).value) + " is out of range");
+                }
+            }
+        }
+
+        if (args[1] != null) {
+            if(args[1] instanceof org.python.types.Int) {
+                if(((org.python.types.Int) args[1]).value > 0 || ((org.python.types.Int) args[1]).value < 10000) {
+                    this.month = ((org.python.types.Int) args[1]).value;
+                } else {
+                    throw new org.python.exceptions.ValueError("month " + Long.toString(((org.python.types.Int) args[1]).value) + " is out of range");
+                }
+            }
+        }
+
+        if (args[2] != null) {
+            if(args[2] instanceof org.python.types.Int) {
+                if(((org.python.types.Int) args[2]).value > 0 || ((org.python.types.Int) args[2]).value < 10000) {
+                    this.day = ((org.python.types.Int) args[2]).value;
+                } else {
+                    throw new org.python.exceptions.ValueError("day " + Long.toString(((org.python.types.Int) args[2]).value) + " is out of range");
+                }
+            }
+        }
+    }
+
+    @org.python.Method(
             __doc__ = "Method to represent a date (without time)",
             args = {"year", "month", "day"}
     )
@@ -34,20 +71,11 @@ public class Date extends org.python.types.Object {
         }
     }
 
-    //static {
-    //    min = org.python.types.Type(org.python.stdlib.datetime.Date.class);
-    //    max = org.python.types.Type(org.python.stdlib.datetime.Date.class);
-    //}
     @org.python.Attribute
     public static org.python.Object min;
     @org.python.Attribute
     public static org.python.Object max;
 
-    ////Placeholder CONSTANTS
-    //private static org.python.types.Int MINYEAR = org.python.types.Int.getInt(1);
-    //private static org.python.types.Int MAXYEAR = org.python.types.Int.getInt(9999);
-//
-    //Instance attributes (read-only) 
     private long year;
     private long month;
     private long day;
@@ -114,7 +142,7 @@ public class Date extends org.python.types.Object {
             __doc__ = "timestamp -> local date from a POSIX timestamp (like time.time()).",
             args = {"timestamp"}
     )
-    public org.python.Object fromtimestamp(org.python.Object timestamp) {
+    public static org.python.Object fromtimestamp(org.python.Object timestamp) {
         java.time.LocalDate date;
 
         if((timestamp instanceof org.python.types.Int) || (timestamp instanceof org.python.types.Float)) {
