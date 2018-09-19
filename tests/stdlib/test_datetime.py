@@ -71,7 +71,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.date(2018, -1, 16))
             """)
 
-    # @expectedFailure
     def test_date_fromtimestamp(self):
         self.assertCodeExecution("""
             import datetime
@@ -93,7 +92,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.date.fromtimestamp(-86400))
             """)
 
-    @expectedFailure
     def test_date_fromtimestamp_errors(self):
         self.assertCodeExecution("""
             import datetime
