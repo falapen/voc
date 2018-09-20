@@ -75,9 +75,18 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Attribute
-    public static org.python.Object min;
+    public static org.python.Object min = 
+        new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(1), org.python.types.Int.getInt(1), org.python.types.Int.getInt(1));
     @org.python.Attribute
-    public static org.python.Object max;
+    public static org.python.Object max = 
+        new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(9999), org.python.types.Int.getInt(12), org.python.types.Int.getInt(31));
+    
+    private static java.util.Map<java.lang.String, org.python.Object> timedeltaMap = new java.util.HashMap<java.lang.String, org.python.Object>(){{
+        timedeltaMap.put("day", org.python.types.Int.getInt(1));
+    }};
+    @org.python.Attribute
+    public static org.python.Object resolution = new org.python.stdlib.datetime.Timedelta(null, timedeltaMap);
+
 
     private org.python.types.Int year;
     private org.python.types.Int month;
@@ -142,7 +151,7 @@ public class Date extends org.python.types.Object {
                 java.time.Instant.ofEpochSecond(((org.python.types.Int) timestamp.__int__()).value)
                 .atZone(java.time.ZoneId.systemDefault()).toLocalDate();
         } else {
-            throw new org.python.exceptions.TypeError("a float is required");
+            throw new org.python.exceptions.TypeError("an integer is required (got type str)");
         }
 
         return new org.python.stdlib.datetime.Date(

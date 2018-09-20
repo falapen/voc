@@ -6,6 +6,7 @@ package python;
 public class datetime extends org.python.types.Module {
     static {
         date = org.python.types.Type.pythonType(org.python.stdlib.datetime.Date.class);
+        timedelta = org.python.types.Type.pythonType(org.python.stdlib.datetime.Timedelta.class);
     }
 
     public datetime() {
@@ -14,4 +15,6 @@ public class datetime extends org.python.types.Module {
 
     @org.python.Attribute
     public static org.python.Object date;
+    @org.python.Attribute
+    public static org.python.Object timedelta;
 }
