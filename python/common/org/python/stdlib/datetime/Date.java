@@ -170,12 +170,21 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "Return the day of the week represented by the date.\nMonday == 1 ... Sunday == 7"
+            __doc__ = "Return the day of the week represented by the date.\nMonday == 1 ... Sunday == 7"
     )
     public org.python.Object isoweekday() {
         java.time.LocalDate date = java.time.LocalDate.of((int) this.year.value, (int) this.month.value, (int) this.day.value);
         long weekday = (long) date.getDayOfWeek().getValue(); // date.isoweekday() uses one indexing
 
         return org.python.types.Int.getInt(weekday);
+    }
+
+    @org.python.Method(
+            __doc__ = "Return a 3-tuple containing ISO year, week number, and weekday."
+    )
+    public org.python.Object isocalendar() {
+        java.util.List<org.python.Object> dateList = 
+            new java.util.ArrayList<org.python.Object>(java.util.Arrays.asList(this.year, this.month, this.day));
+        return new org.python.types.Tuple(dateList);
     }
 }
