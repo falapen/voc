@@ -137,7 +137,7 @@ class DatetimeModuleTests(TranspileTestCase):
             import datetime
             print(datetime.date(2018, 12, 10).day)
         """)
-
+    @expectedFailure
     def test_date_set_attributes(self):
         self.assertCodeExecution("""
             import datetime
@@ -154,3 +154,9 @@ class DatetimeModuleTests(TranspileTestCase):
             a = datetime.date(2018, 12, 10)
             a.day = 20
         """)
+    def test_date_isocalendar(self):
+        self.assertCodeExecution("""
+            import datetime
+            for x in [datetime.date(1970, 1, 1), datetime.date(2018, 12, 31), datetime.date(1, 1, 1)]:
+                x.isocalendar()
+            """)
