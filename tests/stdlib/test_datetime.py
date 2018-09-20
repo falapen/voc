@@ -8,20 +8,6 @@ class DatetimeModuleTests(TranspileTestCase):
             import datetime
             print(datetime.date(2018, 10, 10))
             """)
-
-    def test_date_repr(self): 
-        self.assertCodeExecution("""
-            import datetime
-            print(datetime.date(2018, 10, 10).__repr__())
-        """)
-        self.assertCodeExecution("""
-            import datetime
-            print(datetime.date(2018, 1, 1).__repr__())
-        """)
-        self.assertCodeExecution("""
-            import datetime
-            print(datetime.date(1, 1, 1).__repr__())
-        """)    
     
     def test_date_constructor_thorough(self):
         self.assertCodeExecution("""
@@ -49,26 +35,41 @@ class DatetimeModuleTests(TranspileTestCase):
     def test_date_constructor_errors_sanity(self):
         self.assertCodeExecution("""
             import datetime
-            print(datetime.date(0, 0, 0))
+            try:
+                datetime.date(0, 10, 10)
+            except ValueError as e:
+                print(e)
             """)
         
     @expectedFailure
     def test_date_constructor_errors(self):
         self.assertCodeExecution("""
             import datetime
-            print(datetime.date(10000, 13, 32))
+            try:
+                datetime.date(10000, 13, 32)
+            except ValueError as e: 
+                print(e)
             """)
         self.assertCodeExecution("""
             import datetime
-            print(datetime.date(2018, 2, 29))
+            try: 
+                datetime.date(2018, 2, 29)
+            except ValueError as e: 
+                print(e)
             """)
         self.assertCodeExecution("""
             import datetime
-            print(datetime.date(2016, 2, 29))
+            try: 
+                datetime.date(2016, 2, 29)
+            except ValueError as e: 
+                print(e)
             """)
         self.assertCodeExecution("""
             import datetime
-            print(datetime.date(2018, -1, 16))
+            try: 
+                datetime.date(2018, -1, 16)
+            except ValueError as e: 
+                print(e)
             """)
 
     def test_date_fromtimestamp(self):
@@ -132,6 +133,37 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(datetime.date(2018, 1, x).isoweekday())
             """)
 
+    @expectedFailure
+    def test_date_get_attributes(self): 
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.date(2018, 12, 10).year)
+        """)
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.date(2018, 12, 10).month)
+        """)
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.date(2018, 12, 10).day)
+        """)
+    @expectedFailure
+    def test_date_set_attributes(self):
+        self.assertCodeExecution("""
+            import datetime
+            a = datetime.date(2018, 12, 10)
+            a.year = 2000
+        """)
+        self.assertCodeExecution("""
+            import datetime
+            a = datetime.date(2018, 12, 10)
+            a.month = 10
+        """)
+        self.assertCodeExecution("""
+            import datetime
+            a = datetime.date(2018, 12, 10)
+            a.day = 20
+        """)
     def test_date_isocalendar(self):
         self.assertCodeExecution("""
             import datetime
