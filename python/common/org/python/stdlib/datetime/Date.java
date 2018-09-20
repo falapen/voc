@@ -158,4 +158,24 @@ public class Date extends org.python.types.Object {
             org.python.types.Int.getInt(Long.valueOf(date.getMonthValue())), 
             org.python.types.Int.getInt(Long.valueOf(date.getDayOfMonth())));
     }
+
+    @org.python.Method(
+            __doc__ = "Return the day of the week represented by the date.\nMonday == 0 ... Sunday == 6"
+    )
+    public org.python.Object weekday() {
+        java.time.LocalDate date = java.time.LocalDate.of((int) this.year, (int) this.month, (int) this.day);
+        long weekday = (long) date.getDayOfWeek().getValue() - 1; // date.weekday() uses zero indexing
+
+        return org.python.types.Int.getInt(weekday);
+    }
+
+    @org.python.Method(
+        __doc__ = "Return the day of the week represented by the date.\nMonday == 1 ... Sunday == 7"
+    )
+    public org.python.Object isoweekday() {
+        java.time.LocalDate date = java.time.LocalDate.of((int) this.year, (int) this.month, (int) this.day);
+        long weekday = (long) date.getDayOfWeek().getValue(); // date.isoweekday() uses one indexing
+
+        return org.python.types.Int.getInt(weekday);
+    }
 }
