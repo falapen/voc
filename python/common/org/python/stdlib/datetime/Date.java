@@ -2,7 +2,6 @@ package org.python.stdlib.datetime;
 
 public class Date extends org.python.types.Object {
 
-    //Constructors
     public Date() {
         super();
     }
@@ -12,10 +11,14 @@ public class Date extends org.python.types.Object {
         default_args = {"year", "month", "day"}
     )
     public Date(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
-        super();
+        //super();
+        this.year = org.python.types.Int.getInt(-1);
+        this.month = org.python.types.Int.getInt(-1);
+        this.day = org.python.types.Int.getInt(-1);
+
         if (args[0] != null) {
             if(args[0] instanceof org.python.types.Int) {
-                if(((org.python.types.Int) args[0]).value > 0 || ((org.python.types.Int) args[0]).value < 10000) {
+                if(((org.python.types.Int) args[0]).value > 0 && ((org.python.types.Int) args[0]).value < 10000) {
                     this.year = (org.python.types.Int) args[0];
                 } else {
                     throw new org.python.exceptions.ValueError("year " + Long.toString(((org.python.types.Int) args[0]).value) + " is out of range");
@@ -25,7 +28,7 @@ public class Date extends org.python.types.Object {
 
         if (args[1] != null) {
             if(args[1] instanceof org.python.types.Int) {
-                if(((org.python.types.Int) args[1]).value > 0 || ((org.python.types.Int) args[1]).value < 10000) {
+                if(((org.python.types.Int) args[1]).value > 0 && ((org.python.types.Int) args[1]).value < 10000) {
                     this.month = (org.python.types.Int) args[1];
                 } else {
                     throw new org.python.exceptions.ValueError("month " + Long.toString(((org.python.types.Int) args[1]).value) + " is out of range");
@@ -35,7 +38,7 @@ public class Date extends org.python.types.Object {
 
         if (args[2] != null) {
             if(args[2] instanceof org.python.types.Int) {
-                if(((org.python.types.Int) args[2]).value > 0 || ((org.python.types.Int) args[2]).value < 10000) {
+                if(((org.python.types.Int) args[2]).value > 0 && ((org.python.types.Int) args[2]).value < 10000) {
                     this.day = (org.python.types.Int) args[2];
                 } else {
                     throw new org.python.exceptions.ValueError("day " + Long.toString(((org.python.types.Int) args[2]).value) + " is out of range");
@@ -82,7 +85,7 @@ public class Date extends org.python.types.Object {
     
 
     //Interface methods
-    public org.python.types.Object __getattr__(java.lang.String name) {
+    public org.python.types.Object __getattribute__(java.lang.String name) {
         if(name.equals("year")) return this.year;
         if(name.equals("month")) return this.month;
         if(name.equals("day")) return this.day;
@@ -90,34 +93,23 @@ public class Date extends org.python.types.Object {
     };
     
     public void __setattr__(java.lang.String name, org.python.Object value) {
-        if(name.equals("year")) {
-            if(value instanceof org.python.types.Int) {
-                this.year = (org.python.types.Int) value;
-            }
-        };
-        if(name.equals("month")) {
-            if(value instanceof org.python.types.Int) {
-                this.month = (org.python.types.Int) value;
-            }
-        };
-        if(name.equals("day")) {
-            if(value instanceof org.python.types.Int) {
-                this.day = (org.python.types.Int) value;
-            }
-        };
+        throw new org.python.exceptions.AttributeError("attribute \'" + name + "\' of 'datetime.date' objects is not writable");
+        //if(name.equals("year")) {
+        //    if(value instanceof org.python.types.Int) {
+        //        this.year = (org.python.types.Int) value;
+        //    }
+        //};
+        //if(name.equals("month")) {
+        //    if(value instanceof org.python.types.Int) {
+        //        this.month = (org.python.types.Int) value;
+        //    }
+        //};
+        //if(name.equals("day")) {
+        //    if(value instanceof org.python.types.Int) {
+        //        this.day = (org.python.types.Int) value;
+        //    }
+        //};
     };
-
-    @org.python.Method(
-            __doc__ = "Return repr(self)."
-    )
-    public org.python.types.Str __repr__() {
-        java.lang.StringBuilder buffer = new java.lang.StringBuilder("datetime.date(");
-        buffer.append(this.year.value + ", ");
-        buffer.append(this.month.value + ", ");
-        buffer.append(this.day.value + ")");
-
-        return new org.python.types.Str(buffer.toString());
-    }
 
     @org.python.Method(
             __doc__ = "Returns a string representation of self."
