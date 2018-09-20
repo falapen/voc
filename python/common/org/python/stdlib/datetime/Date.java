@@ -1,6 +1,10 @@
 package org.python.stdlib.datetime;
 
 public class Date extends org.python.types.Object {
+    static {
+        java.util.Map<java.lang.String, org.python.Object> timedeltaMap = new java.util.HashMap<java.lang.String, org.python.Object>();
+        timedeltaMap.put("day", org.python.types.Int.getInt(1));
+    }
 
     public Date() {
         super();
@@ -81,9 +85,7 @@ public class Date extends org.python.types.Object {
     public static org.python.Object max = 
         new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(9999), org.python.types.Int.getInt(12), org.python.types.Int.getInt(31));
     
-    private static java.util.Map<java.lang.String, org.python.Object> timedeltaMap = new java.util.HashMap<java.lang.String, org.python.Object>(){{
-        timedeltaMap.put("day", org.python.types.Int.getInt(1));
-    }};
+    private static java.util.Map<java.lang.String, org.python.Object> timedeltaMap;
     @org.python.Attribute
     public static org.python.Object resolution = new org.python.stdlib.datetime.Timedelta(null, timedeltaMap);
 
