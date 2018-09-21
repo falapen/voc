@@ -94,29 +94,44 @@ class DatetimeModuleTests(TranspileTestCase):
             """)
 
     def test_date_fromtimestamp_errors(self):
-        # self.assertCodeExecution("""
-        #     import datetime
-        #     print(datetime.date.fromtimestamp('1'))
-        #     """)
-
         self.assertCodeExecution("""
             import datetime
-            print(datetime.date.fromtimestamp(1000000000000))
+            try:
+                print(datetime.date.fromtimestamp('1'))
+            except TypeError as e:
+                print(e)
             """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.date.fromtimestamp(-1000000000000))
+            try:
+                print(datetime.date.fromtimestamp(1000000000000))
+            except ValueError as e:
+                print(e)
             """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.date.fromtimestamp(10000000000000000))
+            try:
+                print(datetime.date.fromtimestamp(-1000000000000))
+            except ValueError as e:
+                print(e)
             """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.date.fromtimestamp(-10000000000000000))
+            try:
+                print(datetime.date.fromtimestamp(10000000000000000))
+            except ValueError as e:
+                print(e)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                print(datetime.date.fromtimestamp(-10000000000000000))
+            except ValueError as e:
+                print(e)
             """)
 
     def test_date_weekday(self):
@@ -177,7 +192,7 @@ class DatetimeModuleTests(TranspileTestCase):
         self.assertCodeExecution("""
             import datetime
             for x in [datetime.date(1970, 1, 1), datetime.date(2018, 12, 31), datetime.date(1, 1, 1)]:
-                x.isocalendar()
+                print(x.isocalendar())
             """)
 
     def test_date_class_attributes(self):
