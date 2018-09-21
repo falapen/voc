@@ -186,6 +186,8 @@ class DatetimeModuleTests(TranspileTestCase):
             except AttributeError as e:
                 print(e)
         """)
+
+    @expectedFailure
     def test_date_isocalendar(self):
         self.assertCodeExecution("""
             import datetime
