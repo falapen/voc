@@ -9,8 +9,8 @@ public class Timedelta extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "Difference between two datetime values.",
-        args = {"day"}
+         __doc__ = "Difference between two datetime values.",
+         args = {"day"}
     )
     public Timedelta(org.python.Object day) {
         super();
