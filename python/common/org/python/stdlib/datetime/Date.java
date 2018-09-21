@@ -2,11 +2,11 @@ package org.python.stdlib.datetime;
 
 public class Date extends org.python.types.Object {
     @org.python.Attribute
-    public static org.python.Object min = 
-        new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(1), org.python.types.Int.getInt(1), org.python.types.Int.getInt(1));
+    public static org.python.Object min =
+            new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(1), org.python.types.Int.getInt(1), org.python.types.Int.getInt(1));
     @org.python.Attribute
-    public static org.python.Object max = 
-        new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(9999), org.python.types.Int.getInt(12), org.python.types.Int.getInt(31));
+    public static org.python.Object max =
+            new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(9999), org.python.types.Int.getInt(12), org.python.types.Int.getInt(31));
     @org.python.Attribute
     public static org.python.Object resolution = new org.python.stdlib.datetime.Timedelta(org.python.types.Int.getInt(1));
 
@@ -19,7 +19,7 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "date(year, month, day) --> date object"
+            __doc__ = "date(year, month, day) --> date object"
     )
     public Date(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();
@@ -64,7 +64,7 @@ public class Date extends org.python.types.Object {
     public Date(org.python.Object year, org.python.Object month, org.python.Object day) {
         super();
         if (year instanceof org.python.types.Int) {
-            if(((org.python.types.Int) year).value > 0 || ((org.python.types.Int) year).value < 10000) {
+            if (((org.python.types.Int) year).value > 0 || ((org.python.types.Int) year).value < 10000) {
                 this.year = (org.python.types.Int) year;
             } else {
                 throw new org.python.exceptions.ValueError("year " + Long.toString(((org.python.types.Int) year).value) + " is out of range");
@@ -74,7 +74,7 @@ public class Date extends org.python.types.Object {
         }
         if (month instanceof org.python.types.Int) {
             this.month = (org.python.types.Int) month;
-        } else { 
+        } else {
             this.month = org.python.types.Int.getInt(0);
         }
         if (day instanceof org.python.types.Int) {
@@ -88,12 +88,18 @@ public class Date extends org.python.types.Object {
             __doc__ = "Return getattr(self, name)."
     )
     public org.python.Object __getattribute__(java.lang.String name) {
-        if (name.equals("year")) { return this.year; }
-        if (name.equals("month")) { return this.month; }
-        if (name.equals("day")) { return this.day; }
+        if (name.equals("year")) {
+            return this.year;
+        }
+        if (name.equals("month")) {
+            return this.month;
+        }
+        if (name.equals("day")) {
+            return this.day;
+        }
         return super.__getattribute__(name);
     };
-    
+
     @org.python.Method(
             __doc__ = "Implement setattr(self, name, value)."
     )
@@ -107,16 +113,26 @@ public class Date extends org.python.types.Object {
     public org.python.types.Str __str__() {
         java.lang.StringBuilder buffer = new java.lang.StringBuilder("");
         //Build year
-        if (this.year.value < 1000) { buffer.append("0"); }
-        if (this.year.value < 100) { buffer.append("0"); }
-        if (this.year.value < 10) { buffer.append("0"); }
+        if (this.year.value < 1000) {
+            buffer.append("0");
+        }
+        if (this.year.value < 100) {
+            buffer.append("0");
+        }
+        if (this.year.value < 10) {
+            buffer.append("0");
+        }
         buffer.append(this.year.value + "-");
         //Build month
-        if (this.month.value < 10) { buffer.append("0"); }
+        if (this.month.value < 10) {
+            buffer.append("0");
+        }
         buffer.append(this.month.value + "-");
         //Build day
-        if (this.day.value < 10) { buffer.append("0"); }
-        buffer.append(this.day.value);        
+        if (this.day.value < 10) {
+            buffer.append("0");
+        }
+        buffer.append(this.day.value);
         return new org.python.types.Str(buffer.toString());
     }
 
@@ -128,7 +144,7 @@ public class Date extends org.python.types.Object {
         java.time.LocalDate date;
 
         if ((timestamp instanceof org.python.types.Int) || (timestamp instanceof org.python.types.Float)) {
-            date = 
+            date =
                 java.time.Instant.ofEpochSecond(((org.python.types.Int) timestamp.__int__()).value)
                 .atZone(java.time.ZoneId.systemDefault()).toLocalDate();
 
@@ -142,8 +158,8 @@ public class Date extends org.python.types.Object {
         }
 
         return new org.python.stdlib.datetime.Date(
-                org.python.types.Int.getInt((int) date.getYear()), 
-                org.python.types.Int.getInt((int) date.getMonthValue()), 
+                org.python.types.Int.getInt((int) date.getYear()),
+                org.python.types.Int.getInt((int) date.getMonthValue()),
                 org.python.types.Int.getInt((int) date.getDayOfMonth()));
     }
 
@@ -171,8 +187,8 @@ public class Date extends org.python.types.Object {
             __doc__ = "Return a 3-tuple containing ISO year, week number, and weekday."
     )
     public org.python.Object isocalendar() {
-        java.util.List<org.python.Object> dateList = 
-            new java.util.ArrayList<org.python.Object>(java.util.Arrays.asList(this.year, this.month, this.day));
+        java.util.List<org.python.Object> dateList =
+                new java.util.ArrayList<org.python.Object>(java.util.Arrays.asList(this.year, this.month, this.day));
         return new org.python.types.Tuple(dateList);
     }
 }
