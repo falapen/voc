@@ -1,11 +1,6 @@
 package org.python.stdlib.datetime;
 
 public class Date extends org.python.types.Object {
-    static {
-        java.util.Map<java.lang.String, org.python.Object> timedeltaMap = new java.util.HashMap<java.lang.String, org.python.Object>();
-        timedeltaMap.put("day", org.python.types.Int.getInt(1));
-    }
-
     public Date() {
         super();
     }
@@ -15,7 +10,7 @@ public class Date extends org.python.types.Object {
         default_args = {"year", "month", "day"}
     )
     public Date(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
-        //super();
+        super();
         this.year = org.python.types.Int.getInt(-1);
         this.month = org.python.types.Int.getInt(-1);
         this.day = org.python.types.Int.getInt(-1);
@@ -84,10 +79,8 @@ public class Date extends org.python.types.Object {
     @org.python.Attribute
     public static org.python.Object max = 
         new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(9999), org.python.types.Int.getInt(12), org.python.types.Int.getInt(31));
-    
-    private static java.util.Map<java.lang.String, org.python.Object> timedeltaMap;
     @org.python.Attribute
-    public static org.python.Object resolution = new org.python.stdlib.datetime.Timedelta(null, timedeltaMap);
+    public static org.python.Object resolution = new org.python.stdlib.datetime.Timedelta(org.python.types.Int.getInt(1));
 
 
     private org.python.types.Int year;
@@ -152,6 +145,13 @@ public class Date extends org.python.types.Object {
             date = 
                 java.time.Instant.ofEpochSecond(((org.python.types.Int) timestamp.__int__()).value)
                 .atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+
+            long yearMax = ((org.python.stdlib.datetime.Date) max).year.value;
+            long yearMin = ((org.python.stdlib.datetime.Date) min).year.value;
+
+            if (date.getYear() > yearMax || date.getYear() < yearMin) {
+                throw new org.python.exceptions.ValueError("year " + date.getYear() + " is out of range");
+            }
         } else {
             throw new org.python.exceptions.TypeError("an integer is required (got type str)");
         }
