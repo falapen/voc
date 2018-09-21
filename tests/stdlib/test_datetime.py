@@ -152,17 +152,26 @@ class DatetimeModuleTests(TranspileTestCase):
         self.assertCodeExecution("""
             import datetime
             a = datetime.date(2018, 12, 10)
-            a.year = 2000
+            try: 
+                a.year = 2000
+            except AttributeError as e:
+                print(e)
         """)
         self.assertCodeExecution("""
             import datetime
             a = datetime.date(2018, 12, 10)
-            a.month = 10
+            try: 
+                a.month = 10
+            except AttributeError as e:
+                print(e)
         """)
         self.assertCodeExecution("""
             import datetime
             a = datetime.date(2018, 12, 10)
-            a.day = 20
+            try: 
+                a.day = 20
+            except AttributeError as e:
+                print(e)
         """)
     def test_date_isocalendar(self):
         self.assertCodeExecution("""
