@@ -31,7 +31,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.date(1, 1, 1))
             """)
     
-    @expectedFailure
     def test_date_constructor_errors_sanity(self):
         self.assertCodeExecution("""
             import datetime
@@ -41,7 +40,6 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(e)
             """)
         
-    @expectedFailure
     def test_date_constructor_errors(self):
         self.assertCodeExecution("""
             import datetime
