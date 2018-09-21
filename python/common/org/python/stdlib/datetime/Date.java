@@ -6,8 +6,7 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "",
-        default_args = {"year", "month", "day"}
+        __doc__ = "date(year, month, day) --> date object"
     )
     public Date(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();
@@ -47,8 +46,7 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-            __doc__ = "Method to represent a date (without time)",
-            args = {"year", "month", "day"}
+            __doc__ = "date(year, month, day) --> date object"
     )
     public Date(org.python.Object year, org.python.Object month, org.python.Object day) {
         super();
@@ -101,7 +99,7 @@ public class Date extends org.python.types.Object {
     };
 
     @org.python.Method(
-            __doc__ = "Returns a string representation of self."
+            __doc__ = "Return str(self)."
     )
     public org.python.types.Str __str__() {
         java.lang.StringBuilder buffer = new java.lang.StringBuilder("");
