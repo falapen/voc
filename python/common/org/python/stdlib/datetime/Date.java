@@ -11,11 +11,7 @@ public class Date extends org.python.types.Object {
         default_args = {"year", "month", "day"}
     )
     public Date(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
-        //super();
-        this.year = org.python.types.Int.getInt(-1);
-        this.month = org.python.types.Int.getInt(-1);
-        this.day = org.python.types.Int.getInt(-1);
-
+        super();
         if (args[0] != null) {
             if(args[0] instanceof org.python.types.Int) {
                 if(((org.python.types.Int) args[0]).value > 0 && ((org.python.types.Int) args[0]).value < 10000) {
