@@ -128,10 +128,12 @@ public class Date extends org.python.types.Object {
     )
     public static org.python.Object fromtimestamp(org.python.Object timestamp) {
         java.time.LocalDate date;
+
         if((timestamp instanceof org.python.types.Int) || (timestamp instanceof org.python.types.Float)) {
             date = 
                 java.time.Instant.ofEpochSecond(((org.python.types.Int) timestamp.__int__()).value)
                 .atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+
             long yearMax = ((org.python.stdlib.datetime.Date) max).year.value;
             long yearMin = ((org.python.stdlib.datetime.Date) min).year.value;
             if (date.getYear() > yearMax || date.getYear() < yearMin) {
@@ -140,10 +142,11 @@ public class Date extends org.python.types.Object {
         } else {
             throw new org.python.exceptions.TypeError("an integer is required (got type str)");
         }
+        
         return new org.python.stdlib.datetime.Date(
-            org.python.types.Int.getInt(Long.valueOf(date.getYear())), 
-            org.python.types.Int.getInt(Long.valueOf(date.getMonthValue())), 
-            org.python.types.Int.getInt(Long.valueOf(date.getDayOfMonth())));
+            org.python.types.Int.getInt((int) date.getYear()), 
+            org.python.types.Int.getInt((int) date.getMonthValue()), 
+            org.python.types.Int.getInt((int) date.getDayOfMonth()));
     }
 
     @org.python.Method(
