@@ -1,13 +1,14 @@
 package org.python.stdlib.datetime;
 
 import org.python.types.Int;
+import org.python.types.Float;
 import org.python.types.Str;
 
 public class Timedelta extends org.python.types.Object {
     private Int days;
     private Int seconds;
     private Int microseconds;
-
+ 
 
     @org.python.Method(
         __doc__ = "Timedelta TODO",
@@ -23,14 +24,26 @@ public class Timedelta extends org.python.types.Object {
         Int minutes = Int.getInt(0);
         Int hours = Int.getInt(0);
         Int weeks = Int.getInt(0);
+        Float rest = new Float(0);
 
         // region ==== PARSING ====
 
+       /* 
+        if (!(args[0] instanceof org.python.types.NoneType)){
+            days = (Int) args[0];
+        }
+        */
 
         org.python.Object daysKwargs = kwargs.get("days");
-        if (daysKwargs instanceof org.python.types.Int || daysKwargs instanceof org.python.types.Float) {
-            days = (Int) daysKwargs;
+        if (daysKwargs instanceof org.python.types.Int) {
+            //days = (Int) daysKwargs;
         }
+        if (daysKwargs instanceof org.python.types.Float){
+            Int dayToMicro = Int.getInt(24*60*60*1000000);
+            days = Int.getInt((int)(((Float)daysKwargs.__float__()).value));
+            rest =  (Float) daysKwargs.__sub__(days.__truediv__(dayToMicro));
+        }
+
         org.python.Object secondsKwargs = kwargs.get("seconds");
         if (secondsKwargs instanceof org.python.types.Int) {
             seconds = (Int) secondsKwargs;
