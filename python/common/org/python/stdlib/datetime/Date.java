@@ -86,7 +86,9 @@ public class Date extends org.python.types.Object {
     private org.python.types.Int day;
     
 
-    //Interface methods
+    @org.python.Method(
+            __doc__ = "Return getattr(self, name)."
+    )
     public org.python.Object __getattribute__(java.lang.String name) {
         if(name.equals("year")) return this.year;
         if(name.equals("month")) return this.month;
@@ -94,6 +96,9 @@ public class Date extends org.python.types.Object {
         return super.__getattribute__(name);
     };
     
+    @org.python.Method(
+            __doc__ = "Implement setattr(self, name, value)."
+    )
     public void __setattr__(java.lang.String name, org.python.Object value) {
         throw new org.python.exceptions.AttributeError("attribute \'" + name + "\' of 'datetime.date' objects is not writable");
     };
@@ -152,8 +157,7 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-            __doc__ = "Return the day of the week represented by the date.\nMonday == 1 ... Sunday == 7", 
-            args = {}
+            __doc__ = "Return the day of the week represented by the date.\nMonday == 1 ... Sunday == 7"
     )
     public org.python.Object isoweekday() {
         java.time.LocalDate date = java.time.LocalDate.of((int) this.year.value, (int) this.month.value, (int) this.day.value);
