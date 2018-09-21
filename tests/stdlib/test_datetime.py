@@ -142,11 +142,11 @@ class DatetimeModuleTests(TranspileTestCase):
     def test_date_isoweekday(self):
         self.assertCodeExecution("""
             import datetime
+            import datetime
             for x in range (1, 8):
                 print(datetime.date(2018, 1, x).isoweekday())
             """)
 
-    @expectedFailure
     def test_date_get_attributes(self): 
         self.assertCodeExecution("""
             import datetime
@@ -160,7 +160,7 @@ class DatetimeModuleTests(TranspileTestCase):
             import datetime
             print(datetime.date(2018, 12, 10).day)
         """)
-    @expectedFailure
+
     def test_date_set_attributes(self):
         self.assertCodeExecution("""
             import datetime
