@@ -160,11 +160,9 @@ public class Date extends org.python.types.Object {
     public org.python.Object isoweekday() {
         java.time.LocalDate date = java.time.LocalDate.of((int) this.year.value, (int) this.month.value, (int) this.day.value);
         long weekday = (long) date.getDayOfWeek().getValue(); // date.isoweekday() uses one indexing
-        org.python.types.Int wd = org.python.types.Int.getInt(weekday);
-        return wd;
-    }
 
-    
+        return org.python.types.Int.getInt(weekday);
+    }
 
     @org.python.Method(
             __doc__ = "Return a 3-tuple containing ISO year, week number, and weekday."
