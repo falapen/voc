@@ -23,20 +23,24 @@ public class Date extends org.python.types.Object {
 
         if (args[1] != null) {
             if(args[1] instanceof org.python.types.Int) {
-                if(((org.python.types.Int) args[1]).value > 0 && ((org.python.types.Int) args[1]).value < 10000) {
+                if(((org.python.types.Int) args[1]).value > 0 && ((org.python.types.Int) args[1]).value < 13) {
                     this.month = (org.python.types.Int) args[1];
                 } else {
-                    throw new org.python.exceptions.ValueError("month " + Long.toString(((org.python.types.Int) args[1]).value) + " is out of range");
+                    throw new org.python.exceptions.ValueError("month must be in 1..12");
                 }
             }
         }
 
         if (args[2] != null) {
             if(args[2] instanceof org.python.types.Int) {
-                if(((org.python.types.Int) args[2]).value > 0 && ((org.python.types.Int) args[2]).value < 10000) {
+                try {
+                    java.time.LocalDate date = java.time.LocalDate.of(
+                        (int) ((org.python.types.Int) args[0]).value,
+                        (int) ((org.python.types.Int) args[1]).value,
+                        (int) ((org.python.types.Int) args[2]).value);
                     this.day = (org.python.types.Int) args[2];
-                } else {
-                    throw new org.python.exceptions.ValueError("day " + Long.toString(((org.python.types.Int) args[2]).value) + " is out of range");
+                } catch (java.time.DateTimeException e) {
+                    throw new org.python.exceptions.ValueError("day is out of range for month");
                 }
             }
         }
