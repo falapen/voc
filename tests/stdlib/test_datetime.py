@@ -2,13 +2,13 @@ from unittest import expectedFailure
 from ..utils import TranspileTestCase
 
 
-class DatetimeModuleTests(TranspileTestCase): 
+class DatetimeModuleTests(TranspileTestCase):
     def test_date_constructor_sanity(self):
         self.assertCodeExecution("""
             import datetime
             print(datetime.date(2018, 10, 10))
             """)
-    
+
     def test_date_constructor_thorough(self):
         self.assertCodeExecution("""
             import datetime
@@ -30,7 +30,7 @@ class DatetimeModuleTests(TranspileTestCase):
             import datetime
             print(datetime.date(1, 1, 1))
             """)
-    
+
     def test_date_constructor_errors_sanity(self):
         self.assertCodeExecution("""
             import datetime
@@ -39,34 +39,34 @@ class DatetimeModuleTests(TranspileTestCase):
             except ValueError as e:
                 print(e)
             """)
-        
+
     def test_date_constructor_errors(self):
         self.assertCodeExecution("""
             import datetime
             try:
                 datetime.date(10000, 13, 32)
-            except ValueError as e: 
+            except ValueError as e:
                 print(e)
             """)
         self.assertCodeExecution("""
             import datetime
-            try: 
+            try:
                 datetime.date(2018, 2, 29)
-            except ValueError as e: 
+            except ValueError as e:
                 print(e)
             """)
         self.assertCodeExecution("""
             import datetime
-            try: 
+            try:
                 datetime.date(2016, 2, 29)
-            except ValueError as e: 
+            except ValueError as e:
                 print(e)
             """)
         self.assertCodeExecution("""
             import datetime
-            try: 
+            try:
                 datetime.date(2018, -1, 16)
-            except ValueError as e: 
+            except ValueError as e:
                 print(e)
             """)
 
@@ -75,7 +75,7 @@ class DatetimeModuleTests(TranspileTestCase):
             import datetime
             print(datetime.date.fromtimestamp(0))
             """)
-    
+
         self.assertCodeExecution("""
             import datetime
             print(datetime.date.fromtimestamp(1537283188.184869))
@@ -147,7 +147,7 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(datetime.date(2018, 1, x).isoweekday())
             """)
 
-    def test_date_get_attributes(self): 
+    def test_date_get_attributes(self):
         self.assertCodeExecution("""
             import datetime
             print(datetime.date(2018, 12, 10).year)
@@ -165,7 +165,7 @@ class DatetimeModuleTests(TranspileTestCase):
         self.assertCodeExecution("""
             import datetime
             a = datetime.date(2018, 12, 10)
-            try: 
+            try:
                 a.year = 2000
             except AttributeError as e:
                 print(e)
@@ -173,7 +173,7 @@ class DatetimeModuleTests(TranspileTestCase):
         self.assertCodeExecution("""
             import datetime
             a = datetime.date(2018, 12, 10)
-            try: 
+            try:
                 a.month = 10
             except AttributeError as e:
                 print(e)
@@ -181,7 +181,7 @@ class DatetimeModuleTests(TranspileTestCase):
         self.assertCodeExecution("""
             import datetime
             a = datetime.date(2018, 12, 10)
-            try: 
+            try:
                 a.day = 20
             except AttributeError as e:
                 print(e)
