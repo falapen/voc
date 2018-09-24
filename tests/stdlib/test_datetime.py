@@ -512,8 +512,42 @@ class DatetimeModuleTests(TranspileTestCase):
 
         self.assertCodeExecution("""
             import datetime
+            print(datetime.time(12,30,0,5000))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time(22,0,5,0))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
             try:
-                datetime.date(2018, 2, 29)
+                datetime.time(25,0,0,0)
+            except ValueError as e:
+                print(e)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                datetime.time(0,61,0,)
+            except ValueError as e:
+                print(e)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                datetime.time(0,0,-1,0)
+            except ValueError as e:
+                print(e)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                datetime.time(0,0,0,-10000000)
             except ValueError as e:
                 print(e)
             """)
