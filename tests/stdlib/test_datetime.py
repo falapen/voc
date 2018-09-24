@@ -78,7 +78,7 @@ class DatetimeModuleTests(TranspileTestCase):
             except TypeError as e:
                 print(e)
             """)
-        
+
         self.assertCodeExecution("""
             import datetime
             try:
@@ -337,7 +337,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(foo.tzinfo)
             """)
 
-
     def test_time_isoformat(self):
         self.assertCodeExecution("""
             import datetime
@@ -498,3 +497,23 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.time.fromisoformat("10:30:50.000020"))
             """)
 
+
+    @expectedFailure
+    def test_time_constructor(self):
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time(0,0,0,0))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time(23,59,59,999999))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                datetime.date(2018, 2, 29)
+            except ValueError as e:
+                print(e)
+            """)
