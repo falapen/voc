@@ -34,7 +34,25 @@ public class Timedelta extends org.python.types.Object {
         int minutesIndex = 4;
         int hoursIndex = 5;
         int weeksIndex = 6;
-        
+        //[days[, seconds[, microseconds[, milliseconds[, minutes[, hours[, weeks]]]]]]]
+        String[] paramError = {"days", "seconds", "microseconds", "milliseconds", "minutes", "hours", "weeks"};
+
+
+        // if (args.length > 0){
+        //     if (args[0] instanceof org.python.types.NoneType){
+        //         throw new org.python.exceptions.TypeError(
+        //             "unsupported type for timedelta " + "days" + " component: " + args[0].typeName()+"");
+        //     }
+        // }
+
+        for (int i = 0; i < args.length; i++){
+            if (args[i] instanceof org.python.types.NoneType || 
+                args[i] instanceof org.python.types.Str || 
+                args[i] instanceof org.python.types.List) {
+                throw new org.python.exceptions.TypeError(
+                    "unsupported type for timedelta " + paramError[i] + " component: " + args[i].typeName()+"");
+            }
+        }
 
         //weeks
         org.python.Object weeksKwargs= null;

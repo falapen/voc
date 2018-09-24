@@ -4,7 +4,7 @@ from ..utils import TranspileTestCase
 
 
 class TimedeltaTests(TranspileTestCase):
-    def test_c(self):
+    def test_constructor(self):
         self.assertCodeExecution("""
             import datetime
 
@@ -14,9 +14,7 @@ class TimedeltaTests(TranspileTestCase):
             print(datetime.timedelta(days=10))
             print(datetime.timedelta(days=10.5))
             print(datetime.timedelta())
-            # print(datetime.timedelta(seconds=a))
-            print(datetime.timedelta(seconds=None))
-
+            
             # args vs kwargs
             print(datetime.timedelta(20)) 
             print(datetime.timedelta(seconds=20))
@@ -36,6 +34,38 @@ class TimedeltaTests(TranspileTestCase):
             print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=11111, hours=1))
             # TODO: Carrying over to days
             print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=111111111111, hours=1))
+            """)
+    def test_constructor_inputs(self):
+        self.assertCodeExecution("""
+            import datetime
+
+            #print(datetime.timedelta(a))
+            
+            try:
+                print(datetime.timedelta(None))
+            except TypeError as e:
+                print (e)
+
+            try:
+                print(datetime.timedelta(None, 2, 3))
+            except TypeError as e:
+                print (e)
+
+            try:
+                print(datetime.timedelta(10, None, 3))
+            except TypeError as e:
+                print (e)
+
+            # try:
+            #     print(datetime.timedelta(seconds=None))
+            # except TypeError as e:
+            #     print (e)
+
+            # try:
+            #     print(datetime.timedelta(days=2, seconds=33, week=None))
+            # except TypeError as e:
+            #     print (e)
+
             """)
 
     def test_totalSeconds(self):
