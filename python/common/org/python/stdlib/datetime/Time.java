@@ -2,13 +2,11 @@ package org.python.stdlib.datetime;
 
 public class Time extends org.python.types.Object {
     @org.python.Attribute
-    public static org.python.stdlib.datetime.Time min;
-
+    public static org.python.Object min = new org.python.stdlib.datetime.Time(new org.python.Object[]{org.python.types.Int.getInt(0), org.python.types.Int.getInt(0), org.python.types.Int.getInt(0), org.python.types.Int.getInt(0)}, null);
     @org.python.Attribute
-    public static org.python.stdlib.datetime.Time max;
-
+    public static org.python.Object max = new org.python.stdlib.datetime.Time(new org.python.Object[]{org.python.types.Int.getInt(23), org.python.types.Int.getInt(59), org.python.types.Int.getInt(59), org.python.types.Int.getInt(999999)}, null);
     @org.python.Attribute
-    public org.python.Object resolution;
+    public static org.python.Object resolution = new org.python.stdlib.datetime.Timedelta(org.python.types.Int.getInt(1));
 
     private org.python.types.Int hour;
     private org.python.types.Int minute;
@@ -25,9 +23,6 @@ public class Time extends org.python.types.Object {
     )
     public Time(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();
-        this.min = new org.python.stdlib.datetime.Time(new org.python.Object[]{org.python.types.Int.getInt(0), org.python.types.Int.getInt(0), org.python.types.Int.getInt(0), org.python.types.Int.getInt(0)}, null);
-        this.max = new org.python.stdlib.datetime.Time(new org.python.Object[]{org.python.types.Int.getInt(23), org.python.types.Int.getInt(59), org.python.types.Int.getInt(59), org.python.types.Int.getInt(999999)}, null);
-        this.resolution = new org.python.stdlib.datetime.Timedelta(org.python.types.Int.getInt(1));
         if (args.length >= 1) {
             if (args[0] instanceof org.python.types.Int) {
                 if (((org.python.types.Int) args[0]).value >= 0 && ((org.python.types.Int) args[0]).value < 24) {
