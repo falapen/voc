@@ -211,7 +211,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.date.resolution)
             """)
 
-    @expectedFailure
     def test_time_constructor(self):
         self.assertCodeExecution("""
             import datetime
@@ -244,7 +243,7 @@ class DatetimeModuleTests(TranspileTestCase):
         self.assertCodeExecution("""
             import datetime
             try:
-                datetime.time(0,61,0,)
+                datetime.time(0,61)
             except ValueError as e:
                 print(e)
             """)
@@ -265,7 +264,6 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(e)
             """)
 
-    @expectedFailure
     def test_time_class_attributes(self):
         self.assertCodeExecution("""
             import datetime
@@ -282,29 +280,33 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.time.resolution)
             """)
 
-    @expectedFailure
     def test_time_instance_attributes(self):
         self.assertCodeExecution("""
             import datetime
-            print(datetime.time.hour)
+            foo = datetime.time(1,2,3,4)
+            print(foo.hour)
             """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.time.minute)
+            foo = datetime.time(1,2,3,4)
+            print(foo.minute)
             """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.time.second)
+            foo = datetime.time(1,2,3,4)
+            print(foo.second)
             """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.time.microsecond)
+            foo = datetime.time(1,2,3,4)
+            print(foo.microsecond)
             """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.time.tzinfo)
+            foo = datetime.time(1,2,3,4)
+            print(foo.tzinfo)
             """)
