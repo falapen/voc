@@ -24,53 +24,96 @@ public class Timedelta extends org.python.types.Object {
         Int minutes = Int.getInt(0);
         Int hours = Int.getInt(0);
         Int weeks = Int.getInt(0);
-        Float rest = new Float(0);
+        long rest = 0L;
 
         // region ==== PARSING ====
 
-       /* 
-        if (!(args[0] instanceof org.python.types.NoneType)){
-            days = (Int) args[0];
-        }
-        */
+        
 
-        org.python.Object daysKwargs = kwargs.get("days");
-        if (daysKwargs instanceof org.python.types.Int) {
-            //days = (Int) daysKwargs;
-        }
-        if (daysKwargs instanceof org.python.types.Float){
-            Int dayToMicro = Int.getInt(24*60*60*1000000);
-            days = Int.getInt((int)(((Float)daysKwargs.__float__()).value));
-            rest =  (Float) daysKwargs.__sub__(days.__truediv__(dayToMicro));
-        }
-
-        org.python.Object secondsKwargs = kwargs.get("seconds");
-        if (secondsKwargs instanceof org.python.types.Int) {
-            seconds = (Int) secondsKwargs;
-        }
-        org.python.Object microsecondsKwargs = kwargs.get("microseconds");
-        if (microsecondsKwargs instanceof org.python.types.Int) {
-            microseconds = (Int) microsecondsKwargs;
-        }
-        org.python.Object millisecondsKwargs = kwargs.get("milliseconds");
-        if (millisecondsKwargs instanceof org.python.types.Int) {
-            milliseconds = (Int) millisecondsKwargs;
-        }
-        org.python.Object minutesKwargs = kwargs.get("minutes");
-        if (minutesKwargs instanceof org.python.types.Int) {
-            minutes = (Int) minutesKwargs;
-        }
-        org.python.Object hoursKwargs = kwargs.get("hours");
-        if (hoursKwargs instanceof org.python.types.Int) {
-            hours = (Int) hoursKwargs;
-        }
+        //weeks
         org.python.Object weeksKwargs = kwargs.get("weeks");
         if (weeksKwargs instanceof org.python.types.Int) {
             weeks = (Int) weeksKwargs;
         }
+        else if (weeksKwargs instanceof org.python.types.Float){
+            long weekToMicro = 604800000000L;
+            weeks = Int.getInt((int)(((Float)weeksKwargs.__float__()).value));
+            rest = rest + (long)(((((Float)weeksKwargs.__float__()).value) - weeks.value) * weekToMicro);
+        }
 
+        //days
+        org.python.Object daysKwargs = kwargs.get("days");
+        //if ((daysKwargs instanceof org.python.types.NoneType)){
+          //  daysKwargs = args[0];
+        //}
+        if (daysKwargs instanceof org.python.types.Int) {
+            days = (Int) daysKwargs;
+        }
+        else if (daysKwargs instanceof org.python.types.Float){
+            long daysToMicro = 86400000000L;
+            days = Int.getInt((int)(((Float)daysKwargs.__float__()).value));
+            rest = rest + (long)(((((Float)daysKwargs.__float__()).value) - days.value) * daysToMicro);
+        }
+
+        //seconds
+        org.python.Object secondsKwargs = kwargs.get("seconds");
+        if (secondsKwargs instanceof org.python.types.Int) {
+            seconds = (Int) secondsKwargs;
+        }
+        else if (secondsKwargs instanceof org.python.types.Float){
+            long secondsToMicro = 1000000;
+            seconds = Int.getInt((int)(((Float)secondsKwargs.__float__()).value));
+            rest = rest + (long)(((((Float)secondsKwargs.__float__()).value) - seconds.value) * secondsToMicro);
+        }
+
+        //microseconds
+        org.python.Object microsecondsKwargs = kwargs.get("microseconds");
+        if (microsecondsKwargs instanceof org.python.types.Int) {
+            microseconds = (Int) microsecondsKwargs;
+        }
+        else if (microsecondsKwargs instanceof org.python.types.Float){
+            long microToMicro = 1L;
+            microseconds = Int.getInt((int)(((Float)microsecondsKwargs.__float__()).value));
+            rest = rest + (long)(((((Float)microsecondsKwargs.__float__()).value) - microseconds.value) * microToMicro);
+        }
+        
+        //milliseconds
+        org.python.Object millisecondsKwargs = kwargs.get("milliseconds");
+        if (millisecondsKwargs instanceof org.python.types.Int) {
+            milliseconds = (Int) millisecondsKwargs;
+        }
+        else if (millisecondsKwargs instanceof org.python.types.Float){
+            long milliToMicro = 1000L;
+            milliseconds = Int.getInt((int)(((Float)millisecondsKwargs.__float__()).value));
+            rest = rest + (long)(((((Float)millisecondsKwargs.__float__()).value) - milliseconds.value) * milliToMicro);
+        }
+
+        //minutes
+        org.python.Object minutesKwargs = kwargs.get("minutes");
+        if (minutesKwargs instanceof org.python.types.Int) {
+            minutes = (Int) minutesKwargs;
+        }
+        else if (minutesKwargs instanceof org.python.types.Float){
+            long minutesToMicro = 60000000L;
+            minutes = Int.getInt((int)(((Float)minutesKwargs.__float__()).value));
+            rest = rest + (long)(((((Float)minutesKwargs.__float__()).value) - minutes.value) * minutesToMicro);
+        }
+        
+        //hours TODO
+        org.python.Object hoursKwargs = kwargs.get("hours");
+        if (hoursKwargs instanceof org.python.types.Int) {
+            hours = (Int) hoursKwargs;
+        }
+        else if (hoursKwargs instanceof org.python.types.Float){
+            long hoursToMicro = 3600000000L;
+            hours = Int.getInt((int)(((Float)hoursKwargs.__float__()).value));
+            rest = rest + (long)(((((Float)hoursKwargs.__float__()).value) - hours.value) * hoursToMicro);
+        }
 
         // endregion
+        
+        //add rest to microseconds
+        microseconds = Int.getInt(microseconds.value + rest);
 
         // Normalize everything to days, seconds, microseconds.
         days = Int.getInt(days.value + (weeks.value * 7));
@@ -79,15 +122,21 @@ public class Timedelta extends org.python.types.Object {
 
         // TODO: Fractions
 
+        // Carry over to seconds
         seconds = Int.getInt(seconds.value + microseconds.value / 1000000);
         microseconds = Int.getInt(microseconds.value % 1000000);
 
-        // TODO: Carry over to days as well
+
+        // Carry over to days as well
+        days = Int.getInt(days.value + seconds.value / 86400);
+        seconds = Int.getInt(seconds.value % 86400);
+
 
         this.days = days;
         this.seconds = seconds;
         this.microseconds = microseconds;
     }
+
 
     @org.python.Method(
         __doc__ = "Return the total number of seconds contained in the duration."
