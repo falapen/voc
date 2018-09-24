@@ -264,3 +264,47 @@ class DatetimeModuleTests(TranspileTestCase):
             except ValueError as e:
                 print(e)
             """)
+
+    @expectedFailure
+    def test_time_class_attributes(self):
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.min)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.max)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.resolution)
+            """)
+
+    @expectedFailure
+    def test_time_instance_attributes(self):
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.hour)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.minute)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.second)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.microsecond)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.tzinfo)
+            """)
