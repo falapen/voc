@@ -27,11 +27,23 @@ public class Timedelta extends org.python.types.Object {
         long rest = 0L;
 
         // region ==== PARSING ====
-
+        int daysIndex = 0;
+        int secondsIndex = 1;
+        int microIndex = 2;
+        int milliIndex = 3;
+        int minutesIndex = 4;
+        int hoursIndex = 5;
+        int weeksIndex = 6;
         
 
         //weeks
-        org.python.Object weeksKwargs = kwargs.get("weeks");
+        org.python.Object weeksKwargs= null;
+        if (args.length > weeksIndex){
+            weeksKwargs = args[weeksIndex];
+        }
+        else {
+            weeksKwargs = kwargs.get("weeks");
+        }
         if (weeksKwargs instanceof org.python.types.Int) {
             weeks = (Int) weeksKwargs;
         }
@@ -42,10 +54,13 @@ public class Timedelta extends org.python.types.Object {
         }
 
         //days
-        org.python.Object daysKwargs = kwargs.get("days");
-        //if ((daysKwargs instanceof org.python.types.NoneType)){
-          //  daysKwargs = args[0];
-        //}
+        org.python.Object daysKwargs= null;
+        if (args.length > daysIndex){
+            daysKwargs = args[daysIndex];
+        }
+        else {
+            daysKwargs = kwargs.get("days");
+        }
         if (daysKwargs instanceof org.python.types.Int) {
             days = (Int) daysKwargs;
         }
@@ -56,7 +71,13 @@ public class Timedelta extends org.python.types.Object {
         }
 
         //seconds
-        org.python.Object secondsKwargs = kwargs.get("seconds");
+        org.python.Object secondsKwargs= null;
+        if (args.length > secondsIndex){
+            secondsKwargs = args[secondsIndex];
+        }
+        else {
+            secondsKwargs = kwargs.get("seconds");
+        }
         if (secondsKwargs instanceof org.python.types.Int) {
             seconds = (Int) secondsKwargs;
         }
@@ -67,7 +88,13 @@ public class Timedelta extends org.python.types.Object {
         }
 
         //microseconds
-        org.python.Object microsecondsKwargs = kwargs.get("microseconds");
+        org.python.Object microsecondsKwargs= null;
+        if (args.length > microIndex){
+            microsecondsKwargs = args[microIndex];
+        }
+        else {
+            microsecondsKwargs = kwargs.get("microseconds");
+        }
         if (microsecondsKwargs instanceof org.python.types.Int) {
             microseconds = (Int) microsecondsKwargs;
         }
@@ -78,7 +105,13 @@ public class Timedelta extends org.python.types.Object {
         }
         
         //milliseconds
-        org.python.Object millisecondsKwargs = kwargs.get("milliseconds");
+        org.python.Object millisecondsKwargs= null;
+        if (args.length > milliIndex){
+            millisecondsKwargs = args[milliIndex];
+        }
+        else {
+            millisecondsKwargs = kwargs.get("milliseconds");
+        }
         if (millisecondsKwargs instanceof org.python.types.Int) {
             milliseconds = (Int) millisecondsKwargs;
         }
@@ -89,7 +122,13 @@ public class Timedelta extends org.python.types.Object {
         }
 
         //minutes
-        org.python.Object minutesKwargs = kwargs.get("minutes");
+        org.python.Object minutesKwargs= null;
+        if (args.length > minutesIndex){
+            minutesKwargs = args[minutesIndex];
+        }
+        else {
+            minutesKwargs = kwargs.get("minutes");
+        }
         if (minutesKwargs instanceof org.python.types.Int) {
             minutes = (Int) minutesKwargs;
         }
@@ -99,8 +138,14 @@ public class Timedelta extends org.python.types.Object {
             rest = rest + (long)(((((Float)minutesKwargs.__float__()).value) - minutes.value) * minutesToMicro);
         }
         
-        //hours TODO
-        org.python.Object hoursKwargs = kwargs.get("hours");
+        //hours
+        org.python.Object hoursKwargs= null;
+        if (args.length > hoursIndex){
+            hoursKwargs = args[hoursIndex];
+        }
+        else {
+            hoursKwargs = kwargs.get("hours");
+        }
         if (hoursKwargs instanceof org.python.types.Int) {
             hours = (Int) hoursKwargs;
         }
