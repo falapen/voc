@@ -56,15 +56,15 @@ class TimedeltaTests(TranspileTestCase):
             except TypeError as e:
                 print (e)
 
-            # try:
-            #     print(datetime.timedelta(seconds=None))
-            # except TypeError as e:
-            #     print (e)
+            try:
+                print(datetime.timedelta(seconds=None))
+            except TypeError as e:
+                print (e)
 
-            # try:
-            #     print(datetime.timedelta(days=2, seconds=33, week=None))
-            # except TypeError as e:
-            #     print (e)
+            try:
+                print(datetime.timedelta(days=2, seconds=33, weeks=None))
+            except TypeError as e:
+                print (e)
 
             """)
 

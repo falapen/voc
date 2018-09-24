@@ -54,14 +54,17 @@ public class Timedelta extends org.python.types.Object {
             }
         }
 
-        // for (int i = 0; i < paramError.length; i++){
-        //     if (!(kwargs.get(paramError[i]) instanceof org.python.types.Int ||
-        //         kwargs.get(paramError[i]) instanceof org.python.types.Bool ||
-        //         kwargs.get(paramError[i]) instanceof org.python.types.Float)) {
-        //         throw new org.python.exceptions.TypeError(
-        //             "unsupported type for timedelta " + paramError[i] + " component: " + kwargs.get(paramError[i]).typeName()+"");
-        //     }     
-        // }
+        for (int i = 0; i < paramError.length; i++){
+            org.python.Object kwarg = kwargs.get(paramError[i]);
+            if (kwarg != null){
+                if (!(kwarg instanceof org.python.types.Int ||
+                    kwarg instanceof org.python.types.Bool ||
+                    kwarg instanceof org.python.types.Float)) {
+                    throw new org.python.exceptions.TypeError(
+                        "unsupported type for timedelta " + paramError[i] + " component: " + kwarg.typeName()+"");
+                }
+            }     
+        }
 
         //weeks
         org.python.Object weeksKwargs= null;
