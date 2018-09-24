@@ -15,7 +15,7 @@ public class Timedelta extends org.python.types.Object {
         default_args = {}
     )
     public Timedelta(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
-        super();
+        super();    
 
         Int days = Int.getInt(0);
         Int seconds = Int.getInt(0);
@@ -186,7 +186,7 @@ public class Timedelta extends org.python.types.Object {
     @org.python.Method(
         __doc__ = "Return the total number of seconds contained in the duration."
     )
-    public org.python.types.Float totalSeconds(){
+    public org.python.types.Float total_seconds(){
         //(td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6 computed with true division enabled.
         return new org.python.types.Float((this.microseconds.value + (this.seconds.value + this.days.value*86400)*1000000)/1000000);
     }
