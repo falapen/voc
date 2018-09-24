@@ -210,3 +210,23 @@ class DatetimeModuleTests(TranspileTestCase):
             import datetime
             print(datetime.date.resolution)
             """)
+
+    @expectedFailure
+    def test_time_constructor(self):
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time(0,0,0,0))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time(23,59,59,999999))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                datetime.date(2018, 2, 29)
+            except ValueError as e:
+                print(e)
+            """)
