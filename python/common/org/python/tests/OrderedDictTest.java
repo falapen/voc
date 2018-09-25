@@ -93,11 +93,11 @@ class OrderedDictTest {
         tuple.add(org.python.types.Int.getInt(33L));
         tuple_list.append(new org.python.types.Tuple(tuple));
 
-        //ArrayList from which a tuple is then made and inserted into tuple-list
-        tuple = new ArrayList<>(2);
-        tuple.add(new Str("dd"));
-        tuple.add(org.python.types.Int.getInt(44L));
-        tuple_list.append(new org.python.types.Tuple(tuple));
+        //ArrayList from which a python-list is then made and inserted into tuple-list
+        ArrayList<org.python.Object> list = new ArrayList<>(2);
+        list.add(new Str("dd"));
+        list.add(org.python.types.Int.getInt(44L));
+        tuple_list.append(new org.python.types.List(list));
 
         //ArrayList from which a tuple is then made and inserted into tuple-list
         tuple = new ArrayList<>(2);
