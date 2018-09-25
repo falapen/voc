@@ -2,11 +2,13 @@ package org.python.stdlib.datetime;
 
 public class Time extends org.python.types.Object {
     @org.python.Attribute
-    public static org.python.Object min = new org.python.stdlib.datetime.Time(new org.python.Object[]{org.python.types.Int.getInt(0), org.python.types.Int.getInt(0), org.python.types.Int.getInt(0), org.python.types.Int.getInt(0)}, null);
+    public org.python.stdlib.datetime.Time min;
+
     @org.python.Attribute
-    public static org.python.Object max = new org.python.stdlib.datetime.Time(new org.python.Object[]{org.python.types.Int.getInt(23), org.python.types.Int.getInt(59), org.python.types.Int.getInt(59), org.python.types.Int.getInt(999999)}, null);
+    public org.python.stdlib.datetime.Time max;
+
     @org.python.Attribute
-    public static org.python.Object resolution = new org.python.stdlib.datetime.Timedelta(org.python.types.Int.getInt(1));
+    public org.python.Object resolution;
 
     private org.python.types.Int hour;
     private org.python.types.Int minute;
@@ -23,6 +25,9 @@ public class Time extends org.python.types.Object {
     )
     public Time(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();
+        this.min = new org.python.stdlib.datetime.Time(new org.python.Object[]{org.python.types.Int.getInt(0), org.python.types.Int.getInt(0), org.python.types.Int.getInt(0), org.python.types.Int.getInt(0)}, null);
+        this.max = new org.python.stdlib.datetime.Time(new org.python.Object[]{org.python.types.Int.getInt(23), org.python.types.Int.getInt(59), org.python.types.Int.getInt(59), org.python.types.Int.getInt(999999)}, null);
+        this.resolution = new org.python.stdlib.datetime.Timedelta(org.python.types.Int.getInt(1));
         if (args.length >= 1) {
             if (args[0] instanceof org.python.types.Int) {
                 if (((org.python.types.Int) args[0]).value >= 0 && ((org.python.types.Int) args[0]).value < 24) {
@@ -98,14 +103,14 @@ public class Time extends org.python.types.Object {
             return this.tzinfo;
         }
         return super.__getattribute__(name);
-    };
+    }
 
     @org.python.Method(
         __doc__ = "Implement setattr(self, name, value)."
     )
     public void __setattr__(java.lang.String name, org.python.Object value) {
         throw new org.python.exceptions.AttributeError("attribute \'" + name + "\' of 'datetime.time' objects is not writable");
-    };
+    }
 
     @org.python.Method(
         __doc__ = "Return string in ISO 8601 format, [HH[:MM[:SS[.mmm[uuu]]]]][+HH:MM].\n\ntimespec specifies what components of the time to include."
