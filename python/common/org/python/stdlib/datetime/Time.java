@@ -2,10 +2,10 @@ package org.python.stdlib.datetime;
 
 public class Time extends org.python.types.Object {
     @org.python.Attribute
-    public org.python.stdlib.datetime.Time min;
+    public static org.python.stdlib.datetime.Time min;
 
     @org.python.Attribute
-    public org.python.stdlib.datetime.Time max;
+    public static org.python.stdlib.datetime.Time max;
 
     @org.python.Attribute
     public org.python.Object resolution;
