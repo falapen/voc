@@ -11,21 +11,21 @@ class DatetimeModuleTests(TranspileTestCase):
     def test_datetime_simple(self):
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime(2018, 10, 10))
+            d = datetime.datetime(2018, 10, 10)
             """)
 
     #@expectedFailure
     def test_datetime_simple2(self):
         self.assertCodeExecution("""
-		import datetime
-            print(datetime.datetime(1990,5,10))
+			import datetime
+			d = datetime.datetime(1990,5,10)
             """)
 
     #@expectedFailure
     def test_datetime_simple3(self):
         self.assertCodeExecution("""
-		import datetime
-            print(datetime.datetime(1995,3,10))
+			import datetime
+			d = datetime.datetime(1995,3,10)
             """)
 
     @expectedFailure
@@ -40,6 +40,20 @@ class DatetimeModuleTests(TranspileTestCase):
         self.assertCodeExecution("""
 			import datetime
             print(datetime.datetime(1))
+            """)
+
+    @expectedFailure
+    def test_datetime_many_arg(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(2000,1,1,1,1,1,1,1,1))
+            """)
+
+    @expectedFailure
+    def test_datetime_many_arg2(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(1990,11,11,1,1,1,1,1,1))
             """)
 
     @expectedFailure
