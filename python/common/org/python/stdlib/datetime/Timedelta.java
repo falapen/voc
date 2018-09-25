@@ -5,16 +5,26 @@ import org.python.types.Float;
 import org.python.types.Str;
 import org.python.types.Bool;
 
+
 public class Timedelta extends org.python.types.Object {
     private Int days;
     private Int seconds;
     private Int microseconds;
- 
 
+    //@org.python.Attribute
+    //public static org.python.Object min = new org.python.stdlib.datetime.Timedelta(( (org.python.Object[]) (new Int [] {Int.getInt(-999999999)})), null);
+    
+ 
     @org.python.Method(
         __doc__ = "Timedelta TODO",
         default_args = {}
     )
+    private Timedelta(Int days, Int seconds, Int microseconds){
+        this.days = days;
+        this.seconds = seconds;
+        this. microseconds = microseconds;
+    }
+
     public Timedelta(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();    
 
@@ -155,6 +165,18 @@ public class Timedelta extends org.python.types.Object {
     @org.python.Method(
         __doc__ = "Return str(self)."
     )
+    
+    public Timedelta __pos__(){
+        return this;
+    }
+
+    public Timedelta __neg__(){
+        Int days = Int.getInt(-this.days.value);
+        Int seconds = Int.getInt(-this.seconds.value);
+        Int microseconds = Int.getInt(-this.microseconds.value);
+        return new Timedelta(days, seconds, microseconds);
+    }
+    
     public Str __str__() {
         long mm = this.seconds.value / 60;
         long ss = this.seconds.value % 60;
@@ -168,6 +190,15 @@ public class Timedelta extends org.python.types.Object {
                 "%d day%s, %s",
                 this.days.value,
                 this.days.value > 1 ? "s" : "",
+                result
+            );
+        }
+        
+        if (this.days.value < 0) {
+            result = String.format(
+                "%d day%s, %s",
+                this.days.value,
+                this.days.value < -1 ? "s" : "",
                 result
             );
         }

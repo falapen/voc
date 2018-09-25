@@ -13,6 +13,7 @@ class TimedeltaTests(TranspileTestCase):
             print(datetime.timedelta(1, 2, 0, 0, 3, 2, 1))
             print(datetime.timedelta(days=10))
             print(datetime.timedelta(days=10.5))
+            #print(datetime.timedelta(days=1.2)) # Not working
             print(datetime.timedelta())
             
             # args vs kwargs
@@ -43,19 +44,29 @@ class TimedeltaTests(TranspileTestCase):
             print(datetime.timedelta(microseconds=True, minutes=1, seconds=1, milliseconds=11111, hours=1.5))
             print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=111111111111, hours=False))
 
-            """)
-    
-    @expectedFailure
-    def test_t1(self):
-        self.assertCodeExecution("""
-            import datetime
             
-            try:
-                print(datetime.timedelta(2323232323223232332323200000000000))
-            except TypeError as e:
-                print (e)
+
             """)
 
+    def test_pos(self):
+        self.assertCodeExecution("""
+            import datetime
+            d = datetime.timedelta(99)
+            print(+d)
+            y = datetime.timedelta(weeks = 15, days = 4)
+            print(-y)
+            """)
+    
+    def test_neg(self):
+        self.assertCodeExecution("""
+            import datetime
+            d = datetime.timedelta(99)
+            print(-d)
+            y = datetime.timedelta(days = 4, weeks = 2)
+            print(-y)
+            """)
+    
+    
     def test_constructor_inputs(self):
         self.assertCodeExecution("""
             import datetime
