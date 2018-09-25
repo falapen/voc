@@ -223,7 +223,7 @@ class OrderedDictTest {
     }
 
     @Test
-    void setItemWrongSizedPairs() {
+    void setItemWrongSizedPairsTest() {
         org.python.Object[] args = {null};
         Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
         OrderedDict odict = new OrderedDict(args, kwargs);
@@ -244,6 +244,32 @@ class OrderedDictTest {
         tuple_list.append(new org.python.types.Tuple(tuple));
         assertThrows(org.python.exceptions.ValueError.class, () -> {
             odict.update(tuple_list, null);
+        });
+    }
+
+    @Test
+    void setItemStrAsIterableTest() {
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        OrderedDict odict = new OrderedDict(args, kwargs);
+
+        List list = new List();
+        list.append(new Str("c"));
+        assertThrows(org.python.exceptions.ValueError.class, () -> {
+            odict.update(list, null);
+        });
+    }
+
+    @Test
+    void setItemObjectAsIterableTest() {
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        OrderedDict odict = new OrderedDict(args, kwargs);
+
+        List list = new List();
+        list.append(Int.getInt(1));
+        assertThrows(org.python.exceptions.TypeError.class, () -> {
+            odict.update(list, null);
         });
     }
 
