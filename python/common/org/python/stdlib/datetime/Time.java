@@ -108,9 +108,9 @@ public class Time extends org.python.types.Object {
     };
 
     @org.python.Method(
-        __doc__ = "Return str(self)."
+        __doc__ = "Return string in ISO 8601 format, [HH[:MM[:SS[.mmm[uuu]]]]][+HH:MM].\n\ntimespec specifies what components of the time to include."
     )
-    public org.python.types.Str __str__() {
+    public org.python.types.Str isoformat() {
         java.lang.StringBuilder timeString = new java.lang.StringBuilder("");
         //Hour
         if (this.hour.value < 10) {
@@ -150,6 +150,77 @@ public class Time extends org.python.types.Object {
             timeString.append(this.microsecond.value);
         }
         return new org.python.types.Str(timeString.toString());
+    }
+
+    @org.python.Method(
+        __doc__ = "Return time with new specified fields.",
+        default_args = {"hour", "minute", "second", "microsecond", "tzinfo"}
+    )
+    public org.python.Object replace(org.python.Object hour, org.python.Object minute, org.python.Object second, org.python.Object microsecond, org.python.Object tzinfo) {
+        if (hour == null) {
+            hour = this.hour;
+        }
+        if (minute == null) {
+            minute = this.minute;
+        }
+        if (second == null) {
+            second = this.second;
+        }
+        if (microsecond == null) {
+            microsecond = this.microsecond;
+        }
+        if (tzinfo == null) {
+            tzinfo = this.tzinfo;
+        }
+
+        return new org.python.stdlib.datetime.Time(new org.python.Object[]{(org.python.types.Int) hour, (org.python.types.Int) minute, (org.python.types.Int) second, (org.python.types.Int) microsecond, tzinfo}, null);
+    }
+
+    @org.python.Method(
+        __doc__ = "string -> time from time.isoformat() output",
+        args = {"isoformat"}
+    )
+    public static org.python.Object fromisoformat(org.python.Object isoformat) {
+        if (!(isoformat instanceof org.python.types.Str)) {
+            throw new org.python.exceptions.TypeError("fromisoformat: argument must be str");
+        }
+
+        org.python.exceptions.ValueError valueError = new org.python.exceptions.ValueError("Invalid isoformat string: " + isoformat);
+        String isoformatJavaString = isoformat.toString();
+
+        if (isoformatJavaString.length() != 8 && isoformatJavaString.length() != 15) {
+            throw valueError;
+        }
+
+        org.python.types.Int hour = null;
+        org.python.types.Int minute = null;
+        org.python.types.Int seconds = null;
+        org.python.types.Int microseconds = null;
+
+        try {
+            hour = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(0,2)));
+            if(!isoformatJavaString.substring(2,3).equals(":")) { throw valueError; }
+            minute = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(3,5)));
+            if(!isoformatJavaString.substring(5,6).equals(":")) { throw valueError; }
+            seconds = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(6,8)));
+            if (isoformatJavaString.length() == 15) {
+                if(!(isoformatJavaString.substring(8,9).equals(":") || isoformatJavaString.substring(8,9).equals("."))) { throw valueError; }
+                microseconds = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(9,15)));
+            }
+        } catch (Exception e) {
+            throw valueError;
+        }
+
+        org.python.stdlib.datetime.Time time = microseconds == null ? new org.python.stdlib.datetime.Time(new org.python.Object[]{hour, minute, seconds}, null) : new org.python.stdlib.datetime.Time(new org.python.Object[]{hour, minute, seconds, microseconds}, null);
+        return time;
+
+    }
+
+    @org.python.Method(
+        __doc__ = "Return str(self)."
+    )
+    public org.python.types.Str __str__() {
+        return this.isoformat();
     }
 
 }
