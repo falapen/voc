@@ -198,15 +198,15 @@ class DatetimeModuleTests(TranspileTestCase):
     def test_date_class_attributes(self):
         self.assertCodeExecution("""
             import datetime
-            datetime.date.min
+            print(datetime.date.min)
             """)
 
         self.assertCodeExecution("""
             import datetime
-            datetime.date.max
+            print(datetime.date.max)
             """)
 
         self.assertCodeExecution("""
             import datetime
-            datetime.date.resolution
+            print(datetime.date.resolution)
             """)
