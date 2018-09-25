@@ -57,14 +57,33 @@ class DatetimeModuleTests(TranspileTestCase):
             """)
 
     @expectedFailure
-    def test_datetime_wrong_arg_type(self):
+    def test_datetime_wrong_year_arg_type(self):
         self.assertCodeExecution("""
 			import datetime
             print(datetime.datetime("2018",1,1))
             """)
 
     @expectedFailure
-    def test_datetime_wrong_arg_type2(self):
+    def test_datetime_year_too_low(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(-1,1,1))
+            """)
+
+
+
+    @expectedFailure
+    def test_datetime_year_too_high(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(122018,1,1))
+            """)
+
+
+
+
+    @expectedFailure
+    def test_datetime_wrong_month_arg_type(self):
         self.assertCodeExecution("""
 			import datetime
             print(datetime.datetime(1990,"5",10))
@@ -76,6 +95,11 @@ class DatetimeModuleTests(TranspileTestCase):
 			import datetime
             print(datetime.datetime(1995,3,"10"))
             """)
+
+
+
+
+
 
     @expectedFailure
     def test_all_conc(self):

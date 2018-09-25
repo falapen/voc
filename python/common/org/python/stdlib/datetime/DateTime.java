@@ -6,9 +6,14 @@ import org.python.types.Str;
 public class DateTime extends org.python.types.Object {
 
     @org.python.Attribute
-    public static Int MINYEAR = Int.getInt(1);
+    public static Int MIN_YEAR = Int.getInt(1);
     @org.python.Attribute
-    public static Int MAXYEAR = Int.getInt(9999);
+    public static Int MAX_YEAR = Int.getInt(10000);
+
+    @org.python.Attribute
+    public static Int MIN_MONTH = Int.getInt(1);
+    @org.python.Attribute
+    public static Int MAX_MONTH = Int.getInt(12);
 
     
     private Int year;
@@ -23,8 +28,8 @@ public class DateTime extends org.python.types.Object {
     
 
 	@org.python.Method(
-            __doc__ = "DateTime constructor",
-            default_args = { }
+        __doc__ = "DateTime constructor",
+        default_args = { }
     )
     public DateTime(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();
@@ -48,14 +53,44 @@ public class DateTime extends org.python.types.Object {
         }
 
 
-		yearTemp = (Int) args[0];
-		monthTemp = (Int) args[1];
-		dayTemp = (Int) args[2];
+		//Year
+        org.python.Object kwYear = kwargs.get("year");
 
-		//Validite the three main required arguments year, month, day
-        if (yearTemp == null || monthTemp == null || dayTemp == null) {
-            throw new org.python.exceptions.TypeError("Invalid arguments");
-        }
+
+
+
+		if (kwYear==null) {
+			yearTemp = (Int) args[0];
+		}
+		else {
+			yearTemp = (Int) kwYear;
+		}
+
+		if (yearTemp==null) {
+			throw new org.python.exceptions.TypeError("'year' not found");
+		}
+
+		if (!(yearTemp instanceof org.python.types.Int)) {
+			throw new org.python.exceptions.TypeError("Wrong 'year'-type");
+		}
+
+
+
+
+
+		//valid?
+		checkIntRange(yearTemp, MIN_YEAR, MAX_YEAR);
+
+		//Month
+		dayTemp = (Int) args[1];
+		//valid?
+
+		//Day
+		dayTemp = (Int) args[2];
+		//Hour
+		//Minutes
+		//Second
+		//MicroSecond
 
 
 
@@ -69,8 +104,14 @@ public class DateTime extends org.python.types.Object {
         this.second = secondTemp;
         this.ms = msTemp;
 		this.tzinfo = null;
-    }
-}
+	}
 
+
+	private void checkIntRange(org.python.types.Int var, org.python.types.Int min, org.python.types.Int max) {
+        if (var.value < min.value || var.value > max.value) {
+            throw new org.python.exceptions.ValueError("Out of range");
+        }
+	}
+}
 
 
