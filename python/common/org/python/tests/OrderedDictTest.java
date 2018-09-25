@@ -114,6 +114,72 @@ class OrderedDictTest {
         assertEquals("OrderedDict([('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5), ('aa', 11), ('bb', 22), ('cc', 33), ('dd', 44), ('ee', 55)])", dict.__str__().toJava());
     }
 
+    @org.junit.jupiter.api.Test
+    void testCreationTypeError() {
+        //Third assertion
+        //Python-List which will contain all tuples
+        List tuple_list = new List();
+        tuple_list.append((org.python.types.Int.getInt(12)));
+
+        //args
+        org.python.Object[] args2 = {tuple_list};
+        //kwargs
+        java.util.Map kwargs2 = new java.util.HashMap<java.lang.String, org.python.Object>();
+
+        assertThrows(org.python.exceptions.TypeError.class, () -> {
+            OrderedDict dict = new OrderedDict(args2, kwargs2);
+        });
+    }
+
+    @org.junit.jupiter.api.Test
+    void testCreationValueError() {
+        //Third assertion
+        //Python-List which will contain all tuples
+        List tuple_list = new List();
+        tuple_list.append((org.python.types.Int.getInt(12)));
+
+        //args
+        org.python.Object[] args2 = {new org.python.types.Str("asdf")};
+        //kwargs
+        java.util.Map kwargs2 = new java.util.HashMap<java.lang.String, org.python.Object>();
+
+        assertThrows(org.python.exceptions.ValueError.class, () -> {
+            OrderedDict dict = new OrderedDict(args2, kwargs2);
+        });
+
+        //Third assertion
+        //Python-List which will contain all tuples
+        tuple_list = new List();
+
+        //ArrayList from which a tuple is then made and inserted into tuple-list
+        ArrayList<org.python.Object> tuple = new ArrayList<>(2);
+        tuple.add(new Str("a"));
+        tuple.add(org.python.types.Int.getInt(1L));
+        tuple.add(org.python.types.Int.getInt(2L));
+        tuple_list.append(new org.python.types.Tuple(tuple));
+
+        org.python.Object[] args3 = {tuple_list};
+        //kwargs
+        java.util.Map kwargs3 = new java.util.HashMap<java.lang.String, org.python.Object>();
+
+        assertThrows(org.python.exceptions.ValueError.class, () -> {
+            OrderedDict dict = new OrderedDict(args3, kwargs3);
+        });
+
+
+    }
+    @org.junit.jupiter.api.Test
+    void testCreationFromDict() {
+        org.python.Object[] args = {null};
+        java.util.Map kwargs = new java.util.HashMap<java.lang.String, org.python.Object>();
+        OrderedDict dict = new OrderedDict(args, kwargs);
+
+        org.python.Object[] args2 = {dict};
+        java.util.Map kwargs2 = new java.util.HashMap<java.lang.String, org.python.Object>();
+        OrderedDict dict2 = new OrderedDict(args2, kwargs2);
+        assertEquals("OrderedDict()", dict2.__str__().toJava());
+    }
+
     @Test
     void setItemTest() {
         org.python.Object[] args = {null};
