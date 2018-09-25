@@ -178,4 +178,15 @@ class OrderedDictTest {
         } catch (org.python.exceptions.StopIteration | NoSuchElementException e) {
         }
     }
+
+    @Test
+    void copyTest() {
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+        OrderedDict od2 = od1.copy();
+    }
 }
