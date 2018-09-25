@@ -32,9 +32,29 @@ class TimedeltaTests(TranspileTestCase):
             
             # Carrying over milliseconds to seconds
             print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=11111, hours=1))
-            # TODO: Carrying over to days
             print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=111111111111, hours=1))
+            
+            # Boolean inputs
+            print(datetime.timedelta(days=True, minutes=False))
+            print(datetime.timedelta(True))
+            print(datetime.timedelta(days=True, minutes =False, seconds = 11))
+            
+            # Mixed inputs
+            print(datetime.timedelta(microseconds=True, minutes=1, seconds=1, milliseconds=11111, hours=1.5))
+            print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=111111111111, hours=False))
+
             """)
+
+    def test_t1(self):
+        self.assertCodeExecution("""
+            import datetime
+            
+            #try:
+                #print(datetime.timedelta(2323232323223232332323200000000000))
+            #except TypeError as e:
+            #    print (e)
+            """)
+
     def test_constructor_inputs(self):
         self.assertCodeExecution("""
             import datetime

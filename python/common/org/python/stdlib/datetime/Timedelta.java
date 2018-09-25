@@ -3,6 +3,7 @@ package org.python.stdlib.datetime;
 import org.python.types.Int;
 import org.python.types.Float;
 import org.python.types.Str;
+import org.python.types.Bool;
 
 public class Timedelta extends org.python.types.Object {
     private Int days;
@@ -25,8 +26,7 @@ public class Timedelta extends org.python.types.Object {
         Int hours = Int.getInt(0);
         Int weeks = Int.getInt(0);
         long rest = 0L;
-
-        // region ==== PARSING ====
+        /*
         int daysIndex = 0;
         int secondsIndex = 1;
         int microIndex = 2;
@@ -34,17 +34,14 @@ public class Timedelta extends org.python.types.Object {
         int minutesIndex = 4;
         int hoursIndex = 5;
         int weeksIndex = 6;
-        //[days[, seconds[, microseconds[, milliseconds[, minutes[, hours[, weeks]]]]]]]
+        */
+        // TODO: overflow
+        
+        long[] toMicro = {86400000000L, 1000000L, 1L, 1000L, 60000000L, 3600000000L, 604800000000L};
         String[] paramError = {"days", "seconds", "microseconds", "milliseconds", "minutes", "hours", "weeks"};
+        Int[] params = {days, seconds, microseconds, milliseconds, minutes, hours, weeks};
 
-
-        // if (args.length > 0){
-        //     if (args[0] instanceof org.python.types.NoneType){
-        //         throw new org.python.exceptions.TypeError(
-        //             "unsupported type for timedelta " + "days" + " component: " + args[0].typeName()+"");
-        //     }
-        // }
-
+        //Not valid types 
         for (int i = 0; i < args.length; i++){
             if (!(args[i] instanceof org.python.types.Int || 
                 args[i] instanceof org.python.types.Bool || 
@@ -66,6 +63,65 @@ public class Timedelta extends org.python.types.Object {
             }     
         }
 
+        //Bool inputs
+        for (int i = 0; i < args.length; i++){
+            if (args[i] instanceof org.python.types.Bool){     
+                boolean value = ((Bool) args[i]).value;
+            if(value){
+                params[i] = Int.getInt(1);
+            }
+            }
+        }
+        
+        for (int i = 0; i < paramError.length; i++){
+            org.python.Object kwarg = kwargs.get(paramError[i]);
+            if (kwarg != null){
+                if (kwarg instanceof org.python.types.Bool){
+                    boolean value = ((Bool) kwarg).value;
+                    if(value){
+                        params[i] = Int.getInt(1);
+                    }
+                }
+            }     
+        }
+        
+        //Integers
+        for (int i = 0; i < args.length; i++){
+            if (args[i] instanceof org.python.types.Int){     
+                params[i] = (Int) args[i];
+            }
+        }
+        
+        for (int i = 0; i < paramError.length; i++){
+            org.python.Object kwarg = kwargs.get(paramError[i]);
+            if (kwarg != null){
+                if (kwarg instanceof org.python.types.Int){
+                    params[i] = (Int) kwarg;
+                }
+            }     
+        }
+
+        //Floats
+        for (int i = 0; i < args.length; i++){
+            if (args[i] instanceof org.python.types.Float){     
+            params[i] = Int.getInt((int)(((Float)args[i].__float__()).value));
+            rest = rest + (long)(((((Float)args[i].__float__()).value) - params[i].value) * toMicro[i]);
+            }
+        }
+        
+        for (int i = 0; i < paramError.length; i++){
+            org.python.Object kwarg = kwargs.get(paramError[i]);
+            if (kwarg != null){
+                if (kwarg instanceof org.python.types.Float){     
+                    params[i] = Int.getInt((int)(((Float)kwarg.__float__()).value));
+                    rest = rest + (long)(((((Float)kwarg.__float__()).value) - params[i].value) * toMicro[i]);
+                }
+            }     
+        }
+        
+
+
+        /*
         //weeks
         org.python.Object weeksKwargs= null;
         if (args.length > weeksIndex){
@@ -108,7 +164,7 @@ public class Timedelta extends org.python.types.Object {
         else {
             secondsKwargs = kwargs.get("seconds");
         }
-        if (secondsKwargs instanceof org.python.types.Int) {
+        if (secondsKwargs instanceof org.python.types.Int ) {
             seconds = (Int) secondsKwargs;
         }
         else if (secondsKwargs instanceof org.python.types.Float){
@@ -184,8 +240,17 @@ public class Timedelta extends org.python.types.Object {
             hours = Int.getInt((int)(((Float)hoursKwargs.__float__()).value));
             rest = rest + (long)(((((Float)hoursKwargs.__float__()).value) - hours.value) * hoursToMicro);
         }
-
+        */
         // endregion
+        //[days[, seconds[, microseconds[, milliseconds[, minutes[, hours[, weeks]]]]]]]
+
+        days = params[0];
+        seconds = params[1];
+        microseconds = params[2];
+        milliseconds = params[3];
+        minutes = params[4];
+        hours = params[5];
+        weeks = params[6];
         
         //add rest to microseconds
         microseconds = Int.getInt(microseconds.value + rest);
