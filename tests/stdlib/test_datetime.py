@@ -310,3 +310,165 @@ class DatetimeModuleTests(TranspileTestCase):
             foo = datetime.time(1,2,3,4)
             print(foo.tzinfo)
             """)
+
+
+    def test_time_isoformat(self):
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(1,2,3,4)
+            print(foo.isoformat())
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(0,0,0,1000)
+            print(foo.isoformat())
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(0,0,0,0)
+            print(foo.isoformat())
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(23,59,59,999999)
+            print(foo.isoformat())
+            """)
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(12,30,0,0)
+            print(foo.isoformat())
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(0,0,1,0)
+            print(foo.isoformat())
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(10,10,10,120)
+            print(foo.isoformat())
+            """)
+
+    def test_time_replace(self):
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(10,10,10,120)
+            bar = foo.replace(0,0,0,0)
+            print(foo)
+            print(bar)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(10,10,10,120)
+            bar = foo.replace(12,12,12,4287)
+            print(foo)
+            print(bar)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(10,10,10,120)
+            bar = foo.replace(12)
+            print(foo)
+            print(bar)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(10,10,10,120)
+            bar = foo.replace(second=59)
+            print(foo)
+            print(bar)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(10,10,10,120)
+            bar = foo.replace(microsecond=59, hour=12)
+            print(foo)
+            print(bar)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            foo = datetime.time(10,10,10,120)
+            bar = foo.replace(12, second=0)
+            print(foo)
+            print(bar)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                foo = datetime.time(10,10,10,120)
+                bar = foo.replace(24,0,0,0)
+                print(foo)
+                print(bar)
+            except ValueError as e:
+                print(e)
+            """)
+
+    def test_time_fromisoformat(self):
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                print(datetime.time.fromisoformat("abc"))
+            except ValueError as e:
+                print(e)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                print(datetime.time.fromisoformat(123))
+            except Exception as e:
+                print(e)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                print(datetime.time.fromisoformat("12-30:00.000300"))
+            except Exception as e:
+                print(e)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try:
+                print(datetime.time.fromisoformat("12:30:00:000003"))
+            except Exception as e:
+                print(e)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.fromisoformat("12:30:00.000400"))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.fromisoformat("00:00:00"))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.fromisoformat("12:32:32"))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.fromisoformat("23:59:59.999999"))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.time.fromisoformat("10:30:50.000020"))
+            """)
+
