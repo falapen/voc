@@ -149,7 +149,7 @@ public class Timedelta extends org.python.types.Object {
     )
     public org.python.types.Float total_seconds(){
         //(td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6 computed with true division enabled.
-        return new org.python.types.Float((this.microseconds.value + (this.seconds.value + this.days.value*86400)*1000000)/1000000);
+        return new org.python.types.Float((this.microseconds.value + (this.seconds.value + this.days.value*86400.0)*1000000.0)/1000000.0);
     }
 
     @org.python.Method(

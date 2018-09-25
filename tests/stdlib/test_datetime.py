@@ -44,15 +44,16 @@ class TimedeltaTests(TranspileTestCase):
             print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=111111111111, hours=False))
 
             """)
-
+    
+    @expectedFailure
     def test_t1(self):
         self.assertCodeExecution("""
             import datetime
             
-            #try:
-                #print(datetime.timedelta(2323232323223232332323200000000000))
-            #except TypeError as e:
-            #    print (e)
+            try:
+                print(datetime.timedelta(2323232323223232332323200000000000))
+            except TypeError as e:
+                print (e)
             """)
 
     def test_constructor_inputs(self):
@@ -93,4 +94,20 @@ class TimedeltaTests(TranspileTestCase):
             import datetime
 
             print(datetime.timedelta(minutes=1).total_seconds())
+            print(datetime.timedelta(weeks=1).total_seconds())
+            print(datetime.timedelta(seconds=1).total_seconds())
+            print(datetime.timedelta(days=1).total_seconds())
+            print(datetime.timedelta(hours=1).total_seconds())
+            
+            print(datetime.timedelta(microseconds=10).total_seconds())
+            print(datetime.timedelta(milliseconds=10).total_seconds())
+            
+            print(datetime.timedelta(seconds=1, days=1).total_seconds())
+            print(datetime.timedelta(weeks=3, days=4, hours=13, minutes=26).total_seconds())
+            
+            # try:
+            #     print(datetime.timedelta(minutes=None).total_seconds())
+            # except TypeError as e:
+            #     print(e)
+            
             """)
