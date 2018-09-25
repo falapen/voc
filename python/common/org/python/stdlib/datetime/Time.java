@@ -2,7 +2,7 @@ package org.python.stdlib.datetime;
 
 public class Time extends org.python.types.Object {
     @org.python.Attribute
-    public static org.python.stdlib.datetime.Time min = new org.python.stdlib.datetime.Timedelta(org.python.types.Int.getInt(1));
+    public static org.python.stdlib.datetime.Time min = new org.python.stdlib.datetime.Time(new org.python.Object[]{org.python.types.Int.getInt(23), org.python.types.Int.getInt(59), org.python.types.Int.getInt(59), org.python.types.Int.getInt(999999)}, null);
 
 
     @org.python.Attribute
@@ -10,7 +10,7 @@ public class Time extends org.python.types.Object {
 
 
     @org.python.Attribute
-    public org.python.Object resolution = new org.python.stdlib.datetime.Time(new org.python.Object[]{org.python.types.Int.getInt(23), org.python.types.Int.getInt(59), org.python.types.Int.getInt(59), org.python.types.Int.getInt(999999)}, null);
+    public org.python.Object resolution = new org.python.stdlib.datetime.Timedelta(org.python.types.Int.getInt(1));
 
 
     private org.python.types.Int hour;
