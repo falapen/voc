@@ -96,11 +96,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.datetime(1995,3,"10"))
             """)
 
-
-
-
-
-
     @expectedFailure
     def test_all_conc(self):
         self.assertCodeExecution("""
@@ -115,7 +110,57 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.datetime(year,month,day,hour,minute,second,ms))
             """)
 
+    def test_datetime_utcfromtimestamp(self):
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime.utcfromtimestamp(0))
+            """)
 
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime.utcfromtimestamp(1234567890))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime.utcfromtimestamp(1234567890.123))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime.utcfromtimestamp(-1234567890))
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime.utcfromtimestamp(-1234567890.123))
+            """)
+
+    def test_datetime_utcfromtimestamp_errors(self):
+
+        self.assertCodeExecution("""
+            import datetime
+            try 
+                print(datetime.datetime.utcfromtimestamp(100000000000))
+            except TypeError as e:
+                print(e)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try 
+                print(datetime.datetime.utcfromtimestamp(-100000000000))
+            except ValueError as e:
+                print(e)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            try
+                print(datetime.datetime.utcfromtimestamp('0'))
+            except ValueError as e:
+                print(e)
+            """)
 
 class DateTests(TranspileTestCase):
 
