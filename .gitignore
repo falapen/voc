@@ -20,3 +20,5 @@ tests/tmp*
 /python/*.class
 .vscode/
 .DS_Store
+.idea/
+*.iml
