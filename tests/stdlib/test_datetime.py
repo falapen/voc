@@ -11,13 +11,15 @@ class TimedeltaTests(TranspileTestCase):
             print(datetime.timedelta(1))
             print(datetime.timedelta(10, 10, 5))
             print(datetime.timedelta(1, 2, 0, 0, 3, 2, 1))
+            print(datetime.timedelta(1, -36000, -500000, 0, 0, 0, 0))
+            print(datetime.timedelta(1, -2, 0, 0, 3, -2, 1))
             print(datetime.timedelta(days=10))
             print(datetime.timedelta(days=10.5))
-            #print(datetime.timedelta(days=1.2)) # Not working
+            print(datetime.timedelta(days=1.2))
             print(datetime.timedelta())
-            
+
             # args vs kwargs
-            print(datetime.timedelta(20)) 
+            print(datetime.timedelta(-20))
             print(datetime.timedelta(seconds=20))
             print(datetime.timedelta(seconds=20.05))
             print(datetime.timedelta(minutes=30))
@@ -30,21 +32,19 @@ class TimedeltaTests(TranspileTestCase):
             print(datetime.timedelta(microseconds=2000000000))
             print(datetime.timedelta(milliseconds=20))
             print(datetime.timedelta(milliseconds=20.05))
-            
+
             # Carrying over milliseconds to seconds
             print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=11111, hours=1))
             print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=111111111111, hours=1))
-            
+
             # Boolean inputs
             print(datetime.timedelta(days=True, minutes=False))
             print(datetime.timedelta(True))
             print(datetime.timedelta(days=True, minutes =False, seconds = 11))
-            
+
             # Mixed inputs
             print(datetime.timedelta(microseconds=True, minutes=1, seconds=1, milliseconds=11111, hours=1.5))
             print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=111111111111, hours=False))
-
-            
 
             """)
 
@@ -53,10 +53,10 @@ class TimedeltaTests(TranspileTestCase):
             import datetime
             d = datetime.timedelta(99)
             print(+d)
-            y = datetime.timedelta(weeks = 15, days = 4)
+            y = datetime.timedelta(weeks = 15, days = -4, seconds = -36000, microseconds = -500000)
             print(-y)
             """)
-    
+
     def test_neg(self):
         self.assertCodeExecution("""
             import datetime
@@ -65,7 +65,8 @@ class TimedeltaTests(TranspileTestCase):
             y = datetime.timedelta(days = 4, weeks = 2)
             print(-y)
             """)
-    
+
+    @expectedFailure
     def test_attributes(self):
         self.assertCodeExecution("""
             import datetime
@@ -75,13 +76,12 @@ class TimedeltaTests(TranspileTestCase):
             print(datetime.timedelta.resolution)
             """)
 
-    
     def test_constructor_inputs(self):
         self.assertCodeExecution("""
             import datetime
 
             #print(datetime.timedelta(a))
-            
+
             try:
                 print(datetime.timedelta(None))
             except TypeError as e:
@@ -118,16 +118,16 @@ class TimedeltaTests(TranspileTestCase):
             print(datetime.timedelta(seconds=1).total_seconds())
             print(datetime.timedelta(days=1).total_seconds())
             print(datetime.timedelta(hours=1).total_seconds())
-            
+
             print(datetime.timedelta(microseconds=10).total_seconds())
             print(datetime.timedelta(milliseconds=10).total_seconds())
-            
+
             print(datetime.timedelta(seconds=1, days=1).total_seconds())
             print(datetime.timedelta(weeks=3, days=4, hours=13, minutes=26).total_seconds())
-            
+
             # try:
             #     print(datetime.timedelta(minutes=None).total_seconds())
             # except TypeError as e:
             #     print(e)
-            
+
             """)

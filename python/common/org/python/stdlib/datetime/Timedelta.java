@@ -17,7 +17,8 @@ public class Timedelta extends org.python.types.Object {
 
     @org.python.Attribute
     public static org.python.Object max =
-            new Timedelta(Int.getInt(999999999), Int.getInt(82800+3540+59), Int.getInt(999999)); //days=999999999, hours=23, minutes=59, seconds=59, microseconds=999999
+            new Timedelta(Int.getInt(999999999), Int.getInt(82800+3540+59), Int.getInt(999999)); 
+            //days=999999999, hours=23, minutes=59, seconds=59, microseconds=999999
     
     @org.python.Attribute
     public static org.python.Object resolution = 
@@ -29,11 +30,49 @@ public class Timedelta extends org.python.types.Object {
     )
 
     private Timedelta(Int days, Int seconds, Int microseconds){
+        // Carry over to seconds
+        if (microseconds.value < 0) {
+            seconds = Int.getInt(seconds.value - (1+ (microseconds.value/1000000)));
+            microseconds = Int.getInt(1000000 + (microseconds.value % 1000000));
+        } else {
+            seconds = Int.getInt(seconds.value + microseconds.value / 1000000);
+            microseconds = Int.getInt(microseconds.value % 1000000);
+        }
+        
+        // Carry over to days as well
+        if (seconds.value < 0) {
+            days = Int.getInt(-1 + days.value + (seconds.value/86400));
+            seconds = Int.getInt(86400 + (seconds.value % 86400));
+        } else {
+            days = Int.getInt(days.value + seconds.value / 86400);
+            seconds = Int.getInt(seconds.value % 86400);
+        }
+        
         this.days = days;
         this.seconds = seconds;
         this. microseconds = microseconds;
     }
 
+    @org.python.Method(
+            __doc__ =  "timedelta([days[, seconds[, microseconds[, milliseconds[, minutes[, hours[, weeks]]]]]]]) -->\n" +
+                    "--> A timedelta object that represents a duration, the differences between two dates or time.\n" +
+                    "\n" +
+                    "Only days, seconds and microseconds are stored internally. Arguments are converted to those units:\n" +
+                    "    - A millisecond is converted to 1000 microseconds.\n" +
+                    "    - A minute is converted to 60 seconds.\n" +
+                    "    - An hour is converted to 3600 seconds.\n" +
+                    "    - A week is converted to 7 days.\n" +
+                    "and days, seconds and microseconds are then normalized so that the representation is unique, with\n" +
+                    "      0 <= microseconds < 1000000\n" +
+                    "      0 <= seconds < 3600*24 (the number of seconds in one day)\n" +
+                    "      -999999999 <= days <= 999999999\n" +
+                    "If any argument is a float and there are fractional microseconds, the fractional microseconds left\n" +
+                    "over from all arguments are combined and their sum is rounded to the nearest microsecond.\n" +
+                    "If no argument is a float, the conversion and normalization processes are exact (no information is lost).\n" +
+                    "\n", 
+            default_args = {}
+            //default_args = {"days", "seconds", "microseconds", "milliseconds", "minutes", "hours", "weeks"}
+        )
     public Timedelta(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();    
 
@@ -124,7 +163,6 @@ public class Timedelta extends org.python.types.Object {
             if (kwarg != null){
                 if (kwarg instanceof org.python.types.Float){     
                     params[i] = Int.getInt((int)(((Float)kwarg.__float__()).value));
-                    //rest = rest + (long)(((((Float)kwarg.__float__()).value) - params[i].value) * toMicro[i]);
                     rest = rest + (long)((Math.round(100000000000L*((((Float)kwarg.__float__()).value) - params[i].value)) * toMicro[i])/100000000000L);
 
                 }
@@ -147,17 +185,25 @@ public class Timedelta extends org.python.types.Object {
         seconds = Int.getInt(seconds.value + (minutes.value * 60 + hours.value * 3600));
         microseconds = Int.getInt(microseconds.value + (milliseconds.value * 1000));
 
-        // TODO: Fractions
-
         // Carry over to seconds
-        seconds = Int.getInt(seconds.value + microseconds.value / 1000000);
-        microseconds = Int.getInt(microseconds.value % 1000000);
-
+        if (microseconds.value < 0) {
+            seconds = Int.getInt(seconds.value - (1+ (microseconds.value/1000000)));
+            microseconds = Int.getInt(1000000 + (microseconds.value % 1000000));
+        } else {
+            seconds = Int.getInt(seconds.value + microseconds.value / 1000000);
+            microseconds = Int.getInt(microseconds.value % 1000000);
+        }
+        
 
         // Carry over to days as well
-        days = Int.getInt(days.value + seconds.value / 86400);
-        seconds = Int.getInt(seconds.value % 86400);
-
+        if (seconds.value < 0) {
+            days = Int.getInt(-1 + days.value + (seconds.value/86400));
+            seconds = Int.getInt(86400 + (seconds.value % 86400));
+        } else {
+            days = Int.getInt(days.value + seconds.value / 86400);
+            seconds = Int.getInt(seconds.value % 86400);
+        }
+                
 
         this.days = days;
         this.seconds = seconds;
@@ -166,7 +212,8 @@ public class Timedelta extends org.python.types.Object {
 
 
     @org.python.Method(
-        __doc__ = "Return the total number of seconds contained in the duration."
+        __doc__ = "Return the total number of seconds contained in the duration. Note that for very large "
+        + "\n" + "time intervals (greater than 270 years on most platforms) this method will lose microsecond accuracy."
     )
     public org.python.types.Float total_seconds(){
         //(td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6 computed with true division enabled.
@@ -174,20 +221,25 @@ public class Timedelta extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "Return str(self)."
+        __doc__ = "Returns a timedelta object with the same value."
     )
-    
     public Timedelta __pos__(){
         return this;
     }
 
+    @org.python.Method(
+        __doc__ = "Equivalent to timedelta(-t1.days, -t1.seconds, -t1.microseconds), and to t1* -1."
+    )
     public Timedelta __neg__(){
         Int days = Int.getInt(-this.days.value);
         Int seconds = Int.getInt(-this.seconds.value);
         Int microseconds = Int.getInt(-this.microseconds.value);
         return new Timedelta(days, seconds, microseconds);
     }
-    
+
+    @org.python.Method(
+        __doc__ = "Return str(self)."
+    )
     public Str __str__() {
         long mm = this.seconds.value / 60;
         long ss = this.seconds.value % 60;
