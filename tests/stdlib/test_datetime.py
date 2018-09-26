@@ -290,6 +290,7 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(e)
             """)
 
+    @expectedFailure
     def test_time_class_attributes(self):
         self.assertCodeExecution("""
             import datetime
