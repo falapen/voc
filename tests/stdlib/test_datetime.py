@@ -452,6 +452,16 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(e)
         """)
 
+    def test_datetime_instance_method_date(self):
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime(2018, 1, 1).date)
+        """)
+
+    def test_datetime_instance_method_time(self):
+        self.assertCodeExecution("""
+            print(datetime.datetime(2018, 1, 1, 1, 1, 1, 1).time
+        """)
 
 
 class DateTests(TranspileTestCase):
