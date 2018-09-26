@@ -11,12 +11,6 @@ public class Timedelta extends org.python.types.Object {
     private Int seconds;
     private Int microseconds;
 
-    private Timedelta(Int days, Int seconds, Int microseconds){
-        this.days = days;
-        this.seconds = seconds;
-        this. microseconds = microseconds;
-    }
-
     @org.python.Attribute
     public static org.python.Object min = 
             new Timedelta(Int.getInt(-999999999), Int.getInt(0), Int.getInt(0));
@@ -33,7 +27,13 @@ public class Timedelta extends org.python.types.Object {
         __doc__ = "Timedelta TODO",
         default_args = {}
     )
-    
+
+    private Timedelta(Int days, Int seconds, Int microseconds){
+        this.days = days;
+        this.seconds = seconds;
+        this. microseconds = microseconds;
+    }
+
     public Timedelta(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();    
 
@@ -47,7 +47,7 @@ public class Timedelta extends org.python.types.Object {
         long rest = 0L;
         // TODO: overflow
         
-        long[] toMicro = {86400000000L, 1000000L, 1L, 1000L, 60000000L, 3600000000L, 604800000000L};
+        double[] toMicro = {86400000000.0, 1000000.0, 1.0, 1000.0, 60000000.0, 3600000000.0, 604800000000.0};
         String[] paramError = {"days", "seconds", "microseconds", "milliseconds", "minutes", "hours", "weeks"};
         Int[] params = {days, seconds, microseconds, milliseconds, minutes, hours, weeks};
 
@@ -115,7 +115,7 @@ public class Timedelta extends org.python.types.Object {
         for (int i = 0; i < args.length; i++){
             if (args[i] instanceof org.python.types.Float){     
             params[i] = Int.getInt((int)(((Float)args[i].__float__()).value));
-            rest = rest + (long)(((((Float)args[i].__float__()).value) - params[i].value) * toMicro[i]);
+            rest = rest + (long)((Math.round(100000000000L*((((Float)args[i].__float__()).value) - params[i].value)) * toMicro[i])/100000000000L);
             }
         }
         
@@ -124,7 +124,9 @@ public class Timedelta extends org.python.types.Object {
             if (kwarg != null){
                 if (kwarg instanceof org.python.types.Float){     
                     params[i] = Int.getInt((int)(((Float)kwarg.__float__()).value));
-                    rest = rest + (long)(((((Float)kwarg.__float__()).value) - params[i].value) * toMicro[i]);
+                    //rest = rest + (long)(((((Float)kwarg.__float__()).value) - params[i].value) * toMicro[i]);
+                    rest = rest + (long)((Math.round(100000000000L*((((Float)kwarg.__float__()).value) - params[i].value)) * toMicro[i])/100000000000L);
+
                 }
             }     
         }
