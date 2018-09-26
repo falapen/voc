@@ -28,6 +28,57 @@ class DatetimeModuleTests(TranspileTestCase):
 			d = datetime.datetime(1995,3,10)
             """)
 
+    #@expectedFailure
+    def test_datetime_simple_kwargs(self):
+        self.assertCodeExecution("""
+            import datetime
+            d = datetime.datetime(year=2018, month=10, day=10)
+            """)
+
+    #@expectedFailure
+    def test_datetime_simple_kwargs2(self):
+        self.assertCodeExecution("""
+			import datetime
+			d = datetime.datetime(year=1990, month=5, day=10)
+            """)
+
+    #@expectedFailure
+    def test_datetime_simple_kwargs3(self):
+        self.assertCodeExecution("""
+			import datetime
+			d = datetime.datetime(year=1995, month=3, day=10)
+            """)
+
+    #@expectedFailure
+    def test_datetime_simple_kwargs4(self):
+        self.assertCodeExecution("""
+            import datetime
+            d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1)
+            """)
+
+    #@expectedFailure
+    def test_datetime_simple_kwargs5(self):
+        self.assertCodeExecution("""
+			import datetime
+			d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1, minute = 1)
+            """)
+
+    #@expectedFailure
+    def test_datetime_simple_kwargs6(self):
+        self.assertCodeExecution("""
+			import datetime
+			d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1, minute = 1, second = 1)
+            """)
+
+
+    #@expectedFailure
+    def test_datetime_simple_kwargs7(self):
+        self.assertCodeExecution("""
+			import datetime
+			d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1, minute = 1, second = 1, microsecond = 1)
+            """)
+
+
     @expectedFailure
     def test_datetime_few_arg(self):
         self.assertCodeExecution("""
@@ -57,7 +108,7 @@ class DatetimeModuleTests(TranspileTestCase):
             """)
 
     @expectedFailure
-    def test_datetime_wrong_year_arg_type(self):
+    def test_datetime_wrong_yeartype(self):
         self.assertCodeExecution("""
 			import datetime
             print(datetime.datetime("2018",1,1))
@@ -70,8 +121,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.datetime(-1,1,1))
             """)
 
-
-
     @expectedFailure
     def test_datetime_year_too_high(self):
         self.assertCodeExecution("""
@@ -79,26 +128,130 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.datetime(122018,1,1))
             """)
 
-
-
-
     @expectedFailure
-    def test_datetime_wrong_month_arg_type(self):
+    def test_datetime_wrong_monthtype(self):
         self.assertCodeExecution("""
 			import datetime
-            print(datetime.datetime(1990,"5",10))
+            print(datetime.datetime(2018,"1",1))
             """)
 
     @expectedFailure
-    def test_datetime_wrong_arg_type3(self):
+    def test_datetime_month_too_low(self):
         self.assertCodeExecution("""
 			import datetime
-            print(datetime.datetime(1995,3,"10"))
+            print(datetime.datetime(1990,-1,1))
+            """)
+
+    @expectedFailure
+    def test_datetime_month_too_high(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(1990,31,1))
+            """)
+
+    @expectedFailure
+    def test_datetime_wrong_daytype(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(2018,1,"1"))
+            """)
+
+    @expectedFailure
+    def test_datetime_day_too_low(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(1990,1,-1))
+            """)
+
+    @expectedFailure
+    def test_datetime_day_too_high(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(1990,31,41))
+            """)
+
+    @expectedFailure
+    def test_datetime_hour_too_low(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(1990,1,1,-1))
+            """)
+
+    @expectedFailure
+    def test_datetime_hour_too_high(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(1990,1,1,25))
+            """)
+
+    @expectedFailure
+    def test_datetime_wrong_mintype(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(2018,1,1,1,"1"))
+            """)
+
+    @expectedFailure
+    def test_datetime_min_too_low(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(1990,1,1,1,-1))
+            """)
+
+    @expectedFailure
+    def test_datetime_min_too_high(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(1990,1,1,1,61))
+            """)
+
+
+    @expectedFailure
+    def test_datetime_wrong_sectype(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(2018,1,1,1,1,"1"))
+            """)
+
+    @expectedFailure
+    def test_datetime_sec_too_low(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(1990,1,1,1,1,-1))
+            """)
+
+    @expectedFailure
+    def test_datetime_sec_too_high(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(1990,1,1,1,1,61))
+            """)
+
+    @expectedFailure
+    def test_datetime_wrong_mstype(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(2018,1,1,1,1,1,"1"))
+            """)
+
+    @expectedFailure
+    def test_datetime_ms_too_low(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(2018,1,1,1,1,1,-11))
+            """)
+
+    @expectedFailure
+    def test_datetime_ms_too_high(self):
+        self.assertCodeExecution("""
+			import datetime
+            print(datetime.datetime(2018,1,1,1,1,1,1000000))
             """)
 
     @expectedFailure
     def test_all_conc(self):
         self.assertCodeExecution("""
+			//TODO make some loopz
 			import datetime
 			year = 2014
 			month = 12
