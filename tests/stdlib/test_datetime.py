@@ -222,7 +222,7 @@ class DatetimeModuleTests(TranspileTestCase):
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime(2018, 1, 1)
+            print(datetime.datetime(2018, 1, 1).tzinfo
         """)
 
     def test_datetime_instance_set_attributes(self):
