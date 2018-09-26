@@ -11,20 +11,29 @@ public class Timedelta extends org.python.types.Object {
     private Int seconds;
     private Int microseconds;
 
-    //@org.python.Attribute
-    //public static org.python.Object min = new org.python.stdlib.datetime.Timedelta(( (org.python.Object[]) (new Int [] {Int.getInt(-999999999)})), null);
-    
- 
-    @org.python.Method(
-        __doc__ = "Timedelta TODO",
-        default_args = {}
-    )
     private Timedelta(Int days, Int seconds, Int microseconds){
         this.days = days;
         this.seconds = seconds;
         this. microseconds = microseconds;
     }
 
+    @org.python.Attribute
+    public static org.python.Object min = 
+            new Timedelta(Int.getInt(-999999999), Int.getInt(0), Int.getInt(0));
+
+    @org.python.Attribute
+    public static org.python.Object max =
+            new Timedelta(Int.getInt(999999999), Int.getInt(82800+3540+59), Int.getInt(999999)); //days=999999999, hours=23, minutes=59, seconds=59, microseconds=999999
+    
+    @org.python.Attribute
+    public static org.python.Object resolution = 
+            new Timedelta(Int.getInt(0), Int.getInt(0), Int.getInt(1));
+
+    @org.python.Method(
+        __doc__ = "Timedelta TODO",
+        default_args = {}
+    )
+    
     public Timedelta(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();    
 

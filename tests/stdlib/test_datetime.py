@@ -66,6 +66,15 @@ class TimedeltaTests(TranspileTestCase):
             print(-y)
             """)
     
+    def test_attributes(self):
+        self.assertCodeExecution("""
+            import datetime
+
+            print(datetime.timedelta.max)
+            print(datetime.timedelta.min)
+            print(datetime.timedelta.resolution)
+            """)
+
     
     def test_constructor_inputs(self):
         self.assertCodeExecution("""

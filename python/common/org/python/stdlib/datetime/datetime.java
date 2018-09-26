@@ -9,8 +9,8 @@ public class datetime extends org.python.types.Module {
     static {
         // TODO: Add stuff here, e.g.:
         timedelta = org.python.types.Type.pythonType(org.python.stdlib.datetime.Timedelta.class);
-        //date = org.python.types.Type.pythonType(org.python.stdlib.datetime.Date.class);
-        //time = org.python.types.Type.pythonType(org.python.stdlib.datetime.Time.class);
+        date = org.python.types.Type.pythonType(org.python.stdlib.datetime.Date.class);
+        time = org.python.types.Type.pythonType(org.python.stdlib.datetime.Time.class);
     }
 
     @org.python.Attribute
