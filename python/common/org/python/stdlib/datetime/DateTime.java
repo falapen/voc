@@ -82,11 +82,11 @@ public class DateTime extends org.python.types.Object {
 		checkIntRange(yearTemp, MIN_YEAR, MAX_YEAR);
 
 		//Month
-		dayTemp = (Int) args[1];
+		//dayTemp = (Int) args[1];
 		//valid?
 
 		//Day
-		dayTemp = (Int) args[2];
+		//dayTemp = (Int) args[2];
 		//Hour
 		//Minutes
 		//Second
@@ -94,6 +94,13 @@ public class DateTime extends org.python.types.Object {
 
 
 
+		yearTemp = (Int) kwargs.get("year");
+		monthTemp = (Int) kwargs.get("month");
+		dayTemp = (Int) kwargs.get("day");
+		hourTemp = (Int) kwargs.get("hour");
+		minuteTemp = (Int) kwargs.get("minute");
+		secondTemp = (Int) kwargs.get("second");
+		msTemp = (Int) kwargs.get("microsecond");
 		//Final assignment
 
 		this.year = yearTemp;

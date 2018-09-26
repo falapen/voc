@@ -248,20 +248,37 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.datetime(2018,1,1,1,1,1,1000000))
             """)
 
-    @expectedFailure
-    def test_all_conc(self):
-        self.assertCodeExecution("""
-			//TODO make some loopz
+    #@expectedFailure
+	#One test with 240.000 different inputs using args
+    def test_datetime_all_conc_args(self):
+        self.assertCodeExecution("""			
 			import datetime
-			year = 2014
-			month = 12
-			day = 1
-			hour = 1
-			minute = 
-			second = 1
-			ms = 1
-            print(datetime.datetime(year,month,day,hour,minute,second,ms))
-            """)
+			for year in range(1, 10000, 1000): #10 different years 
+				for month in range(1, 12, 3): #4 different month 
+					for day in range(1, 28, 6): #5 different day 
+						for hour in range(0, 23, 4): #6 different hours 
+							for min in range(0, 59, 18): #4 different minutes 
+								for sec in range(0, 59, 12): #5 different seconds 
+									for ms in range(0, 1000000, 100000): #10 different ms 
+										d = datetime.datetime(year,month,day,hour,min,sec,ms)
+			""")
+
+
+    #@expectedFailure
+	#One test with 240.000 different inputs using kwargs
+    def test_datetime_all_conc_kwargs(self):
+        self.assertCodeExecution("""			
+			import datetime
+			for y in range(1, 10000, 1000): #10 different years 
+				for m in range(1, 12, 3): #4 different month 
+					for d in range(1, 28, 6): #5 different day 
+						for h in range(0, 23, 4): #6 different hours 
+							for min in range(0, 59, 18): #4 different minutes 
+								for sec in range(0, 59, 12): #5 different seconds 
+									for ms in range(0, 1000000, 100000): #10 different ms 
+            							date = datetime.datetime(year = y, month = m, day = d, hour = h, minute = min, second = sec, microsecond = ms)
+			""")
+
 
     def test_datetime_utcfromtimestamp(self):
         self.assertCodeExecution("""
