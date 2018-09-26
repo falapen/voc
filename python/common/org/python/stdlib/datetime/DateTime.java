@@ -3,12 +3,17 @@ package org.python.stdlib.datetime;
 import org.python.types.Int;
 import org.python.types.Str;
 
+import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZoneOffset;
+
 public class DateTime extends org.python.types.Object {
 
+	//Class Attributes
     @org.python.Attribute
     public static Int MIN_YEAR = Int.getInt(1);
     @org.python.Attribute
-    public static Int MAX_YEAR = Int.getInt(10000);
+    public static Int MAX_YEAR = Int.getInt(9999);
 
     @org.python.Attribute
     public static Int MIN_MONTH = Int.getInt(1);
@@ -40,6 +45,13 @@ public class DateTime extends org.python.types.Object {
     @org.python.Attribute
     public static Int MAX_MS = Int.getInt(999999);
 
+    @org.python.Attribute
+    public static DateTime min = new DateTime((int) MIN_YEAR.value, (int) MIN_MONTH.value, (int) MIN_DAY.value, (int) MIN_HOUR.value, (int) MIN_MIN.value, (int) MIN_SEC.value, (int) MIN_MS.value);
+
+    @org.python.Attribute
+    public static DateTime max = new DateTime((int) MAX_YEAR.value, (int) MAX_MONTH.value, (int) MAX_DAY.value, (int) MAX_HOUR.value, (int) MAX_MIN.value, (int) MAX_SEC.value, (int) MAX_MS.value);
+
+
     private Int year;
     private Int month;
     private Int day;
@@ -50,7 +62,7 @@ public class DateTime extends org.python.types.Object {
     private Str tzinfo;
 
 	@org.python.Method(
-        __doc__ = "DateTime Constructor",
+        __doc__ = "Main DateTime Constructor",
         default_args = {}
     )
     public DateTime(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
@@ -80,22 +92,28 @@ public class DateTime extends org.python.types.Object {
 		//Year
 		String strYear = "year";
 		yearTemp = ((kwargs.get(strYear) == null && args.length >= 1) ? (Int) args[0] : (Int) kwargs.get(strYear));
+		if (yearTemp==null) {
+			throw new org.python.exceptions.TypeError("Required argument 'year' not found");
+		}
 		checkIntType(strYear, yearTemp);
-		checkNull(strYear, yearTemp);
 		checkIntRange(strYear, yearTemp, MIN_YEAR, MAX_YEAR);
 
 		//Month
 		String strMonth = "month";
 		monthTemp = ((kwargs.get(strMonth) == null && args.length >= 2) ? (Int) args[1] : (Int) kwargs.get(strMonth));
+		if (monthTemp==null) {
+			throw new org.python.exceptions.TypeError("Required argument 'month' not found");
+		}
 		checkIntType(strMonth, monthTemp);
-		checkNull(strMonth, monthTemp);
 		checkIntRange(strMonth, monthTemp, MIN_MONTH, MAX_MONTH);
 
 		//Day
 		String strDay = "day";
 		dayTemp = ((kwargs.get(strDay) == null && args.length >= 3) ? (Int) args[2] : (Int) kwargs.get(strDay));
+		if (dayTemp==null) {
+						throw new org.python.exceptions.TypeError("Required argument 'day' not found");
+		}
 		checkIntType(strDay, dayTemp);
-		checkNull(strDay, dayTemp);
 		checkIntRange(strDay, dayTemp, MIN_DAY, MAX_DAY);
 
 		//Hour
@@ -142,6 +160,22 @@ public class DateTime extends org.python.types.Object {
 	}
 
 	@org.python.Method(
+        __doc__ = "2nd DateTime Constructor",
+        default_args = {}
+    )
+    public DateTime(int year, int month, int day, int hour, int min, int sec, int ms) {
+        this.year = org.python.types.Int.getInt(year);
+        this.month = org.python.types.Int.getInt(month);
+        this.day = org.python.types.Int.getInt(day);
+        this.hour = org.python.types.Int.getInt(hour);
+        this.minute = org.python.types.Int.getInt(min);
+        this.second = org.python.types.Int.getInt(sec);
+        this.ms = org.python.types.Int.getInt(ms);
+        this.tzinfo = null;
+    }
+
+
+	@org.python.Method(
         __doc__ = "Checks a variable if it is of type Integers",
         default_args = {}
     )
@@ -160,6 +194,53 @@ public class DateTime extends org.python.types.Object {
             throw new org.python.exceptions.ValueError(varName + " is Out of range");
         }
 	}
+
+
+	//Instance Methods
+    @org.python.Method(
+            __doc__ = "Return date object with same year, month and day."
+    )
+
+    public Date date() {
+        int year = (int) this.year.value;
+        int month = (int) this.month.value;
+        int day = (int) this.day.value;
+
+        return new org.python.stdlib.datetime.Date(year, month, day);
+    }
+
+    @org.python.Method(
+            __doc__ = "Return time object with same hour, minute, second and microsecond."
+    )
+    public Time time() {
+        int hour = (int) this.hour.value;
+        int min = (int) this.minute.value;
+        int sec = (int) this.second.value;
+        int ms = (int) this.ms.value;
+
+
+        return new org.python.stdlib.datetime.Time(hour, min, sec, ms);
+    }
+
+
+	//Class Methods
+    @org.python.Method(
+            __doc__ = "Return the UTC datetime corresponding to the POSIX timestamp."
+    )
+    public DateTime utcfromtimestamp(Integer timeStamp) {
+        Instant i = Instant.ofEpochMilli(timeStamp*1000);
+        LocalDateTime ldt = LocalDateTime.ofInstant(i, ZoneOffset.UTC);
+
+        int year = ldt.getYear();
+        int month = ldt.getMonthValue();
+        int day = ldt.getDayOfMonth();
+        int hour = ldt.getHour();
+        int min = ldt.getMinute();
+        int sec = ldt.getSecond();
+        int ms = ldt.getNano() / 1000;
+
+        return new DateTime(year, month, day, hour, min, sec, ms);
+    }
 }
 
 
