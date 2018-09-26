@@ -332,6 +332,145 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(e)
             """)
 
+    def test_datetime_class_attributes(self):
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime.min)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime.max)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime.max)
+            """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime.resolution)
+            """)
+
+    def test_datetime_instance_get_attributes(self):
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime(2018, 1, 1).year
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime(2018, 1, 1).month
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime(2018, 1, 1).day
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime(2018, 1, 1, 1).hour
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime(2018, 1, 1, 1, 1).minute
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime(2018, 1, 1, 1, 1, 1).second
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime(2018, 1, 1, 1, 1, 1, 1).microsecond
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            print(datetime.datetime(2018, 1, 1).tzinfo
+        """)
+
+    def test_datetime_instance_set_attributes(self):
+
+        self.assertCodeExecution("""
+            import datetime
+            y = datetime.datetime(2018, 1, 1)
+            try:
+                y.year = 2017
+            except AttributeError as e:
+                print(e)
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            m = datetime.datetime(2018, 1, 1)
+            try:
+                m.month = 2
+            except AttributeError as e:
+                print (e)
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            d = datetime.datetime(2018, 1, 1)
+            try:
+                d.day = 2
+            except AttributeError as e:
+                print(e)
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            h = datetime.datetime(2018, 1, 1, 1)
+            try:
+                h.hour = 2
+            except AttributeError as e
+                print(e)
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            m = datetime.datetime(2018, 1, 1, 1, 1)
+            try:
+                m.minute = 2
+            except AttributeError as e
+                print(e)
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            s = datetime.datetime(2018, 1, 1, 1, 1, 1)
+            try:
+                s.second = 2
+            except AttributeError as e
+                print(e)
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            m = datetime.datetime(2018, 1, 1, 1, 1, 1, 1)
+            try:
+                m.microsecond = 2
+            except AttributeError as e
+                print(e)
+        """)
+
+        self.assertCodeExecution("""
+            import datetime
+            t = datetime.datetime(2018, 1, 1)
+            try:
+                t.tzinfo = 1
+            except AttributeError as e
+                print(e)
+        """)
+
+
+
 class DateTests(TranspileTestCase):
 
     #@expectedFailure
