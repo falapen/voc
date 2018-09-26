@@ -388,5 +388,56 @@ class OrderedDictTest {
         kwargs.put("a", Int.getInt(1));
         OrderedDict od1 = new OrderedDict(args, kwargs);
         OrderedDict od2 = od1.copy();
+
+        org.python.Object iter = od.__reversed__();
+        try {
+            while (true) {
+                assertEquals(charsIter.next(), iter.__next__().__str__().toJava());
+            }
+        } catch (org.python.exceptions.StopIteration | NoSuchElementException e) {
+        }
     }
+
+    @Test
+    void popTest() {
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("d", Int.getInt(4));
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+        OrderedDict od2 = od1.pop('d', 4);
+
+        org.python.Object iter = od.__reversed__();
+        try {
+            while (true) {
+                assertEquals(charsIter.next(), iter.__next__().__str__().toJava());
+            }
+        } catch (org.python.exceptions.StopIteration | NoSuchElementException e) {
+        }
+    }
+
+    @Test
+    void popItemTest() {
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+        OrderedDict od2 = od1.popitem();
+        OrderedDict od3 = od2.popitem(last=False);
+        OrderedDict od4 = od3.popitem(last=True);
+
+        org.python.Object iter = od.__reversed__();
+        try {
+            while (true) {
+                assertEquals(charsIter.next(), iter.__next__().__str__().toJava());
+            }
+        } catch (org.python.exceptions.StopIteration | NoSuchElementException e) {
+        }
+    }
+
+
 }
