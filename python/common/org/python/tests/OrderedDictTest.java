@@ -18,7 +18,7 @@ import org.python.types.Str;
 
 import java.util.ArrayList;
 
-class OrderedDictTest {
+public class OrderedDictTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
@@ -387,35 +387,29 @@ class OrderedDictTest {
         kwargs.put("b", Int.getInt(2));
         kwargs.put("a", Int.getInt(1));
         OrderedDict od1 = new OrderedDict(args, kwargs);
-        OrderedDict od2 = od1.copy();
+        OrderedDict od2 = (org.python.stdlib.collections.OrderedDict) od1.copy();
+        assertEquals(od1.toString(), od2.toString());
 
-        org.python.Object iter = od.__reversed__();
-        try {
-            while (true) {
-                assertEquals(charsIter.next(), iter.__next__().__str__().toJava());
-            }
-        } catch (org.python.exceptions.StopIteration | NoSuchElementException e) {
-        }
+        kwargs.put("d", Int.getInt(4));
+        od1 = new OrderedDict(args, kwargs);
+        assertNotEquals(od1.toString(), od2.toString());
+
     }
 
     @Test
     void popTest() {
         org.python.Object[] args = {null};
         Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
-        kwargs.put("d", Int.getInt(4));
         kwargs.put("c", Int.getInt(3));
         kwargs.put("b", Int.getInt(2));
         kwargs.put("a", Int.getInt(1));
         OrderedDict od1 = new OrderedDict(args, kwargs);
-        OrderedDict od2 = od1.pop('d', 4);
 
-        org.python.Object iter = od.__reversed__();
-        try {
-            while (true) {
-                assertEquals(charsIter.next(), iter.__next__().__str__().toJava());
-            }
-        } catch (org.python.exceptions.StopIteration | NoSuchElementException e) {
-        }
+        org.python.Object removedValue = od1.pop(new Str("c") , null);
+        org.python.Object notRemovedValue = od1.pop(new Str("d"), Int.getInt(4));
+        assertEquals(removedValue,Int.getInt(3));
+        assertEquals(notRemovedValue,Int.getInt(4));
+
     }
 
     @Test
@@ -426,17 +420,33 @@ class OrderedDictTest {
         kwargs.put("b", Int.getInt(2));
         kwargs.put("a", Int.getInt(1));
         OrderedDict od1 = new OrderedDict(args, kwargs);
-        OrderedDict od2 = od1.popitem();
-        OrderedDict od3 = od2.popitem(last=False);
-        OrderedDict od4 = od3.popitem(last=True);
 
-        org.python.Object iter = od.__reversed__();
+        org.python.Object removedTuple;
+        org.python.types.Tuple expectedTuple;
+
+        //Pop last
+        removedTuple = od1.popitem();
+        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("c"),Int.getInt(3))));
+        assertEquals(removedTuple, expectedTuple);
+
+        //Pop first
+        removedTuple = od1.popitem(org.python.types.Bool.FALSE);
+        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("a"),Int.getInt(1))));
+        assertEquals(removedTuple, expectedTuple);
+
+        //Pop last item
+        removedTuple = od1.popitem();
+        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("b"),Int.getInt(2))));
+        assertEquals(removedTuple, expectedTuple);
+
+        //Pop empty List
         try {
-            while (true) {
-                assertEquals(charsIter.next(), iter.__next__().__str__().toJava());
-            }
-        } catch (org.python.exceptions.StopIteration | NoSuchElementException e) {
+            removedTuple = od1.popitem();
+        } catch(org.python.exceptions.KeyError e) {
+            assertEquals("'dictionary is empty'", e.getMessage());
         }
+
+
     }
 
 
