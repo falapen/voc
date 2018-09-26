@@ -254,8 +254,8 @@ class DatetimeModuleTests(TranspileTestCase):
         self.assertCodeExecution("""			
 			import datetime
 			for year in range(1, 10000, 1000): #10 different years 
-				for month in range(1, 12, 3): #4 different month 
-					for day in range(1, 28, 6): #5 different day 
+				for month in range(1, 12, 3): #4 different months
+					for day in range(1, 28, 6): #5 different days 
 						for hour in range(0, 23, 4): #6 different hours 
 							for min in range(0, 59, 18): #4 different minutes 
 								for sec in range(0, 59, 12): #5 different seconds 
