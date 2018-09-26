@@ -279,7 +279,7 @@ class DatetimeModuleTests(TranspileTestCase):
             							date = datetime.datetime(year = y, month = m, day = d, hour = h, minute = min, second = sec, microsecond = ms)
 			""")
 
-
+    @expectedFailure
     def test_datetime_utcfromtimestamp(self):
         self.assertCodeExecution("""
             import datetime
@@ -306,6 +306,7 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.datetime.utcfromtimestamp(-1234567890.123))
             """)
 
+    @expectedFailure
     def test_datetime_utcfromtimestamp_errors(self):
 
         self.assertCodeExecution("""
@@ -332,6 +333,7 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(e)
             """)
 
+    @expectedFailure
     def test_datetime_class_attributes(self):
         self.assertCodeExecution("""
             import datetime
@@ -353,6 +355,7 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.datetime.resolution)
             """)
 
+    @expectedFailure
     def test_datetime_instance_get_attributes(self):
 
         self.assertCodeExecution("""
@@ -395,6 +398,7 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.datetime(2018, 1, 1).tzinfo
         """)
 
+    @expectedFailure
     def test_datetime_instance_set_attributes(self):
 
         self.assertCodeExecution("""
@@ -469,12 +473,14 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(e)
         """)
 
+    @expectedFailure
     def test_datetime_instance_method_date(self):
         self.assertCodeExecution("""
             import datetime
             print(datetime.datetime(2018, 1, 1).date)
         """)
 
+    @expectedFailure
     def test_datetime_instance_method_time(self):
         self.assertCodeExecution("""
             print(datetime.datetime(2018, 1, 1, 1, 1, 1, 1).time
