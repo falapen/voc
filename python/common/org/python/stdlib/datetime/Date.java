@@ -30,6 +30,8 @@ public class Date extends org.python.types.Object {
                 } else {
                     throw new org.python.exceptions.ValueError("year " + Long.toString(((org.python.types.Int) args[0]).value) + " is out of range");
                 }
+            } else {
+                throw new org.python.exceptions.TypeError("an integer is required (got type " + args[0].typeName() + ")");
             }
         }
 
@@ -40,6 +42,8 @@ public class Date extends org.python.types.Object {
                 } else {
                     throw new org.python.exceptions.ValueError("month must be in 1..12");
                 }
+            } else {
+                throw new org.python.exceptions.TypeError("an integer is required (got type " + args[1].typeName() + ")");
             }
         }
 
@@ -54,6 +58,8 @@ public class Date extends org.python.types.Object {
                 } catch (java.time.DateTimeException e) {
                     throw new org.python.exceptions.ValueError("day is out of range for month");
                 }
+            } else {
+                throw new org.python.exceptions.TypeError("an integer is required (got type " + args[2].typeName() + ")");
             }
         }
     }
