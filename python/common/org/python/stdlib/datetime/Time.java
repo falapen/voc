@@ -24,7 +24,7 @@ public class Time extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "time([hour[, minute[, second[, microsecond[, tzinfo]]]]]) --> a time object\n\nAll arguments are optional. tzinfo may be None, or an instance of\na tzinfo subclass. The remaining arguments may be ints.\n"
+            __doc__ = "time([hour[, minute[, second[, microsecond[, tzinfo]]]]]) --> a time object\n\nAll arguments are optional. tzinfo may be None, or an instance of\na tzinfo subclass. The remaining arguments may be ints.\n"
     )
     public Time(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();
@@ -84,7 +84,7 @@ public class Time extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "Return getattr(self, name)."
+            __doc__ = "Return getattr(self, name)."
     )
     public org.python.Object __getattribute__(java.lang.String name) {
         if (name.equals("hour")) {
@@ -106,14 +106,14 @@ public class Time extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "Implement setattr(self, name, value)."
+            __doc__ = "Implement setattr(self, name, value)."
     )
     public void __setattr__(java.lang.String name, org.python.Object value) {
         throw new org.python.exceptions.AttributeError("attribute \'" + name + "\' of 'datetime.time' objects is not writable");
     }
 
     @org.python.Method(
-        __doc__ = "Return string in ISO 8601 format, [HH[:MM[:SS[.mmm[uuu]]]]][+HH:MM].\n\ntimespec specifies what components of the time to include."
+                __doc__ = "Return string in ISO 8601 format, [HH[:MM[:SS[.mmm[uuu]]]]][+HH:MM].\n\ntimespec specifies what components of the time to include."
     )
     public org.python.types.Str isoformat() {
         java.lang.StringBuilder timeString = new java.lang.StringBuilder("");
@@ -158,8 +158,8 @@ public class Time extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "Return time with new specified fields.",
-        default_args = {"hour", "minute", "second", "microsecond", "tzinfo"}
+            __doc__ = "Return time with new specified fields.",
+            default_args = {"hour", "minute", "second", "microsecond", "tzinfo"}
     )
     public org.python.Object replace(org.python.Object hour, org.python.Object minute, org.python.Object second, org.python.Object microsecond, org.python.Object tzinfo) {
         if (hour == null) {
@@ -182,8 +182,8 @@ public class Time extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "string -> time from time.isoformat() output",
-        args = {"isoformat"}
+            __doc__ = "string -> time from time.isoformat() output",
+            args = {"isoformat"}
     )
     public static org.python.Object fromisoformat(org.python.Object isoformat) {
         if (!(isoformat instanceof org.python.types.Str)) {
@@ -203,14 +203,20 @@ public class Time extends org.python.types.Object {
         org.python.types.Int microseconds = null;
 
         try {
-            hour = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(0,2)));
-            if(!isoformatJavaString.substring(2,3).equals(":")) { throw valueError; }
-            minute = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(3,5)));
-            if(!isoformatJavaString.substring(5,6).equals(":")) { throw valueError; }
-            seconds = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(6,8)));
+            hour = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(0, 2)));
+            if (!isoformatJavaString.substring(2, 3).equals(":")) {
+                throw valueError;
+            }
+            minute = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(3, 5)));
+            if (!isoformatJavaString.substring(5, 6).equals(":")) {
+                throw valueError;
+            }
+            seconds = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(6, 8)));
             if (isoformatJavaString.length() == 15) {
-                if(!(isoformatJavaString.substring(8,9).equals(":") || isoformatJavaString.substring(8,9).equals("."))) { throw valueError; }
-                microseconds = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(9,15)));
+                if (!(isoformatJavaString.substring(8, 9).equals(":") || isoformatJavaString.substring(8, 9).equals("."))) {
+                    throw valueError;
+                }
+                microseconds = org.python.types.Int.getInt(Integer.parseInt(isoformatJavaString.substring(9, 15)));
             }
         } catch (Exception e) {
             throw valueError;
@@ -222,7 +228,7 @@ public class Time extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "Return str(self)."
+            __doc__ = "Return str(self)."
     )
     public org.python.types.Str __str__() {
         return this.isoformat();
