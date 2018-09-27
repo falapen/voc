@@ -1,11 +1,11 @@
 package org.python.tests;
 
-import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.python.Object;
 import org.python.types.Dict;
@@ -16,9 +16,9 @@ import org.python.stdlib.collections.OrderedDict;
 import org.python.types.List;
 import org.python.types.Str;
 
-import java.util.ArrayList;
+import java.util.*;
 
-class OrderedDictTest {
+public class OrderedDictTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
@@ -200,7 +200,7 @@ class OrderedDictTest {
     @Test
     void setItemTest() {
         org.python.Object[] args = {null};
-        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        Map<String, Object> kwargs = new HashMap<String, Object>();
         OrderedDict odict = new OrderedDict(args, kwargs);
 
         kwargs.put("c", Int.getInt(3));
@@ -395,4 +395,72 @@ class OrderedDictTest {
         } catch (org.python.exceptions.StopIteration | NoSuchElementException e) {
         }
     }
+
+    @Test
+    void copyTest() {
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+        OrderedDict od2 = (org.python.stdlib.collections.OrderedDict) od1.copy();
+        assertEquals(od1.toString(), od2.toString());
+
+        kwargs.put("d", Int.getInt(4));
+        od1 = new OrderedDict(args, kwargs);
+        assertNotEquals(od1.toString(), od2.toString());
+
+    }
+
+    @Test
+    void popTest() {
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+
+        org.python.Object removedValue = od1.pop(new Str("c"), null);
+        org.python.Object notRemovedValue = od1.pop(new Str("d"), Int.getInt(4));
+        assertEquals(removedValue, Int.getInt(3));
+        assertEquals(notRemovedValue, Int.getInt(4));
+
+    }
+
+    @Test
+    void popItemTest() {
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+
+        org.python.Object removedTuple;
+        org.python.types.Tuple expectedTuple;
+
+        //Pop last
+        removedTuple = od1.popitem();
+        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("c"), Int.getInt(3))));
+        assertEquals(removedTuple, expectedTuple);
+
+        //Pop first
+        removedTuple = od1.popitem(org.python.types.Bool.FALSE);
+        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("a"), Int.getInt(1))));
+        assertEquals(removedTuple, expectedTuple);
+
+        //Pop last item
+        removedTuple = od1.popitem();
+        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("b"), Int.getInt(2))));
+        assertEquals(removedTuple, expectedTuple);
+
+        //Pop empty List
+        assertThrows(org.python.exceptions.KeyError.class, () -> {
+            od1.popitem();
+        });
+    }
+
+
 }
