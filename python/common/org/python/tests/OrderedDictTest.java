@@ -490,6 +490,7 @@ public class OrderedDictTest {
     void fromKeysTest() {
         org.python.Object[] args = {null};
         Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        /*hello*/
 
 
     }
