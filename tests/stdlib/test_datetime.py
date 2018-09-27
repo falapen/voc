@@ -248,8 +248,8 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.datetime(2018,1,1,1,1,1,1000000))
             """)
 
-    # @expectedFailure
-    # One test with 240.000 different inputs using args
+
+    # @expectedFailure - One test with 240.000 different inputs using args
     def test_datetime_all_conc_args(self):
         self.assertCodeExecution("""            
             import datetime
@@ -264,8 +264,7 @@ class DatetimeModuleTests(TranspileTestCase):
             """)
 
 
-    # @expectedFailure
-    # One test with 240.000 different inputs using kwargs
+    # @expectedFailure - One test with 240.000 different inputs using kwargs
     def test_datetime_all_conc_kwargs(self):
         self.assertCodeExecution("""            
             import datetime
