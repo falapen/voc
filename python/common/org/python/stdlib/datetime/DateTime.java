@@ -52,19 +52,22 @@ public class DateTime extends org.python.types.Object {
     public static DateTime max = new DateTime((int) MAX_YEAR.value, (int) MAX_MONTH.value, (int) MAX_DAY.value, (int) MAX_HOUR.value, (int) MAX_MIN.value, (int) MAX_SEC.value, (int) MAX_MS.value);
 
 
-    private Int year;
-    private Int month;
-    private Int day;
-    private Int hour;
-    private Int minute;
-    private Int second;
-    private Int ms;
-    private Str tzinfo;
+	//Instance Attributes
+    public Int year;
+    public Int month;
+    public Int day;
+    public Int hour;
+    public Int minute;
+    public Int second;
+    public Int ms;
+    public Str tzinfo;
+
 
 	@org.python.Method(
         __doc__ = "Main DateTime Constructor",
         default_args = {}
     )
+
     public DateTime(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();
 
@@ -200,7 +203,6 @@ public class DateTime extends org.python.types.Object {
     @org.python.Method(
             __doc__ = "Return date object with same year, month and day."
     )
-
     public Date date() {
         int year = (int) this.year.value;
         int month = (int) this.month.value;
@@ -217,7 +219,6 @@ public class DateTime extends org.python.types.Object {
         int min = (int) this.minute.value;
         int sec = (int) this.second.value;
         int ms = (int) this.ms.value;
-
 
         return new org.python.stdlib.datetime.Time(hour, min, sec, ms);
     }
@@ -241,6 +242,35 @@ public class DateTime extends org.python.types.Object {
 
         return new DateTime(year, month, day, hour, min, sec, ms);
     }
+
+	//Get instance attributes
+    @org.python.Method(
+            __doc__ = "Return getattr(self, name)"
+    )
+    public org.python.Object __getattribute__(java.lang.String input) {
+        if (input.equals("year")) {
+            return this.year;
+        }
+        if (input.equals("month")) {
+            return this.month;
+        }
+        if (input.equals("day")) {
+            return this.day;
+        }
+        if (input.equals("hour")) {
+            return this.hour;
+        }
+        if (input.equals("minute")) {
+            return this.minute;
+        }
+        if (input.equals("second")) {
+            return this.second;
+        }
+        if (input.equals("microsecond")) {
+            return this.ms;
+        }
+        return super.__getattribute__(input);
+    };
 }
 
 

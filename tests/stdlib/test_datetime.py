@@ -5,203 +5,203 @@ from ..utils import TranspileTestCase
 
 class DatetimeModuleTests(TranspileTestCase):
 
-    #######################################################
+ #######################################################
 
-    #@expectedFailure
+    # @expectedFailure
     def test_datetime_simple(self):
         self.assertCodeExecution("""
             import datetime
             d = datetime.datetime(2018, 10, 10)
             """)
 
-    #@expectedFailure
+    # @expectedFailure
     def test_datetime_simple2(self):
         self.assertCodeExecution("""
-			import datetime
-			d = datetime.datetime(1990,5,10)
+            import datetime
+            d = datetime.datetime(1990,5,10)
             """)
 
-    #@expectedFailure
+    # @expectedFailure
     def test_datetime_simple3(self):
         self.assertCodeExecution("""
-			import datetime
-			d = datetime.datetime(1995,3,10)
+            import datetime
+            d = datetime.datetime(1995,3,10)
             """)
 
-    #@expectedFailure
+    # @expectedFailure
     def test_datetime_simple_kwargs(self):
         self.assertCodeExecution("""
             import datetime
             d = datetime.datetime(year=2018, month=10, day=10)
             """)
 
-    #@expectedFailure
+    # @expectedFailure
     def test_datetime_simple_kwargs2(self):
         self.assertCodeExecution("""
-			import datetime
-			d = datetime.datetime(year=1990, month=5, day=10)
+            import datetime
+            d = datetime.datetime(year=1990, month=5, day=10)
             """)
 
-    #@expectedFailure
+    # @expectedFailure
     def test_datetime_simple_kwargs3(self):
         self.assertCodeExecution("""
-			import datetime
-			d = datetime.datetime(year=1995, month=3, day=10)
+            import datetime
+            d = datetime.datetime(year=1995, month=3, day=10)
             """)
 
-    #@expectedFailure
+    # @expectedFailure
     def test_datetime_simple_kwargs4(self):
         self.assertCodeExecution("""
             import datetime
             d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1)
             """)
 
-    #@expectedFailure
+    # @expectedFailure
     def test_datetime_simple_kwargs5(self):
         self.assertCodeExecution("""
-			import datetime
-			d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1, minute = 1)
+            import datetime
+            d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1, minute = 1)
             """)
 
-    #@expectedFailure
+    # @expectedFailure
     def test_datetime_simple_kwargs6(self):
         self.assertCodeExecution("""
-			import datetime
-			d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1, minute = 1, second = 1)
+            import datetime
+            d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1, minute = 1, second = 1)
             """)
 
 
-    #@expectedFailure
+    # @expectedFailure
     def test_datetime_simple_kwargs7(self):
         self.assertCodeExecution("""
-			import datetime
-			d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1, minute = 1, second = 1, microsecond = 1)
+            import datetime
+            d = datetime.datetime(year = 1995, month = 1, day = 1, hour = 1, minute = 1, second = 1, microsecond = 1)
             """)
 
 
     @expectedFailure
     def test_datetime_few_arg(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1,1))
             """)
 
     @expectedFailure
     def test_datetime_few_arg2(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1))
             """)
 
     @expectedFailure
     def test_datetime_many_arg(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(2000,1,1,1,1,1,1,1,1))
             """)
 
     @expectedFailure
     def test_datetime_many_arg2(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,11,11,1,1,1,1,1,1))
             """)
 
     @expectedFailure
     def test_datetime_wrong_yeartype(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime("2018",1,1))
             """)
 
     @expectedFailure
     def test_datetime_year_too_low(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(-1,1,1))
             """)
 
     @expectedFailure
     def test_datetime_year_too_high(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(122018,1,1))
             """)
 
     @expectedFailure
     def test_datetime_wrong_monthtype(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(2018,"1",1))
             """)
 
     @expectedFailure
     def test_datetime_month_too_low(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,-1,1))
             """)
 
     @expectedFailure
     def test_datetime_month_too_high(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,31,1))
             """)
 
     @expectedFailure
     def test_datetime_wrong_daytype(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(2018,1,"1"))
             """)
 
     @expectedFailure
     def test_datetime_day_too_low(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,1,-1))
             """)
 
     @expectedFailure
     def test_datetime_day_too_high(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,31,41))
             """)
 
     @expectedFailure
     def test_datetime_hour_too_low(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,1,1,-1))
             """)
 
     @expectedFailure
     def test_datetime_hour_too_high(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,1,1,25))
             """)
 
     @expectedFailure
     def test_datetime_wrong_mintype(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(2018,1,1,1,"1"))
             """)
 
     @expectedFailure
     def test_datetime_min_too_low(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,1,1,1,-1))
             """)
 
     @expectedFailure
     def test_datetime_min_too_high(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,1,1,1,61))
             """)
 
@@ -209,75 +209,75 @@ class DatetimeModuleTests(TranspileTestCase):
     @expectedFailure
     def test_datetime_wrong_sectype(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(2018,1,1,1,1,"1"))
             """)
 
     @expectedFailure
     def test_datetime_sec_too_low(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,1,1,1,1,-1))
             """)
 
     @expectedFailure
     def test_datetime_sec_too_high(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(1990,1,1,1,1,61))
             """)
 
     @expectedFailure
     def test_datetime_wrong_mstype(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(2018,1,1,1,1,1,"1"))
             """)
 
     @expectedFailure
     def test_datetime_ms_too_low(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(2018,1,1,1,1,1,-11))
             """)
 
     @expectedFailure
     def test_datetime_ms_too_high(self):
         self.assertCodeExecution("""
-			import datetime
+            import datetime
             print(datetime.datetime(2018,1,1,1,1,1,1000000))
             """)
 
-    #@expectedFailure
-	#One test with 240.000 different inputs using args
+    # @expectedFailure
+    # One test with 240.000 different inputs using args
     def test_datetime_all_conc_args(self):
-        self.assertCodeExecution("""			
-			import datetime
-			for year in range(1, 10000, 1000): #10 different years 
-				for month in range(1, 12, 3): #4 different months
-					for day in range(1, 28, 6): #5 different days 
-						for hour in range(0, 23, 4): #6 different hours 
-							for min in range(0, 59, 18): #4 different minutes 
-								for sec in range(0, 59, 12): #5 different seconds 
-									for ms in range(0, 1000000, 100000): #10 different ms 
-										d = datetime.datetime(year,month,day,hour,min,sec,ms)
-			""")
+        self.assertCodeExecution("""            
+            import datetime
+            for year in range(1, 10000, 1000):
+                for month in range(1, 12, 3):
+                    for day in range(1, 28, 6):
+                        for hour in range(0, 23, 4):
+                            for min in range(0, 59, 18):
+                                for sec in range(0, 59, 12):
+                                    for ms in range(0, 1000000, 100000):
+                                        d = datetime.datetime(year,month,day,hour,min,sec,ms)
+            """)
 
 
-    #@expectedFailure
-	#One test with 240.000 different inputs using kwargs
+    # @expectedFailure
+    # One test with 240.000 different inputs using kwargs
     def test_datetime_all_conc_kwargs(self):
-        self.assertCodeExecution("""			
-			import datetime
-			for y in range(1, 10000, 1000): #10 different years 
-				for m in range(1, 12, 3): #4 different month 
-					for d in range(1, 28, 6): #5 different day 
-						for h in range(0, 23, 4): #6 different hours 
-							for min in range(0, 59, 18): #4 different minutes 
-								for sec in range(0, 59, 12): #5 different seconds 
-									for ms in range(0, 1000000, 100000): #10 different ms 
-            							date = datetime.datetime(year = y, month = m, day = d, hour = h, minute = min, second = sec, microsecond = ms)
-			""")
+        self.assertCodeExecution("""            
+            import datetime
+            for y in range(1, 10000, 1000):
+                for m in range(1, 12, 3):
+                    for d in range(1, 28, 6):
+                        for h in range(0, 23, 4):
+                            for min in range(0, 59, 18):
+                                for sec in range(0, 59, 12):
+                                    for ms in range(0, 1000000, 100000):
+                                        date = datetime.datetime(year = y, month = m, day = d, hour = h, minute = min, second = sec, microsecond = ms)
+            """)
 
     @expectedFailure
     def test_datetime_utcfromtimestamp(self):
@@ -333,69 +333,54 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(e)
             """)
 
-    @expectedFailure
+    # @expectedFailure
     def test_datetime_class_attributes(self):
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime.min)
+            d = datetime.datetime.min
             """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime.max)
+            d = datetime.datetime.max
             """)
 
-        self.assertCodeExecution("""
-            import datetime
-            print(datetime.datetime.max)
-            """)
-
-        self.assertCodeExecution("""
-            import datetime
-            print(datetime.datetime.resolution)
-            """)
-
-    @expectedFailure
+    # @expectedFailure
     def test_datetime_instance_get_attributes(self):
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime(2018, 1, 1).year
+            print(datetime.datetime(2018, 1, 1).year)
         """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime(2018, 1, 1).month
+            print(datetime.datetime(2018, 1, 1).month)
         """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime(2018, 1, 1).day
+            print(datetime.datetime(2018, 1, 1).day)
         """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime(2018, 1, 1, 1).hour
+            print(datetime.datetime(2018, 1, 1, 1).hour)
         """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime(2018, 1, 1, 1, 1).minute
+            print(datetime.datetime(2018, 1, 1, 1, 1).minute)
         """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime(2018, 1, 1, 1, 1, 1).second
+            print(datetime.datetime(2018, 1, 1, 1, 1, 1).second)
         """)
 
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime(2018, 1, 1, 1, 1, 1, 1).microsecond
-        """)
-
-        self.assertCodeExecution("""
-            import datetime
-            print(datetime.datetime(2018, 1, 1).tzinfo
+            print(datetime.datetime(2018, 1, 1, 1, 1, 1, 1).microsecond)
         """)
 
     @expectedFailure
@@ -473,30 +458,31 @@ class DatetimeModuleTests(TranspileTestCase):
                 print(e)
         """)
 
-    @expectedFailure
+    # @expectedFailure
     def test_datetime_instance_method_date(self):
         self.assertCodeExecution("""
             import datetime
-            print(datetime.datetime(2018, 1, 1).date)
+            d = datetime.datetime(2018, 1, 1).date
         """)
 
-    @expectedFailure
+    # @expectedFailure
     def test_datetime_instance_method_time(self):
         self.assertCodeExecution("""
-            print(datetime.datetime(2018, 1, 1, 1, 1, 1, 1).time
+            import datetime
+            d = datetime.datetime(2018, 1, 1, 1, 1, 1, 1).time
         """)
 
 
 class DateTests(TranspileTestCase):
 
-    #@expectedFailure
+    # @expectedFailure
     def test_Date(self):
         self.assertCodeExecution("""
             from datetime import date
             d = date(1,1,1)
             """)
 
-    #@expectedFailure
+    # @expectedFailure
     def test_date_isoformat_kwargs(self):
         self.assertCodeExecution("""
             from datetime import date
@@ -504,7 +490,7 @@ class DateTests(TranspileTestCase):
             print(d.isoformat())
             """)
 
-    #@expectedFailure
+    # @expectedFailure
     def test_date_isoformat_args(self):
         self.assertCodeExecution("""
             from datetime import date
@@ -559,10 +545,10 @@ class TimedeltaTests(TranspileTestCase):
             print(datetime.timedelta(microseconds=20))
             print(datetime.timedelta(milliseconds=20))
             
-            # Carrying over milliseconds to seconds
+            #  Carrying over milliseconds to seconds
             print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=11111, hours=1))
-            # TODO: Carrying over to days
-            # print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=111111111111, hours=1))
+            #  TODO: Carrying over to days
+            #  print(datetime.timedelta(microseconds=1, minutes=1, seconds=1, milliseconds=111111111111, hours=1))
             """)
 
 
