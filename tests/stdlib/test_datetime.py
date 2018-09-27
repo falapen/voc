@@ -60,9 +60,9 @@ class TimedeltaTests(TranspileTestCase):
     def test_neg(self):
         self.assertCodeExecution("""
             import datetime
-            d = datetime.timedelta(99)
+            d = datetime.timedelta(99, 13, 4, 1, -1, 2, 8)
             print(-d)
-            y = datetime.timedelta(days = 4, weeks = 2)
+            y = datetime.timedelta(weeks = 15, days = -4, seconds = -36000, microseconds = -500000)
             print(-y)
             """)
 
