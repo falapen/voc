@@ -1,6 +1,7 @@
 package org.python.tests;
 
 import java.util.*;
+import java.lang.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -449,7 +450,8 @@ public class OrderedDictTest {
 
     }
 
-    /*
+
+
     @Test
     void clearTest() {
         org.python.Object[] args = {null};
@@ -459,9 +461,53 @@ public class OrderedDictTest {
         kwargs.put("a", Int.getInt(1));
         OrderedDict od1 = new OrderedDict(args, kwargs);
 
-        clearedList = odl.clear();
-        assertThat(cleardList.isEmty(), is(true));
+        kwargs.clear();
+        od1 = new OrderedDict(args, kwargs);
+        assertEquals("OrderedDict()", od1.__str__().toJava());
     }
-*/
+
+
+    @Test
+    void eqTest() {
+        org.python.Object[] args = {null};
+        org.python.Object[] args2 = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        Map<String, org.python.Object> kwargs2 = new HashMap<String, org.python.Object>();
+        kwargs.put("a", Int.getInt(1));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("aa", Int.getInt(3));
+        kwargs2.put("a", Int.getInt(1));
+        kwargs2.put("aa", Int.getInt(3));
+        kwargs2.put("b", Int.getInt(2));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+        OrderedDict od2 = new OrderedDict(args2, kwargs2);
+
+        assertEquals(od1, od2);
+
+    }
+
+    @Test
+    void fromKeysTest() {
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+
+
+    }
+
+    @Test
+    void delItemTest() {
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+
+        kwargs.remove("a");
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+        assertEquals("OrderedDict([('b', 2), ('c', 3)])", od1.__str__().toJava());
+
+    }
 
 }
+
+
