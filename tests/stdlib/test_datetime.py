@@ -1,12 +1,4 @@
 from unittest import expectedFailure
-
-from ..utils import TranspileTestCase
-
-
-class DatetimeModuleTests(TranspileTestCase):
-
-from unittest import expectedFailure
-
 from ..utils import TranspileTestCase
 
 
