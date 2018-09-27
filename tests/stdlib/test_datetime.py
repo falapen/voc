@@ -2,6 +2,7 @@ from unittest import expectedFailure
 
 from ..utils import TranspileTestCase
 
+
 class DatetimeModuleTests(TranspileTestCase):
     def test_date_constructor_sanity(self):
         self.assertCodeExecution("""
@@ -338,7 +339,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(foo.tzinfo)
             """)
 
-
     def test_time_isoformat(self):
         self.assertCodeExecution("""
             import datetime
@@ -574,6 +574,11 @@ class DatetimeModuleTests(TranspileTestCase):
             except TypeError as e:
                 print (e)
 
+            try:
+                print(datetime.timedelta(1, 2, 0, 0, 3, 2, 1, 8))
+            except TypeError as e:
+                print (e)
+
             """)
 
     def test_timedelta_pos(self):
@@ -603,8 +608,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(datetime.timedelta.min)
             print(datetime.timedelta.resolution)
             """)
-
-    
 
     def test_timedelta_totalSeconds(self):
         self.assertCodeExecution("""
