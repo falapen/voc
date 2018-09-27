@@ -86,8 +86,8 @@ public class Timedelta extends org.python.types.Object {
         long rest = 0L;
         // TODO: overflow
         
-        double[] toMicro = {86400000000.0, 1000000.0, 1.0, 1000.0, 60000000.0, 3600000000.0, 604800000000.0};
-        String[] paramError = {"days", "seconds", "microseconds", "milliseconds", "minutes", "hours", "weeks"};
+        double[] to_micro = {86400000000.0, 1000000.0, 1.0, 1000.0, 60000000.0, 3600000000.0, 604800000000.0};
+        String[] param_error = {"days", "seconds", "microseconds", "milliseconds", "minutes", "hours", "weeks"};
         Int[] params = {days, seconds, microseconds, milliseconds, minutes, hours, weeks};
 
         //Not valid types 
@@ -96,18 +96,18 @@ public class Timedelta extends org.python.types.Object {
                 args[i] instanceof org.python.types.Bool || 
                 args[i] instanceof org.python.types.Float)) {
                 throw new org.python.exceptions.TypeError(
-                    "unsupported type for timedelta " + paramError[i] + " component: " + args[i].typeName()+"");
+                    "unsupported type for timedelta " + param_error[i] + " component: " + args[i].typeName()+"");
             }
         }
 
-        for (int i = 0; i < paramError.length; i++){
-            org.python.Object kwarg = kwargs.get(paramError[i]);
+        for (int i = 0; i < param_error.length; i++){
+            org.python.Object kwarg = kwargs.get(param_error[i]);
             if (kwarg != null){
                 if (!(kwarg instanceof org.python.types.Int ||
                     kwarg instanceof org.python.types.Bool ||
                     kwarg instanceof org.python.types.Float)) {
                     throw new org.python.exceptions.TypeError(
-                        "unsupported type for timedelta " + paramError[i] + " component: " + kwarg.typeName()+"");
+                        "unsupported type for timedelta " + param_error[i] + " component: " + kwarg.typeName()+"");
                 }
             }     
         }
@@ -122,8 +122,8 @@ public class Timedelta extends org.python.types.Object {
             }
         }
         
-        for (int i = 0; i < paramError.length; i++){
-            org.python.Object kwarg = kwargs.get(paramError[i]);
+        for (int i = 0; i < param_error.length; i++){
+            org.python.Object kwarg = kwargs.get(param_error[i]);
             if (kwarg != null){
                 if (kwarg instanceof org.python.types.Bool){
                     boolean value = ((Bool) kwarg).value;
@@ -141,8 +141,8 @@ public class Timedelta extends org.python.types.Object {
             }
         }
         
-        for (int i = 0; i < paramError.length; i++){
-            org.python.Object kwarg = kwargs.get(paramError[i]);
+        for (int i = 0; i < param_error.length; i++){
+            org.python.Object kwarg = kwargs.get(param_error[i]);
             if (kwarg != null){
                 if (kwarg instanceof org.python.types.Int){
                     params[i] = (Int) kwarg;
@@ -154,16 +154,16 @@ public class Timedelta extends org.python.types.Object {
         for (int i = 0; i < args.length; i++){
             if (args[i] instanceof org.python.types.Float){     
             params[i] = Int.getInt((int)(((Float)args[i].__float__()).value));
-            rest = rest + (long)((Math.round(100000000000L*((((Float)args[i].__float__()).value) - params[i].value)) * toMicro[i])/100000000000L);
+            rest = rest + (long)((Math.round(100000000000L*((((Float)args[i].__float__()).value) - params[i].value)) * to_micro[i])/100000000000L);
             }
         }
         
-        for (int i = 0; i < paramError.length; i++){
-            org.python.Object kwarg = kwargs.get(paramError[i]);
+        for (int i = 0; i < param_error.length; i++){
+            org.python.Object kwarg = kwargs.get(param_error[i]);
             if (kwarg != null){
                 if (kwarg instanceof org.python.types.Float){     
                     params[i] = Int.getInt((int)(((Float)kwarg.__float__()).value));
-                    rest = rest + (long)((Math.round(100000000000L*((((Float)kwarg.__float__()).value) - params[i].value)) * toMicro[i])/100000000000L);
+                    rest = rest + (long)((Math.round(100000000000L*((((Float)kwarg.__float__()).value) - params[i].value)) * to_micro[i])/100000000000L);
 
                 }
             }     
