@@ -84,6 +84,13 @@ public class Date extends org.python.types.Object {
         return output;
     }
 
+
+    public Date(int year, int month, int day) {
+        this.year = org.python.types.Int.getInt(year);
+        this.month = org.python.types.Int.getInt(month);
+        this.day = org.python.types.Int.getInt(day);
+    }
+
     @org.python.Method(
             __doc__ = "Return repr(self)."
     )

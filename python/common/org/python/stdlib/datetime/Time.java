@@ -6,7 +6,6 @@ public class Time extends org.python.types.Object {
     public final org.python.types.Int minute;
     public final org.python.types.Int second;
     public final org.python.types.Int microsecond;
-    public final org.python.types.Str tzinfo;
 
     // @org.python.Method(
     //     __doc__ = "Time TODO",
@@ -30,15 +29,14 @@ public class Time extends org.python.types.Object {
         this.minute = null;
         this.second = null;
         this.microsecond = null;
-        this.tzinfo = null;
     }
 
-    // public Time(org.python.types.Int hour, org.python.types.Int minute, org.python.types.Int second, org.python.types.Int microsecond) {
-    //     this.hour = hour;
-    //     this.minute = minute;
-    //     this.second = second;
-    //     this.microsecond = microsecond;
-    // }
+     public Time(int hour, int minute, int second, int microsecond) {
+         this.hour = org.python.types.Int.getInt(hour);
+         this.minute = org.python.types.Int.getInt(minute);
+         this.second = org.python.types.Int.getInt(second);
+         this.microsecond = org.python.types.Int.getInt(microsecond);
+     }
 
     // public Time(org.python.types.Int hour, org.python.types.Int minute, org.python.types.Int second) {
     //     this.hour = hour;
@@ -55,3 +53,4 @@ public class Time extends org.python.types.Object {
     //     this.hour = hour;
     // }
 }
+
