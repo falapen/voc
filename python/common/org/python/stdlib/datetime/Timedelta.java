@@ -95,6 +95,11 @@ public class Timedelta extends org.python.types.Object {
         String[] paramError = {"days", "seconds", "microseconds", "milliseconds", "minutes", "hours", "weeks"};
         Int[] params = {days, seconds, microseconds, milliseconds, minutes, hours, weeks};
 
+        if (args.length > 7) {
+            throw new org.python.exceptions.TypeError(
+                    "__new__() takes at most 7 arguments (" + args.length + " given)");
+        }
+
         //Not valid types
         for (int i = 0; i < args.length; i++) {
             if (!(args[i] instanceof org.python.types.Int ||
