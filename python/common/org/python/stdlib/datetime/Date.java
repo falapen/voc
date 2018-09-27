@@ -67,7 +67,7 @@ public class Date extends org.python.types.Object {
     @org.python.Method(
             __doc__ = "date(year, month, day) --> date object"
     )
-<<<<<<< HEAD
+
 	public Date(int year, int month, int day) {
         this.year = org.python.types.Int.getInt(year);
         this.month = org.python.types.Int.getInt(month);
@@ -77,8 +77,7 @@ public class Date extends org.python.types.Object {
     @org.python.Method(
             __doc__ = "date(year, month, day) --> date object"
     )
-=======
->>>>>>> origin/adriannurre
+
     public Date(org.python.Object year, org.python.Object month, org.python.Object day) {
         super();
         if (year instanceof org.python.types.Int) {

@@ -181,7 +181,6 @@ public class Time extends org.python.types.Object {
         return new org.python.stdlib.datetime.Time(new org.python.Object[]{(org.python.types.Int) hour, (org.python.types.Int) minute, (org.python.types.Int) second, (org.python.types.Int) microsecond, tzinfo}, null);
     }
 
-<<<<<<< HEAD
 	 public Time(int hour, int minute, int second, int microsecond) {
          this.hour = org.python.types.Int.getInt(hour);
          this.minute = org.python.types.Int.getInt(minute);
@@ -189,8 +188,7 @@ public class Time extends org.python.types.Object {
          this.microsecond = org.python.types.Int.getInt(microsecond);
      }
 	 
-=======
->>>>>>> origin/adriannurre
+
     @org.python.Method(
             __doc__ = "string -> time from time.isoformat() output",
             args = {"isoformat"}
