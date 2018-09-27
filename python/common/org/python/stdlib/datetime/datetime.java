@@ -23,6 +23,5 @@ public class datetime extends org.python.types.Module {
     public static org.python.Object time;
     @org.python.Attribute
     public static org.python.Object datetime;
-
 }
 
