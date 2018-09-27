@@ -1,10 +1,8 @@
 package org.python.stdlib.datetime;
-
 import org.python.types.Int;
 import org.python.types.Float;
 import org.python.types.Str;
 import org.python.types.Bool;
-
 
 public class Timedelta extends org.python.types.Object {
     private Int days;
@@ -21,14 +19,21 @@ public class Timedelta extends org.python.types.Object {
             //days=999999999, hours=23, minutes=59, seconds=59, microseconds=999999
     
     @org.python.Attribute
-    public static org.python.Object resolution = 
+    public static org.python.Object resolution =
             new Timedelta(Int.getInt(0), Int.getInt(0), Int.getInt(1));
+    @org.python.Method(
+            __doc__ = "Difference between two datetime values.",
+            args = {"day"}
+    )
+    public Timedelta(org.python.Object day) {
+        super();
+        this.days = (org.python.types.Int) day;
+    }
 
     @org.python.Method(
         __doc__ = "Timedelta TODO",
         default_args = {}
     )
-
     private Timedelta(Int days, Int seconds, Int microseconds){
         // Carry over to seconds
         if (microseconds.value < 0) {
@@ -275,5 +280,13 @@ public class Timedelta extends org.python.types.Object {
         }
 
         return new Str(result);
+
+    // public org.python.types.Str __repr__() {
+    //     java.lang.StringBuilder buffer = new java.lang.StringBuilder("datetime.timedelta(");
+    //     buffer.append(this.day.value + ")");
+
+    //     return new org.python.types.Str(buffer.toString());
+    // }
+
     }
 }
