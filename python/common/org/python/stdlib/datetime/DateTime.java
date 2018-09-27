@@ -9,7 +9,7 @@ import java.time.ZoneOffset;
 
 public class DateTime extends org.python.types.Object {
 
-	//Class Attributes
+    //Class Attributes
     @org.python.Attribute
     public static Int MIN_YEAR = Int.getInt(1);
     @org.python.Attribute
@@ -52,7 +52,7 @@ public class DateTime extends org.python.types.Object {
     public static DateTime max = new DateTime((int) MAX_YEAR.value, (int) MAX_MONTH.value, (int) MAX_DAY.value, (int) MAX_HOUR.value, (int) MAX_MIN.value, (int) MAX_SEC.value, (int) MAX_MS.value);
 
 
-	//Instance Attributes
+    //Instance Attributes
     public Int year;
     public Int month;
     public Int day;
@@ -63,7 +63,7 @@ public class DateTime extends org.python.types.Object {
     public Str tzinfo;
 
 
-	@org.python.Method(
+    @org.python.Method(
         __doc__ = "Main DateTime Constructor",
         default_args = {}
     )
@@ -71,98 +71,98 @@ public class DateTime extends org.python.types.Object {
     public DateTime(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();
 
-		//Init temp variables
-		Int yearTemp = null;
-		Int monthTemp = null;
-		Int dayTemp = null;
+        //Init temp variables
+        Int yearTemp = null;
+        Int monthTemp = null;
+        Int dayTemp = null;
         Int hourTemp = Int.getInt(0);
         Int minTemp = Int.getInt(0);
         Int secTemp = Int.getInt(0);
         Int msTemp = Int.getInt(0);
 
-		//Too few arguments
+        //Too few arguments
         if ((args.length + kwargs.size()) < 3) {
             throw new org.python.exceptions.TypeError("Too few arguments.");
         }
 
-		//Too many arguments
+        //Too many arguments
         if ((args.length + kwargs.size()) > 7) {
             throw new org.python.exceptions.TypeError("Too many arguments.");
         }
 
-		//Set and validate all arguments
+        //Set and validate all arguments
 
-		//Year
-		String strYear = "year";
-		yearTemp = ((kwargs.get(strYear) == null && args.length >= 1) ? (Int) args[0] : (Int) kwargs.get(strYear));
-		if (yearTemp==null) {
-			throw new org.python.exceptions.TypeError("Required argument 'year' not found");
-		}
-		checkIntType(strYear, yearTemp);
-		checkIntRange(strYear, yearTemp, MIN_YEAR, MAX_YEAR);
+        //Year
+        String strYear = "year";
+        yearTemp = ((kwargs.get(strYear) == null && args.length >= 1) ? (Int) args[0] : (Int) kwargs.get(strYear));
+        if (yearTemp==null) {
+            throw new org.python.exceptions.TypeError("Required argument 'year' not found");
+        }
+        checkIntType(strYear, yearTemp);
+        checkIntRange(strYear, yearTemp, MIN_YEAR, MAX_YEAR);
 
-		//Month
-		String strMonth = "month";
-		monthTemp = ((kwargs.get(strMonth) == null && args.length >= 2) ? (Int) args[1] : (Int) kwargs.get(strMonth));
-		if (monthTemp==null) {
-			throw new org.python.exceptions.TypeError("Required argument 'month' not found");
-		}
-		checkIntType(strMonth, monthTemp);
-		checkIntRange(strMonth, monthTemp, MIN_MONTH, MAX_MONTH);
+        //Month
+        String strMonth = "month";
+        monthTemp = ((kwargs.get(strMonth) == null && args.length >= 2) ? (Int) args[1] : (Int) kwargs.get(strMonth));
+        if (monthTemp==null) {
+            throw new org.python.exceptions.TypeError("Required argument 'month' not found");
+        }
+        checkIntType(strMonth, monthTemp);
+        checkIntRange(strMonth, monthTemp, MIN_MONTH, MAX_MONTH);
 
-		//Day
-		String strDay = "day";
-		dayTemp = ((kwargs.get(strDay) == null && args.length >= 3) ? (Int) args[2] : (Int) kwargs.get(strDay));
-		if (dayTemp==null) {
-						throw new org.python.exceptions.TypeError("Required argument 'day' not found");
-		}
-		checkIntType(strDay, dayTemp);
-		checkIntRange(strDay, dayTemp, MIN_DAY, MAX_DAY);
+        //Day
+        String strDay = "day";
+        dayTemp = ((kwargs.get(strDay) == null && args.length >= 3) ? (Int) args[2] : (Int) kwargs.get(strDay));
+        if (dayTemp==null) {
+            throw new org.python.exceptions.TypeError("Required argument 'day' not found");
+        }
+        checkIntType(strDay, dayTemp);
+        checkIntRange(strDay, dayTemp, MIN_DAY, MAX_DAY);
 
-		//Hour
-		String strHour = "hour";
-		hourTemp = ((kwargs.get(strHour) == null && args.length >= 4) ? (Int) args[3] : (Int) kwargs.get(strHour));
-		if (hourTemp!=null) {
-			checkIntType(strHour, hourTemp);
-			checkIntRange(strHour, hourTemp, MIN_HOUR, MAX_HOUR);
-		}
+        //Hour
+        String strHour = "hour";
+        hourTemp = ((kwargs.get(strHour) == null && args.length >= 4) ? (Int) args[3] : (Int) kwargs.get(strHour));
+        if (hourTemp!=null) {
+            checkIntType(strHour, hourTemp);
+            checkIntRange(strHour, hourTemp, MIN_HOUR, MAX_HOUR);
+        }
 
-		//Minutes
-		String strMin = "minute";
-		minTemp = ((kwargs.get(strMin) == null && args.length >= 5) ? (Int) args[4] : (Int) kwargs.get(strMin));
-		if (minTemp!=null) {
-			checkIntType(strMin, minTemp);
-			checkIntRange(strMin, minTemp, MIN_MIN, MAX_MIN);
-		}
+        //Minutes
+        String strMin = "minute";
+        minTemp = ((kwargs.get(strMin) == null && args.length >= 5) ? (Int) args[4] : (Int) kwargs.get(strMin));
+        if (minTemp!=null) {
+            checkIntType(strMin, minTemp);
+            checkIntRange(strMin, minTemp, MIN_MIN, MAX_MIN);
+        }
 
-		//Second
-		String strSec = "second";
-		secTemp = ((kwargs.get(strSec) == null && args.length >= 6) ? (Int) args[5] : (Int) kwargs.get(strSec));
-		if (secTemp!=null) {
-			checkIntType(strSec, secTemp);
-			checkIntRange(strSec, secTemp, MIN_SEC, MAX_SEC);
-		}
+        //Second
+        String strSec = "second";
+        secTemp = ((kwargs.get(strSec) == null && args.length >= 6) ? (Int) args[5] : (Int) kwargs.get(strSec));
+        if (secTemp!=null) {
+            checkIntType(strSec, secTemp);
+            checkIntRange(strSec, secTemp, MIN_SEC, MAX_SEC);
+        }
 
-		//MicroSecond
-		String strMs = "microsecond";
-		msTemp = ((kwargs.get(strMs) == null && args.length >= 7) ? (Int) args[6] : (Int) kwargs.get(strMs));
-		if (msTemp!=null) {
-			checkIntType(strMs, msTemp);
-			checkIntRange(strMs, msTemp, MIN_MS, MAX_MS);
-		}
+        //MicroSecond
+        String strMs = "microsecond";
+        msTemp = ((kwargs.get(strMs) == null && args.length >= 7) ? (Int) args[6] : (Int) kwargs.get(strMs));
+        if (msTemp!=null) {
+            checkIntType(strMs, msTemp);
+            checkIntRange(strMs, msTemp, MIN_MS, MAX_MS);
+        }
 
-		//Final assignment
-		this.year = yearTemp;
+        //Final assignment
+        this.year = yearTemp;
         this.month = monthTemp;
         this.day = dayTemp;
         this.hour = hourTemp;
         this.minute = minTemp;
         this.second = secTemp;
         this.ms = msTemp;
-		this.tzinfo = null;
-	}
+        this.tzinfo = null;
+    }
 
-	@org.python.Method(
+    @org.python.Method(
         __doc__ = "2nd DateTime Constructor",
         default_args = {}
     )
@@ -178,30 +178,30 @@ public class DateTime extends org.python.types.Object {
     }
 
 
-	@org.python.Method(
+    @org.python.Method(
         __doc__ = "Checks a variable if it is of type Integers",
         default_args = {}
     )
-	private void checkIntType(String varName, org.python.types.Object var) {
-		if (!(var instanceof org.python.types.Int)) {
-			throw new org.python.exceptions.TypeError("Wrong '" + varName + "'-type");
-		}
-	}
+    private void checkIntType(String varName, org.python.types.Object var) {
+        if (!(var instanceof org.python.types.Int)) {
+            throw new org.python.exceptions.TypeError("Wrong '" + varName + "'-type");
+        }
+    }
 
-	@org.python.Method(
+    @org.python.Method(
         __doc__ = "Checks a variable if it is in a specific range of Integers",
         default_args = {}
     )
-	private void checkIntRange(String varName, org.python.types.Int var, org.python.types.Int min, org.python.types.Int max) {
+    private void checkIntRange(String varName, org.python.types.Int var, org.python.types.Int min, org.python.types.Int max) {
         if (var.value < min.value || var.value > max.value) {
             throw new org.python.exceptions.ValueError(varName + " is Out of range");
         }
-	}
+    }
 
 
-	//Instance Methods
+    //Instance Methods
     @org.python.Method(
-            __doc__ = "Return date object with same year, month and day."
+        __doc__ = "Return date object with same year, month and day."
     )
     public Date date() {
         int year = (int) this.year.value;
@@ -212,7 +212,7 @@ public class DateTime extends org.python.types.Object {
     }
 
     @org.python.Method(
-            __doc__ = "Return time object with same hour, minute, second and microsecond."
+        __doc__ = "Return time object with same hour, minute, second and microsecond."
     )
     public Time time() {
         int hour = (int) this.hour.value;
@@ -224,9 +224,9 @@ public class DateTime extends org.python.types.Object {
     }
 
 
-	//Class Methods
+    //Class Methods
     @org.python.Method(
-            __doc__ = "Return the UTC datetime corresponding to the POSIX timestamp."
+        __doc__ = "Return the UTC datetime corresponding to the POSIX timestamp."
     )
     public DateTime utcfromtimestamp(Integer timeStamp) {
         Instant i = Instant.ofEpochMilli(timeStamp*1000);
@@ -243,9 +243,9 @@ public class DateTime extends org.python.types.Object {
         return new DateTime(year, month, day, hour, min, sec, ms);
     }
 
-	//Get instance attributes
+    //Get instance attributes
     @org.python.Method(
-            __doc__ = "Return getattr(self, name)"
+        __doc__ = "Return getattr(self, name)"
     )
     public org.python.Object __getattribute__(java.lang.String input) {
         if (input.equals("year")) {
@@ -272,5 +272,3 @@ public class DateTime extends org.python.types.Object {
         return super.__getattribute__(input);
     };
 }
-
-
