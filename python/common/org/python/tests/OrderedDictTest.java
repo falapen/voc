@@ -8,6 +8,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.python.Object;
+import org.python.stdlib.collections.OrderedDictKeys;
+import org.python.stdlib.collections.OrderedDictValues;
 import org.python.types.Dict;
 import org.python.types.Int;
 
@@ -445,9 +447,117 @@ public class OrderedDictTest {
         } catch(org.python.exceptions.KeyError e) {
             assertEquals("'dictionary is empty'", e.getMessage());
         }
+    }
+    
+    @Test
+    void test_move_to_end() {
+        //init
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
 
+        //move to the right end
+        od1.move_to_end(new Str("b"), null);
+        assertEquals(od1.toString(), "OrderedDict([('c', 3), ('a', 1), ('b', 2)])");
+
+        //move to the right end when already at right end
+        od1.move_to_end(new Str("b"), null);
+        assertEquals(od1.toString(), "OrderedDict([('c', 3), ('a', 1), ('b', 2)])");
+
+        //move to the left end
+        od1.move_to_end(new Str("b"), org.python.types.Bool.FALSE);
+        assertEquals(od1.toString(), "OrderedDict([('b', 1), ('c', 3), ('a', 1)])");
+
+        //move to the right end 
+        od1.move_to_end(new Str("b"), org.python.types.Bool.TRUE);
+        assertEquals(od1.toString(), "OrderedDict([('c', 3), ('a', 1), ('b', 2)])");
+
+        //not existing key
+        try {
+            od1.move_to_end(new Str("g"), null);
+        } catch (org.python.exceptions.KeyError e) {
+            assertEquals("'key does not exist'", e.getMessage());
+        }
+    }
+    @Test
+    void test_update(){
+        //init
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+        
+        //no parameters
+        od1.update(null, null);
+        assertEquals(od1.toString(), "OrderedDict([('c', 3), ('a', 1), ('b', 2)])");
+
+        //new orderedDict
+        Map<String, org.python.Object> kwargs2 = new HashMap<String, org.python.Object>();
+        kwargs2.put("c", Int.getInt(3));
+        kwargs2.put("b", Int.getInt(2));
+        kwargs2.put("a", Int.getInt(1));
+        Dict od3 = new Dict(args, kwargs2);
+        od1.update(null,od3);
+        assertEquals(od1.toString(), od3.toString());
+
+        //Tuple
+        org.python.types.Tuple newTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("d"),Int.getInt(4))));
+        od1.update(newTuple, null);
+        assertEquals(od1.toString(), "OrderedDict([('c', 3), ('a', 1), ('b', 2),('d', 4)])");
 
     }
+    @Test
+    void test_values(){
+        //init
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+
+        //orderedDict with items
+        OrderedDictValues odv1 = (OrderedDictValues) od1.values();
+        assertEquals(odv1.toString(), "DictValues([3, 2, 1])");
+
+        //orderedDict without items
+        Map<String, org.python.Object> kwargs2 = new HashMap<String, org.python.Object>();
+        OrderedDict od2 = new OrderedDict(args, kwargs);
+        OrderedDictValues odv2 = (OrderedDictValues) od1.values();
+        assertEquals(odv1.toString(), "DictValues([3, 2, 1])");
+
+    }
+
+    @Test
+    void test_keys(){
+        //init
+        org.python.Object[] args = {null};
+        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        kwargs.put("c", Int.getInt(3));
+        kwargs.put("b", Int.getInt(2));
+        kwargs.put("a", Int.getInt(1));
+        OrderedDict od1 = new OrderedDict(args, kwargs);
+
+        //orderedDict with items
+        OrderedDictKeys odk1 = (OrderedDictKeys) od1.keys();
+        assertEquals(odk1.toString(), "DictValues([c, b, a])");
+
+        //orderedDict without items
+        Map<String, org.python.Object> kwargs2 = new HashMap<String, org.python.Object>();
+        OrderedDict od2= new OrderedDict(args, kwargs2);
+        OrderedDictKeys odk2 = (OrderedDictKeys) od2.keys();
+        assertEquals(odk1.toString(), "DictValues([c])");
+
+    }
+
+
+
+
 
 
 }
