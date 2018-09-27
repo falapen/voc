@@ -338,7 +338,6 @@ class DatetimeModuleTests(TranspileTestCase):
             print(foo.tzinfo)
             """)
 
-
     def test_time_isoformat(self):
         self.assertCodeExecution("""
             import datetime
@@ -628,3 +627,4 @@ class DatetimeModuleTests(TranspileTestCase):
             #     print(e)
 
             """)
+

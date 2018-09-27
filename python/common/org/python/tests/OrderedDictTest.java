@@ -1,11 +1,11 @@
 package org.python.tests;
 
-import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.python.Object;
 import org.python.types.Dict;
@@ -16,7 +16,7 @@ import org.python.stdlib.collections.OrderedDict;
 import org.python.types.List;
 import org.python.types.Str;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class OrderedDictTest {
 
@@ -115,6 +115,23 @@ public class OrderedDictTest {
     }
 
     @org.junit.jupiter.api.Test
+    void testSmall() {
+        org.python.types.List tuple_list = new List();
+        //ArrayList from which a tuple is then made and inserted into tuple-list
+        ArrayList<org.python.Object> tuple = new ArrayList<>(2);
+
+        tuple.add(new Str("a"));
+        tuple.add(org.python.types.Int.getInt(1L));
+
+        tuple_list.append(new org.python.types.Tuple(tuple));
+
+        org.python.Object[] args2 = {tuple_list};
+        java.util.Map kwargs2 = new java.util.HashMap<java.lang.String, org.python.Object>();
+
+        OrderedDict dict = new OrderedDict(args2, kwargs2);
+    }
+
+    @org.junit.jupiter.api.Test
     void testCreationTypeError() {
         //Third assertion
         //Python-List which will contain all tuples
@@ -183,7 +200,7 @@ public class OrderedDictTest {
     @Test
     void setItemTest() {
         org.python.Object[] args = {null};
-        Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
+        Map<String, Object> kwargs = new HashMap<String, Object>();
         OrderedDict odict = new OrderedDict(args, kwargs);
 
         kwargs.put("c", Int.getInt(3));
@@ -405,10 +422,10 @@ public class OrderedDictTest {
         kwargs.put("a", Int.getInt(1));
         OrderedDict od1 = new OrderedDict(args, kwargs);
 
-        org.python.Object removedValue = od1.pop(new Str("c") , null);
+        org.python.Object removedValue = od1.pop(new Str("c"), null);
         org.python.Object notRemovedValue = od1.pop(new Str("d"), Int.getInt(4));
-        assertEquals(removedValue,Int.getInt(3));
-        assertEquals(notRemovedValue,Int.getInt(4));
+        assertEquals(removedValue, Int.getInt(3));
+        assertEquals(notRemovedValue, Int.getInt(4));
 
     }
 
@@ -426,27 +443,23 @@ public class OrderedDictTest {
 
         //Pop last
         removedTuple = od1.popitem();
-        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("c"),Int.getInt(3))));
+        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("c"), Int.getInt(3))));
         assertEquals(removedTuple, expectedTuple);
 
         //Pop first
         removedTuple = od1.popitem(org.python.types.Bool.FALSE);
-        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("a"),Int.getInt(1))));
+        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("a"), Int.getInt(1))));
         assertEquals(removedTuple, expectedTuple);
 
         //Pop last item
         removedTuple = od1.popitem();
-        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("b"),Int.getInt(2))));
+        expectedTuple = new org.python.types.Tuple(new ArrayList<>(Arrays.asList(new Str("b"), Int.getInt(2))));
         assertEquals(removedTuple, expectedTuple);
 
         //Pop empty List
-        try {
-            removedTuple = od1.popitem();
-        } catch(org.python.exceptions.KeyError e) {
-            assertEquals("'dictionary is empty'", e.getMessage());
-        }
-
-
+        assertThrows(org.python.exceptions.KeyError.class, () -> {
+            od1.popitem();
+        });
     }
 
 
