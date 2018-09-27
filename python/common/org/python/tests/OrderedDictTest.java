@@ -115,6 +115,23 @@ class OrderedDictTest {
     }
 
     @org.junit.jupiter.api.Test
+    void testSmall() {
+        org.python.types.List tuple_list = new List();
+        //ArrayList from which a tuple is then made and inserted into tuple-list
+        ArrayList<org.python.Object> tuple = new ArrayList<>(2);
+
+        tuple.add(new Str("a"));
+        tuple.add(org.python.types.Int.getInt(1L));
+
+        tuple_list.append(new org.python.types.Tuple(tuple));
+
+        org.python.Object[] args2 = {tuple_list};
+        java.util.Map kwargs2 = new java.util.HashMap<java.lang.String, org.python.Object>();
+
+        OrderedDict dict = new OrderedDict(args2, kwargs2);
+    }
+
+    @org.junit.jupiter.api.Test
     void testCreationTypeError() {
         //Third assertion
         //Python-List which will contain all tuples
