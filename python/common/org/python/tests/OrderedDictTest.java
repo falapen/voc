@@ -557,7 +557,6 @@ public class OrderedDictTest {
         assertEquals(odv1.toString(), "odict_values([1, 2, 3])");
     }
 
-    }
 
 
     @Test
