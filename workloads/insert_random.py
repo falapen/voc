@@ -1,5 +1,5 @@
 """
-Inserts 650000 random numbers between 0 and 99 in an OrderedDict
+Inserts 650000 random numbers between 0 and 100 in an OrderedDict
 """
 from collections import OrderedDict
 import time
