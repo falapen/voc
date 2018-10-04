@@ -3,10 +3,10 @@ package org.python.stdlib.datetime;
 public class Date extends org.python.types.Object {
     @org.python.Attribute
     public static org.python.Object min =
-        new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(1), org.python.types.Int.getInt(1), org.python.types.Int.getInt(1));
+            new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(1), org.python.types.Int.getInt(1), org.python.types.Int.getInt(1));
     @org.python.Attribute
     public static org.python.Object max =
-        new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(9999), org.python.types.Int.getInt(12), org.python.types.Int.getInt(31));
+            new org.python.stdlib.datetime.Date(org.python.types.Int.getInt(9999), org.python.types.Int.getInt(12), org.python.types.Int.getInt(31));
     @org.python.Attribute
     public static org.python.Object resolution = new org.python.stdlib.datetime.Timedelta(org.python.types.Int.getInt(1));
 
@@ -19,7 +19,7 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "date(year, month, day) --> date object"
+            __doc__ = "date(year, month, day) --> date object"
     )
     public Date(org.python.Object[] args, java.util.Map<java.lang.String, org.python.Object> kwargs) {
         super();
@@ -51,9 +51,9 @@ public class Date extends org.python.types.Object {
             if (args[2] instanceof org.python.types.Int) {
                 try {
                     java.time.LocalDate date = java.time.LocalDate.of(
-                        (int) ((org.python.types.Int) args[0]).value,
-                        (int) ((org.python.types.Int) args[1]).value,
-                        (int) ((org.python.types.Int) args[2]).value);
+                            (int) ((org.python.types.Int) args[0]).value,
+                            (int) ((org.python.types.Int) args[1]).value,
+                            (int) ((org.python.types.Int) args[2]).value);
                     this.day = (org.python.types.Int) args[2];
                 } catch (java.time.DateTimeException e) {
                     throw new org.python.exceptions.ValueError("day is out of range for month");
@@ -65,19 +65,8 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "date(year, month, day) --> date object"
+            __doc__ = "date(year, month, day) --> date object"
     )
-
-    public Date(int year, int month, int day) {
-        this.year = org.python.types.Int.getInt(year);
-        this.month = org.python.types.Int.getInt(month);
-        this.day = org.python.types.Int.getInt(day);
-    }
-
-    @org.python.Method(
-        __doc__ = "date(year, month, day) --> date object"
-    )
-
     public Date(org.python.Object year, org.python.Object month, org.python.Object day) {
         super();
         if (year instanceof org.python.types.Int) {
@@ -102,7 +91,7 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "Return getattr(self, name)."
+            __doc__ = "Return getattr(self, name)."
     )
     public org.python.Object __getattribute__(java.lang.String name) {
         if (name.equals("year")) {
@@ -118,14 +107,14 @@ public class Date extends org.python.types.Object {
     };
 
     @org.python.Method(
-        __doc__ = "Implement setattr(self, name, value)."
+            __doc__ = "Implement setattr(self, name, value)."
     )
     public void __setattr__(java.lang.String name, org.python.Object value) {
         throw new org.python.exceptions.AttributeError("attribute \'" + name + "\' of 'datetime.date' objects is not writable");
     };
 
     @org.python.Method(
-        __doc__ = "Return str(self)."
+            __doc__ = "Return str(self)."
     )
     public org.python.types.Str __str__() {
         java.lang.StringBuilder buffer = new java.lang.StringBuilder("");
@@ -154,8 +143,8 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "timestamp -> local date from a POSIX timestamp (like time.time()).",
-        args = {"timestamp"}
+            __doc__ = "timestamp -> local date from a POSIX timestamp (like time.time()).",
+            args = {"timestamp"}
     )
     public static org.python.Object fromtimestamp(org.python.Object timestamp) {
         java.time.LocalDate date;
@@ -163,7 +152,7 @@ public class Date extends org.python.types.Object {
         if ((timestamp instanceof org.python.types.Int) || (timestamp instanceof org.python.types.Float)) {
             date =
                 java.time.Instant.ofEpochSecond(((org.python.types.Int) timestamp.__int__()).value)
-                    .atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+                .atZone(java.time.ZoneId.systemDefault()).toLocalDate();
 
             long yearMax = ((org.python.stdlib.datetime.Date) max).year.value;
             long yearMin = ((org.python.stdlib.datetime.Date) min).year.value;
@@ -175,13 +164,13 @@ public class Date extends org.python.types.Object {
         }
 
         return new org.python.stdlib.datetime.Date(
-            org.python.types.Int.getInt((int) date.getYear()),
-            org.python.types.Int.getInt((int) date.getMonthValue()),
-            org.python.types.Int.getInt((int) date.getDayOfMonth()));
+                org.python.types.Int.getInt((int) date.getYear()),
+                org.python.types.Int.getInt((int) date.getMonthValue()),
+                org.python.types.Int.getInt((int) date.getDayOfMonth()));
     }
 
     @org.python.Method(
-        __doc__ = "Return the day of the week represented by the date.\nMonday == 0 ... Sunday == 6"
+            __doc__ = "Return the day of the week represented by the date.\nMonday == 0 ... Sunday == 6"
     )
     public org.python.Object weekday() {
         java.time.LocalDate date = java.time.LocalDate.of((int) this.year.value, (int) this.month.value, (int) this.day.value);
@@ -191,7 +180,7 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "Return the day of the week represented by the date.\nMonday == 1 ... Sunday == 7"
+            __doc__ = "Return the day of the week represented by the date.\nMonday == 1 ... Sunday == 7"
     )
     public org.python.Object isoweekday() {
         java.time.LocalDate date = java.time.LocalDate.of((int) this.year.value, (int) this.month.value, (int) this.day.value);
@@ -201,11 +190,11 @@ public class Date extends org.python.types.Object {
     }
 
     @org.python.Method(
-        __doc__ = "Return a 3-tuple containing ISO year, week number, and weekday."
+            __doc__ = "Return a 3-tuple containing ISO year, week number, and weekday."
     )
     public org.python.Object isocalendar() {
         java.util.List<org.python.Object> dateList =
-            new java.util.ArrayList<org.python.Object>(java.util.Arrays.asList(this.year, this.month, this.day));
+                new java.util.ArrayList<org.python.Object>(java.util.Arrays.asList(this.year, this.month, this.day));
         return new org.python.types.Tuple(dateList);
     }
 }
