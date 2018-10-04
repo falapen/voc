@@ -31,9 +31,13 @@ for i in range(10):
             d[k] = v * multiply
             if(multiply > 1):
                 multiply = multiply - 1
+
         if (random.randint(0,1)%2 == 0):
             d.popitem(True)
         else:
             d.popitem(False)
+
+for d in dicts:
+    d.clear()
 
 print(time.clock()-start)
