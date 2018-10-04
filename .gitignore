@@ -18,7 +18,5 @@ tests/tmp*
 /stdlib_tests/*.class
 /stdlib_tests/python
 /python/*.class
-.vscode/
+
 .DS_Store
-.idea/
-*.iml
