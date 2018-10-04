@@ -233,5 +233,4 @@ public class Time extends org.python.types.Object {
     public org.python.types.Str __str__() {
         return this.isoformat();
     }
-
 }
