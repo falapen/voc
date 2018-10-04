@@ -525,7 +525,7 @@ public class OrderedDictTest {
 
     }
     @Test
-    void testValues(){
+    void testValues() {
         //init
         org.python.Object[] args = {null};
         Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
@@ -543,6 +543,7 @@ public class OrderedDictTest {
         OrderedDict od2 = new OrderedDict(args, kwargs);
         OrderedDictValues odv2 = (OrderedDictValues) od1.values();
         assertEquals(odv1.toString(), "odict_values([1, 2, 3])");
+    }
 
 
     @Test
