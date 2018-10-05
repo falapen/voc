@@ -8,16 +8,7 @@ import java.util.List;
 
 public class KeysAndFromKeysTest {
 
-    @org.junit.jupiter.api.BeforeEach
-    void setUp() {
-    }
-
-    @org.junit.jupiter.api.AfterEach
-    void tearDown() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void testKeysAndFromKeys() {
+    public static void main(String[] x) {
         List<org.python.Object> odKeys = new ArrayList<org.python.Object>();
         List<org.python.Object> odList = new ArrayList<org.python.Object>();
 
