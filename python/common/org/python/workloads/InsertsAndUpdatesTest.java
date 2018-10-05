@@ -5,13 +5,13 @@ import org.python.types.Int;
 
 public class InsertsAndUpdatesTest{
 
-    @org.junit.jupiter.api.Test
-    void testInsertAndUpdates() {
-        org.python.Object[] args = {null};
+    //void testInsertAndUpdates() {
+    public static void main(String[] args) {
+        org.python.Object[] odArgs = {null};
         java.util.Map kwargs = new java.util.HashMap<java.lang.String, org.python.Object>();
         long start = System.nanoTime();
-        OrderedDict first = new OrderedDict(args, kwargs);
-        OrderedDict second = new OrderedDict(args, kwargs);
+        OrderedDict first = new OrderedDict(odArgs, kwargs);
+        OrderedDict second = new OrderedDict(odArgs, kwargs);
 
         for (int i = 0; i < 100000; i++) {
             first.__setitem__(org.python.types.Int.getInt(i), org.python.types.Int.getInt(i));
