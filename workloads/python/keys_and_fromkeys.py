@@ -8,7 +8,8 @@ start = time.clock()
 ordered_dict = OrderedDict()
 
 for i in range(2500):
-    ordered_dict[i] = i
+    update_dict = {i: i}
+    ordered_dict.update(update_dict)
 
 for i in range(2500):
     od_keys.append(ordered_dict.keys())
