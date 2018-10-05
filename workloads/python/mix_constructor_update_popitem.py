@@ -6,14 +6,12 @@ from collections import OrderedDict
 import collections
 import time
 start = time.clock()
-dict = OrderedDict()
 
-for i in range(1, 300000):
+for i in range(1, 600000):
     dict = OrderedDict()
-    dict2 = OrderedDict()
     dict.update({'a': 1})
     dict.update({'b': 2})
     dict.update({'c': 3})
-    dict.pop('b')
+    dict.popitem()
 
 print(time.clock()-start)
