@@ -15,10 +15,11 @@ for i in range(10000):
     name = names[random.randint(0,25)]
     score = orderedDict.get(name)
     if (score == None):
-        orderedDict[name] = 1
+        orderedDict.update({name: 1})
     else:
-        orderedDict[name] = score + 1
+        orderedDict.update({name: 1+score})
 
+print(orderedDict)
 
 dicts = []
 for i in range(10000):
@@ -28,7 +29,7 @@ for i in range(10):
     for d in dicts:
         multiply = 10
         for k, v in d.items():
-            d[k] = v * multiply
+            orderedDict.update({k: v * multiply})
             if(multiply > 1):
                 multiply = multiply - 1
 
