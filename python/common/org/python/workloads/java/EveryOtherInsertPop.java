@@ -23,10 +23,15 @@ public class EveryOtherInsertPop {
         ArrayList<Object> tuple = new ArrayList<>(2);
         tuple.add(new Str("a"));
         tuple.add(org.python.types.Int.getInt(1L));
-        //tuple_list.append(new org.python.types.Tuple(tuple));
-        //Second assertion
-        for (int i = 0; i < 10000000; i++) {
-            if (i % 2 == 0) dict.__setitem__(org.python.types.Int.getInt(i), org.python.types.Int.getInt(i));
+
+
+
+        for (int i = 0; i < 3000000; i++) {
+            if (i % 2 == 0) {
+                org.python.types.Dict kwargs2 = new org.python.types.Dict();
+                kwargs2.__setitem__(org.python.types.Int.getInt(i), org.python.types.Int.getInt(i));
+                dict.update(null, kwargs2);
+            }
             if (i % 2 == 1) dict.popitem();
         }
         long end = System.nanoTime();
