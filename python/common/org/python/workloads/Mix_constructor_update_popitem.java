@@ -9,7 +9,7 @@ import java.util.*;
 public class Mix_constructor_update_popitem {
 
     public static void main(String args[]){
-
+        long startTime = System.currentTimeMillis();
         org.python.Object[] dictargs = {null};
         Map<String, org.python.Object> kwargs = new HashMap<String, org.python.Object>();
         int iterations = 600000;
@@ -40,5 +40,7 @@ public class Mix_constructor_update_popitem {
 
             dict.popitem();
         }
+        long finishTime = System.currentTimeMillis();
+        System.out.println(finishTime-startTime);
     }
 }
