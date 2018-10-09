@@ -19,12 +19,6 @@ public class EveryOtherInsertPop {
         long start = System.nanoTime();
         OrderedDict  dict = new OrderedDict(args, kwargs);
 
-
-        ArrayList<Object> tuple = new ArrayList<>(2);
-        tuple.add(new Str("a"));
-        tuple.add(org.python.types.Int.getInt(1L));
-
-
         for (int k = 0; k < 150; k++){
             for (int i = 0; i < 10000; i++) {
                 org.python.types.Dict kwargs2 = new org.python.types.Dict();
