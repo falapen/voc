@@ -1,6 +1,8 @@
 package org.python.workloads.java;
 
+import org.python.stdlib.collections.OrderedDict;
 import org.python.types.Bool;
+import org.python.types.Int;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -10,7 +12,7 @@ public class UpdateCopyItemsPopClearWorkload {
     public static void main(String[] args) {
         long start = System.nanoTime();
 
-        org.python.stdlib.collections.OrderedDict orderedDict = new org.python.stdlib.collections.OrderedDict(new org.python.Object[]{null} , new java.util.HashMap<java.lang.String, org.python.Object>());
+        OrderedDict orderedDict = new OrderedDict(new org.python.Object[]{null} , new java.util.HashMap<java.lang.String, org.python.Object>());
 
         java.util.List<org.python.Object> _names = Arrays.asList(new org.python.types.Str("Harry"), new org.python.types.Str("Ross"),
             new org.python.types.Str("Bruce"), new org.python.types.Str("Cook"), new org.python.types.Str("Carolyn"),
@@ -27,10 +29,17 @@ public class UpdateCopyItemsPopClearWorkload {
         for (int i = 0; i < 10000; i++) {
             org.python.Object name = names.__getitem__(org.python.types.Int.getInt(ThreadLocalRandom.current().nextInt(0, 25 + 1)));
             org.python.Object score = orderedDict.get(name, null);
+
             if (score == org.python.types.NoneType.NONE) {
-                orderedDict.__setitem__(name, org.python.types.Int.getInt(1));
+                java.util.Map kwargs = new java.util.HashMap<org.python.Object, org.python.Object>();
+                kwargs.put(name.toString(), Int.getInt(1));
+                OrderedDict updateDict = new OrderedDict(new org.python.Object[]{null} , kwargs);
+                orderedDict.update(null, updateDict);
             } else {
-                orderedDict.__setitem__(name, score.__add__(org.python.types.Int.getInt(1)));
+                java.util.Map kwargs = new java.util.HashMap<org.python.Object, org.python.Object>();
+                kwargs.put(name.toString(), score.__add__(org.python.types.Int.getInt(1)));
+                OrderedDict updateDict = new OrderedDict(new org.python.Object[]{null} , kwargs);
+                orderedDict.update(null, updateDict);
             }
         }
 
@@ -46,13 +55,17 @@ public class UpdateCopyItemsPopClearWorkload {
                     org.python.stdlib.collections.OrderedDict d = (org.python.stdlib.collections.OrderedDict) dictIter.__next__();
                     org.python.types.Int multiply = org.python.types.Int.getInt(10);
 
-                    org.python.types.Iterator itemsIter = (org.python.types.Iterator) d.items().__iter__();
+                    org.python.Object items = d.items();
+                    org.python.Object itemsIter = items.__iter__();
                     try {
                         while (true) {
                             org.python.Object keyValue = itemsIter.__next__();
                             org.python.Object k = keyValue.__getitem__(org.python.types.Int.getInt(0));
                             org.python.Object v = keyValue.__getitem__(org.python.types.Int.getInt(1));
-                            d.__setitem__(k, v.__mul__(multiply));
+                            java.util.Map kwargs = new java.util.HashMap<org.python.Object, org.python.Object>();
+                            kwargs.put(k.toString(), v.__mul__(multiply));
+                            OrderedDict updateDict = new OrderedDict(new org.python.Object[]{null} , kwargs);
+                            d.update(null, updateDict);
 
                             if (multiply.value > 1) {
                                 multiply.__sub__(org.python.types.Int.getInt(1));

@@ -36,7 +36,7 @@ public class EveryOtherInsertPop {
             }
         }
         long end = System.nanoTime();
-        System.out.println((end-start)/1000000000);
+        System.out.println((end-start)/1000000000.0);
 
     }
 }
