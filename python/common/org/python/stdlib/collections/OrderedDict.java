@@ -206,11 +206,13 @@ public class OrderedDict extends org.python.types.Dict {
         }
 
         org.python.Object key;
-        org.python.Object[] keys = this.value.keySet().toArray(new org.python.Object[this.value.size()]);
+        java.util.Iterator<org.python.Object> it = this.value.keySet().iterator();
         if (last == null || ((org.python.types.Bool) last).value) {
-            key = keys[this.value.size() - 1];
+            do {
+                key = it.next();
+            } while (it.hasNext());
         } else {
-            key = keys[0];
+            key = it.next();
         }
 
         org.python.Object value = this.value.remove(key);
