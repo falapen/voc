@@ -30,7 +30,7 @@ public class EveryOtherInsertPop {
             if (i % 2 == 1) dict.popitem();
         }
         long end = System.nanoTime();
-        System.out.println((end-start)/1000000000);
+        System.out.println((end-start)/1000000000.0);
 
     }
 }
