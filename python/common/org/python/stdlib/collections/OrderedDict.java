@@ -232,6 +232,7 @@ public class OrderedDict extends org.python.types.Dict {
             if (kwargs != null) {
                 // kwargs is not recommended prior to Python version 3.6 as order of keyword argument is not preserved
                 org.python.Object iterator = org.Python.iter(kwargs);
+
                 while (true) {
                     try {
                         org.python.Object key = iterator.__next__();
@@ -241,6 +242,14 @@ public class OrderedDict extends org.python.types.Dict {
                         break;
                     }
                 }
+                /*
+                long length = kwargs.__len__().value;
+                for(int i = 0; i < length; i++) {
+                    org.python.Object key = iterator.__next__();
+                    org.python.Object value = kwargs.value.get(key);
+                    this.value.put(key, value);
+                }
+                */
             }
         } else if (iterable instanceof org.python.types.Dict) {
             org.python.Object iterator = org.Python.iter(iterable);
