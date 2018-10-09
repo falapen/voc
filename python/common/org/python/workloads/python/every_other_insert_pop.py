@@ -5,7 +5,9 @@ from collections import OrderedDict
 import time
 start = time.clock()
 d = OrderedDict()
-for a in range(3000000):
-    if a%2 == 0: d.update({a: a})
-    if a%2 == 1: d.popitem()
+for k in range(150):
+    for a in range(10000):
+        d.update({a: a})
+    for a in range(10000):
+        d.popitem()
 print(time.clock()-start)

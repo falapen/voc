@@ -25,14 +25,15 @@ public class EveryOtherInsertPop {
         tuple.add(org.python.types.Int.getInt(1L));
 
 
-
-        for (int i = 0; i < 3000000; i++) {
-            if (i % 2 == 0) {
+        for (int k = 0; k < 150; k++){
+            for (int i = 0; i < 10000; i++) {
                 org.python.types.Dict kwargs2 = new org.python.types.Dict();
                 kwargs2.__setitem__(org.python.types.Int.getInt(i), org.python.types.Int.getInt(i));
                 dict.update(null, kwargs2);
             }
-            if (i % 2 == 1) dict.popitem();
+            for (int i = 0; i < 10000; i++) {
+                dict.popitem();
+            }
         }
         long end = System.nanoTime();
         System.out.println((end-start)/1000000000);
