@@ -2,6 +2,7 @@ package org.python.workloads.java;
 
 import org.python.stdlib.collections.OrderedDict;
 import org.python.types.Bool;
+import org.python.types.Dict;
 import org.python.types.Int;
 
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class UpdateCopyItemsPopClearWorkload {
     public static void main(String[] args) {
         long start = System.nanoTime();
+        int counter = 0;
 
         OrderedDict orderedDict = new OrderedDict(new org.python.Object[]{null} , new java.util.HashMap<java.lang.String, org.python.Object>());
 
@@ -33,12 +35,12 @@ public class UpdateCopyItemsPopClearWorkload {
             if (score == org.python.types.NoneType.NONE) {
                 java.util.Map kwargs = new java.util.HashMap<org.python.Object, org.python.Object>();
                 kwargs.put(name.toString(), Int.getInt(1));
-                OrderedDict updateDict = new OrderedDict(new org.python.Object[]{null} , kwargs);
+                Dict updateDict = new Dict(new org.python.Object[]{null} , kwargs);
                 orderedDict.update(null, updateDict);
             } else {
                 java.util.Map kwargs = new java.util.HashMap<org.python.Object, org.python.Object>();
                 kwargs.put(name.toString(), score.__add__(org.python.types.Int.getInt(1)));
-                OrderedDict updateDict = new OrderedDict(new org.python.Object[]{null} , kwargs);
+                Dict updateDict = new Dict(new org.python.Object[]{null} , kwargs);
                 orderedDict.update(null, updateDict);
             }
         }
@@ -52,8 +54,8 @@ public class UpdateCopyItemsPopClearWorkload {
             org.python.Object dictIter = dicts.__iter__();
             try {
                 while (true) {
-                    org.python.stdlib.collections.OrderedDict d = (org.python.stdlib.collections.OrderedDict) dictIter.__next__();
-                    org.python.types.Int multiply = org.python.types.Int.getInt(10);
+                    OrderedDict d = (OrderedDict) dictIter.__next__();
+                    Int multiply = Int.getInt(10);
 
                     org.python.Object items = d.items();
                     org.python.Object itemsIter = items.__iter__();
@@ -64,22 +66,23 @@ public class UpdateCopyItemsPopClearWorkload {
                             org.python.Object v = keyValue.__getitem__(org.python.types.Int.getInt(1));
                             java.util.Map kwargs = new java.util.HashMap<org.python.Object, org.python.Object>();
                             kwargs.put(k.toString(), v.__mul__(multiply));
-                            OrderedDict updateDict = new OrderedDict(new org.python.Object[]{null} , kwargs);
+                            Dict updateDict = new Dict(new org.python.Object[]{null} , kwargs);
                             d.update(null, updateDict);
-
+                            counter++;
                             if (multiply.value > 1) {
-                                multiply.__sub__(org.python.types.Int.getInt(1));
-                            }
-
-                            if (org.python.types.Int.getInt(ThreadLocalRandom.current().nextInt(0, 1 + 1))
-                                .__mod__(org.python.types.Int.getInt(2))
-                                .__eq__(org.python.types.Int.getInt(0)) == Bool.TRUE) {
-                                d.popitem(Bool.TRUE);
+                                multiply = (Int) multiply.__sub__(org.python.types.Int.getInt(1));
                             } else {
-                                d.popitem(Bool.FALSE);
+                                break;
                             }
                         }
                     } catch (org.python.exceptions.StopIteration | NoSuchElementException e) {
+                    }
+                    if (org.python.types.Int.getInt(ThreadLocalRandom.current().nextInt(0, 1 + 1))
+                        .__mod__(org.python.types.Int.getInt(2))
+                        .__eq__(org.python.types.Int.getInt(0)) == Bool.TRUE) {
+                        d.popitem(Bool.TRUE);
+                    } else {
+                        d.popitem(Bool.FALSE);
                     }
                 }
             } catch (org.python.exceptions.StopIteration | NoSuchElementException e) {
@@ -99,5 +102,6 @@ public class UpdateCopyItemsPopClearWorkload {
 
         long end = System.nanoTime();
         System.out.println((end-start)/1000000000.0);
+        System.out.println(counter);
     }
 }
