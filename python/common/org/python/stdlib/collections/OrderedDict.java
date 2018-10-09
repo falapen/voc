@@ -207,13 +207,6 @@ public class OrderedDict extends org.python.types.Dict {
             throw new org.python.exceptions.KeyError(new org.python.types.Str("dictionary is empty"));
         }
 
-//        org.python.Object key;
-//        org.python.Object[] keys = this.value.keySet().toArray(new org.python.Object[this.value.size()]);
-//        if (last == null || ((org.python.types.Bool) last).value) {
-//            key = keys[this.value.size() - 1];
-//        } else {
-//            key = keys[0];
-//        }
         org.python.Object key = null;
         java.util.Iterator<org.python.Object> keys = this.value.keySet().iterator();
         if (last == null || ((org.python.types.Bool) last).value) {
