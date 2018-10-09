@@ -9,6 +9,8 @@ package org.python.stdlib.collections;
 // TODO: When the methods above are implemented to produce the same output as Python 3.4,
 // TODO: uncomment and remove this line from `test_collections.py`: "Different type prior to Python 3.5"
 
+import org.python.types.Iterator;
+
 public class OrderedDict extends org.python.types.Dict {
 
     private OrderedDict() {
@@ -205,12 +207,21 @@ public class OrderedDict extends org.python.types.Dict {
             throw new org.python.exceptions.KeyError(new org.python.types.Str("dictionary is empty"));
         }
 
-        org.python.Object key;
-        org.python.Object[] keys = this.value.keySet().toArray(new org.python.Object[this.value.size()]);
+//        org.python.Object key;
+//        org.python.Object[] keys = this.value.keySet().toArray(new org.python.Object[this.value.size()]);
+//        if (last == null || ((org.python.types.Bool) last).value) {
+//            key = keys[this.value.size() - 1];
+//        } else {
+//            key = keys[0];
+//        }
+        org.python.Object key = null;
+        java.util.Iterator<org.python.Object> keys = this.value.keySet().iterator();
         if (last == null || ((org.python.types.Bool) last).value) {
-            key = keys[this.value.size() - 1];
+            while(keys.hasNext()) {
+                key=keys.next();
+            }
         } else {
-            key = keys[0];
+            key = keys.next();
         }
 
         org.python.Object value = this.value.remove(key);
@@ -230,26 +241,13 @@ public class OrderedDict extends org.python.types.Dict {
     public org.python.Object update(org.python.Object iterable, org.python.types.Dict kwargs) {
         if (iterable == null) {
             if (kwargs != null) {
-                // kwargs is not recommended prior to Python version 3.6 as order of keyword argument is not preserved
                 org.python.Object iterator = org.Python.iter(kwargs);
-
-                while (true) {
-                    try {
-                        org.python.Object key = iterator.__next__();
-                        org.python.Object value = kwargs.value.get(key);
-                        this.value.put(key, value);
-                    } catch (org.python.exceptions.StopIteration si) {
-                        break;
-                    }
-                }
-                /*
                 long length = kwargs.__len__().value;
                 for(int i = 0; i < length; i++) {
                     org.python.Object key = iterator.__next__();
                     org.python.Object value = kwargs.value.get(key);
                     this.value.put(key, value);
                 }
-                */
             }
         } else if (iterable instanceof org.python.types.Dict) {
             org.python.Object iterator = org.Python.iter(iterable);
