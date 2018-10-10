@@ -1,5 +1,6 @@
 package org.python.stdlib.collections;
 
+
 // NOTE: The following methods has different implementation/representation in Python 3.4 and older version:
 //       1. __iter__     (implemented as generator object in Python 3.4 and older version)
 //       2. __reversed__ (implemented as generator object in Python 3.4 and older version)
@@ -8,6 +9,8 @@ package org.python.stdlib.collections;
 //       5. items        (implemented as ItemsView object in Python 3.4, and as a list in Python 2.7)
 // TODO: When the methods above are implemented to produce the same output as Python 3.4,
 // TODO: uncomment and remove this line from `test_collections.py`: "Different type prior to Python 3.5"
+
+import org.python.types.Bool;
 
 public class OrderedDict extends org.python.types.Dict {
 
@@ -205,13 +208,28 @@ public class OrderedDict extends org.python.types.Dict {
             throw new org.python.exceptions.KeyError(new org.python.types.Str("dictionary is empty"));
         }
 
+
         org.python.Object key;
         org.python.Object[] keys = this.value.keySet().toArray(new org.python.Object[this.value.size()]);
+        //OrderedDictKeys keys = (OrderedDictKeys) this.keys();
+
         if (last == null || ((org.python.types.Bool) last).value) {
             key = keys[this.value.size() - 1];
         } else {
             key = keys[0];
         }
+
+
+
+        //OrderedDictKeys keys2 = (OrderedDictKeys) this.keys();
+        //OrderedDictKeys keys2 = this.value.keySet();
+
+
+        //if (last == null || ((org.python.types.Bool) last).value) {
+         //   key = keys2[this.value.size() - 1];
+
+
+
 
         org.python.Object value = this.value.remove(key);
 
@@ -228,7 +246,9 @@ public class OrderedDict extends org.python.types.Dict {
             kwargs = "kwargs"
     )
     public org.python.Object update(org.python.Object iterable, org.python.types.Dict kwargs) {
+        /*
         if (iterable == null) {
+
             if (kwargs != null) {
                 // kwargs is not recommended prior to Python version 3.6 as order of keyword argument is not preserved
                 org.python.Object iterator = org.Python.iter(kwargs);
@@ -283,6 +303,69 @@ public class OrderedDict extends org.python.types.Dict {
                 } catch (org.python.exceptions.StopIteration si) {
                     break;
                 }
+            }
+        }
+
+        return org.python.types.NoneType.NONE;
+    } */
+
+        if (iterable == null) {
+
+            if (kwargs != null) {
+                // kwargs is not recommended prior to Python version 3.6 as order of keyword argument is not preserved
+                org.python.Object iterator = org.Python.iter(kwargs);
+
+                while (((Bool) iterator.__hasNext__()).value) {
+                    //try {
+                        org.python.Object key = iterator.__next__();
+                        org.python.Object value = kwargs.value.get(key);
+                        this.value.put(key, value);
+                    //} catch (org.python.exceptions.StopIteration si) {
+                      //  break;
+                    //}
+                }
+            }
+        } else if (iterable instanceof org.python.types.Dict) {
+            org.python.Object iterator = org.Python.iter(iterable);
+            while (((Bool) iterator.__hasNext__()).value) {
+                //try {
+                    org.python.Object key = iterator.__next__();
+                    org.python.Object value = iterable.__getitem__(key);
+                    this.value.put(key, value);
+                //} catch (org.python.exceptions.StopIteration si) {
+                  //  break;
+               // }
+            }
+        } else {
+            org.python.Object iterator = org.Python.iter(iterable);
+            java.util.List<org.python.Object> pair;
+            while (((Bool) iterator.__hasNext__()).value) {
+                //try {
+                    org.python.Object next = iterator.__next__();
+                    if (next instanceof org.python.types.List) {
+                        pair = ((org.python.types.List) next).value;
+                    } else if (next instanceof org.python.types.Tuple) {
+                        pair = ((org.python.types.Tuple) next).value;
+                    } else if (next instanceof org.python.types.Str) {
+                        throw new org.python.exceptions.ValueError("need more than 1 value to unpack");
+                    } else {
+                        throw new org.python.exceptions.TypeError(
+                            "'" + next.typeName() + "' object is not iterable"
+                        );
+                    }
+
+                    if (pair.size() > 2) {
+                        throw new org.python.exceptions.ValueError("too many values to unpack (expected 2)");
+                    } else if (pair.size() < 2) {
+                        throw new org.python.exceptions.ValueError("need more than 1 value to unpack");
+                    }
+
+                    org.python.Object key = pair.get(0);
+                    org.python.Object value = pair.get(1);
+                    this.value.put(key, value);
+                //} catch (org.python.exceptions.StopIteration si) {
+                  //  break;
+               // }
             }
         }
 

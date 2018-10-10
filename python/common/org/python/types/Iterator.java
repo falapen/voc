@@ -25,8 +25,12 @@ public class Iterator extends org.python.types.Object implements org.python.Obje
     }
 
     @org.python.Method(
-            __doc__ = "Implement next(self)."
+            __doc__ = "Implement hasNext(self)."
     )
+    public org.python.Object __hasNext__() {
+        return (org.python.Object) org.python.types.Bool.getBool(this.iterator.hasNext());
+    }
+
     public org.python.Object __next__(java.util.List<org.python.Object> args, java.util.Map<java.lang.String, org.python.Object> kwargs, java.util.List<org.python.Object> default_args, java.util.Map<java.lang.String, org.python.Object> default_kwargs) {
         if (kwargs != null && kwargs.size() != 0) {
             throw new org.python.exceptions.TypeError("__next__ doesn't take keyword arguments");

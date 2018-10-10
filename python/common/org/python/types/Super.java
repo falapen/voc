@@ -445,6 +445,13 @@ public class Super implements org.python.Object {
     }
 
     @org.python.Method(
+        __doc__ = ""
+    )
+    public org.python.Object __hasNext__() {
+        throw new org.python.exceptions.AttributeError(this, "__hasNext__");
+    }
+
+    @org.python.Method(
             __doc__ = "",
             args = {"item"}
     )

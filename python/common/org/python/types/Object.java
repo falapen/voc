@@ -539,6 +539,13 @@ public class Object extends java.lang.RuntimeException implements org.python.Obj
     }
 
     @org.python.Method(
+        __doc__ = ""
+    )
+    public org.python.Object __hasNext__() { throw new org.python.exceptions.AttributeError(this, "__hasNext__"); }
+
+
+
+    @org.python.Method(
             __doc__ = "",
             args = {"item"}
     )

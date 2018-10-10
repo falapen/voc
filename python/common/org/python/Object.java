@@ -123,6 +123,7 @@ public interface Object extends Comparable {
     public org.python.Object __contains__(org.python.Object item);
 
     public org.python.Object __next__();
+    public org.python.Object __hasNext__();
 
     /**
      * Section 3.3.7 - Emulating numeric types
