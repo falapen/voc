@@ -257,7 +257,6 @@ public class OrderedDict extends org.python.types.Dict {
             org.python.Object iterator = org.Python.iter(iterable);
             java.util.List<org.python.Object> pair;
             while (((Bool) iterator.__hasNext__()).value) {
-                //try {
                     org.python.Object next = iterator.__next__();
                     if (next instanceof org.python.types.List) {
                         pair = ((org.python.types.List) next).value;
