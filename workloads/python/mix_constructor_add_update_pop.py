@@ -8,12 +8,12 @@ import time
 X = 10000 # number of Dictionaries to create
 Y = 1000 # number of elements to populate the dictionaries with
 
-dict_array = []
-
-# Create  X number of dictionaries
 start = time.clock() # start clock
 start_total =  start
 
+dict_array = []
+
+# Create  X number of dictionaries
 for i in range (X):
     dict = OrderedDict()
     dict_array.append(dict)
