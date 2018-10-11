@@ -45,7 +45,7 @@ public class mix_constructor_add_update_pop {
 
         for(int i = 0; i < X; i++) {
             for(int j = 0; j < Y; j++) {
-                dict_array[i].__setitem__(Int.getInt(j), dict_array[i].__getitem__ (j) + " World");
+                dict_array[i].__setitem__(Int.getInt(j), dict_array[i].__getitem__ (j) + " World!");
             }
         }
 
@@ -72,6 +72,6 @@ public class mix_constructor_add_update_pop {
         }
 
         System.out.println("Popped all " + Y + " elements in second half (" + (X/2) + ") dictionaries starting from last element in -> " + System.currentTimeMillis()- start); // stop clock, print time
-        System.out.println("Total Time - > " + System.currentTimeMillis()- start); // stop clock, print time
+        System.out.println("Total Time - > " + System.currentTimeMillis()- start_total); // stop clock, print time
     }
 }
