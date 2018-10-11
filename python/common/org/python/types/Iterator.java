@@ -46,4 +46,8 @@ public class Iterator extends org.python.types.Object implements org.python.Obje
     public org.python.Object __next__() {
         return this.__next__(null, null, null, null);
     }
+
+    public java.util.Iterator<org.python.Object> getIterator() {
+        return this.iterator;
+    }
 }
