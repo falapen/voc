@@ -5,7 +5,7 @@ import org.python.types.List;
 import org.python.types.Str;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Main {
+public class mix_constructor_add_update_pop {
     public static void main(String[] args) {
 
         int X = 10000; // number of Dictionaries to create
