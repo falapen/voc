@@ -1,6 +1,4 @@
-#
 #Benchmarking routing for OrderedDict by Mauro José Pappaterra
-#
 
 from collections import OrderedDict
 import time
