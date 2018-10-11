@@ -152,17 +152,18 @@ public class OrderedDict extends org.python.types.Dict {
     )
     public static org.python.Object fromkeys(org.python.Object iterable, org.python.Object value) {
         org.python.stdlib.collections.OrderedDict result = new org.python.stdlib.collections.OrderedDict();
+
         try {
             org.python.Object iter = iterable.__iter__();
-            if (value == null) {
-                value = org.python.types.NoneType.NONE;
-            }
-            while (true) {
-                result.__setitem__(iter.__next__(), value);
+            java.util.Iterator<org.python.Object> iterator = ((org.python.types.Iterator) iter).getIterator();
+            while (iterator.hasNext()) {
+                if (value == null) {
+                    value = org.python.types.NoneType.NONE;
+                }
+                result.__setitem__(iterator.next(), value);
             }
         } catch (org.python.exceptions.AttributeError e) {
             throw new org.python.exceptions.TypeError("'" + iterable.typeName() + "' object is not iterable");
-        } catch (org.python.exceptions.StopIteration e) {
         }
 
         return result;
