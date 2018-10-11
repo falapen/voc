@@ -1,4 +1,4 @@
-/* Benchmarking routing for OrderedDict by Mauro José Pappaterra */
+/* Benchmarking routine for OrderedDict by Mauro José Pappaterra */
 
 package python.common.org.python.workloads;
 import org.python.stdlib.collections.OrderedDict;
