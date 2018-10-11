@@ -38,13 +38,22 @@ for i in range (X):
 
 print("Updated all " + str(Y) + " elements in " + str(X) + " dictionaries in -> "  + str(round((time.clock() - start),2))) # stop clock, print time
 
-# Pop all Y elements in all X dictionaries
+# Pop all Y elements in first half of X dictionaries (starting first)
 start = time.clock() # start clock
 
-for i in range (X):
+for i in range (0,int(X/2)):
     for e in range (Y):
-        dict_array[i].popitem()
+        dict_array[i].popitem(last=False)
 
-print("Popped all " + str(Y) + " elements in " + str(X) + " dictionaries in -> "  + str(round((time.clock() - start),2))) # stop clock, print time
+print("Popped all " + str(Y) + " elements in first half (" + str(int(X/2)) + ") dictionaries starting from first element in -> "  + str(round((time.clock() - start),2))) # stop clock, print time
+
+# Pop all Y elements in second half of X dictionaries (starting last)
+start = time.clock() # start clock
+
+for i in range (int(X/2), X):
+    for e in range (Y):
+        dict_array[i].popitem(last=True)
+
+print("Popped all " + str(Y) + " elements in second half (" + str(int(X/2)) + ") dictionaries starting from last element in -> "  + str(round((time.clock() - start),2))) # stop clock, print time
 
 print("Total Time - > "  + str(round((time.clock() - start_total),2))) # stop clock, print time )
