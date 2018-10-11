@@ -234,7 +234,7 @@ public class OrderedDict extends org.python.types.Dict {
                 // kwargs is not recommended prior to Python version 3.6 as order of keyword argument is not preserved
                 org.python.Object iterator = org.Python.iter(kwargs);
                 java.util.Iterator<org.python.Object> iter = ((org.python.types.Iterator) iterator).getIterator();
-                while(iter.hasNext()) {
+                while (iter.hasNext()) {
                     org.python.Object key = iter.next();
                     org.python.Object value = kwargs.value.get(key);
                     this.value.put(key, value);
@@ -244,7 +244,7 @@ public class OrderedDict extends org.python.types.Dict {
         } else if (iterable instanceof org.python.types.Dict) {
             org.python.Object iterator = org.Python.iter(iterable);
             java.util.Iterator<org.python.Object> iter = ((org.python.types.Iterator) iterator).getIterator();
-            while(iter.hasNext()) {
+            while (iter.hasNext()) {
                 org.python.Object key = iter.next();
                 org.python.Object value = iterable.__getitem__(key);
                 this.value.put(key, value);
@@ -255,7 +255,7 @@ public class OrderedDict extends org.python.types.Dict {
             java.util.Iterator<org.python.Object> iter = ((org.python.types.Iterator) iterator).getIterator();
             java.util.List<org.python.Object> pair;
 
-            while(iter.hasNext()) {
+            while (iter.hasNext()) {
                 org.python.Object next = iter.next();
                 if (next instanceof org.python.types.List) {
                     pair = ((org.python.types.List) next).value;
