@@ -6,7 +6,7 @@ import org.python.types.Str;
 import java.util.*;
 
 
-public class Mix_constructor_update_popitem {
+public class MixConstructorUpdatePopitem {
 
     public static void main(String args[]){
         long startTime = System.currentTimeMillis();
@@ -39,6 +39,7 @@ public class Mix_constructor_update_popitem {
             dict.update(tuple_list, null);
 
             dict.popitem();
+
         }
         long finishTime = System.currentTimeMillis();
         System.out.println(finishTime-startTime);

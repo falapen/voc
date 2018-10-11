@@ -211,25 +211,12 @@ public class OrderedDict extends org.python.types.Dict {
 
         org.python.Object key;
         org.python.Object[] keys = this.value.keySet().toArray(new org.python.Object[this.value.size()]);
-        //OrderedDictKeys keys = (OrderedDictKeys) this.keys();
 
         if (last == null || ((org.python.types.Bool) last).value) {
             key = keys[this.value.size() - 1];
         } else {
             key = keys[0];
         }
-
-
-
-        //OrderedDictKeys keys2 = (OrderedDictKeys) this.keys();
-        //OrderedDictKeys keys2 = this.value.keySet();
-
-
-        //if (last == null || ((org.python.types.Bool) last).value) {
-         //   key = keys2[this.value.size() - 1];
-
-
-
 
         org.python.Object value = this.value.remove(key);
 
@@ -320,9 +307,6 @@ public class OrderedDict extends org.python.types.Dict {
                         org.python.Object key = iterator.__next__();
                         org.python.Object value = kwargs.value.get(key);
                         this.value.put(key, value);
-                    //} catch (org.python.exceptions.StopIteration si) {
-                      //  break;
-                    //}
                 }
             }
         } else if (iterable instanceof org.python.types.Dict) {
@@ -332,9 +316,6 @@ public class OrderedDict extends org.python.types.Dict {
                     org.python.Object key = iterator.__next__();
                     org.python.Object value = iterable.__getitem__(key);
                     this.value.put(key, value);
-                //} catch (org.python.exceptions.StopIteration si) {
-                  //  break;
-               // }
             }
         } else {
             org.python.Object iterator = org.Python.iter(iterable);
@@ -363,9 +344,6 @@ public class OrderedDict extends org.python.types.Dict {
                     org.python.Object key = pair.get(0);
                     org.python.Object value = pair.get(1);
                     this.value.put(key, value);
-                //} catch (org.python.exceptions.StopIteration si) {
-                  //  break;
-               // }
             }
         }
 
