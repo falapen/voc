@@ -23,7 +23,7 @@ public class mix_copy_popitem_first_and_last {
             main_dict.__setitem__(Int.getInt(i), Int.getInt(i));
         }
 
-        for(int j = 0; j < D; j++) { //Create new copy of main dictionary
+        for(int j = 0; j < D; j++) {
             OrderedDict temp_dict = (OrderedDict) main_dict.copy(); //Create new copy of main dictionary
             for(int k = 0; k < E; k++) { //Pop all items in temp dictionary by chance
                 int rnd = ThreadLocalRandom.current().nextInt(0, 1 + 1);
