@@ -205,21 +205,27 @@ public class OrderedDict extends org.python.types.Dict {
             throw new org.python.exceptions.KeyError(new org.python.types.Str("dictionary is empty"));
         }
 
-        org.python.Object key;
-        org.python.Object[] keys = this.value.keySet().toArray(new org.python.Object[this.value.size()]);
-        if (last == null || ((org.python.types.Bool) last).value) {
-            key = keys[this.value.size() - 1];
-        } else {
-            key = keys[0];
+        org.python.Object key = null;
+        java.util.Iterator<org.python.Object> iter = this.value.keySet().iterator(); //create iterator
+
+        if (last == null || ((org.python.types.Bool) last).value) //finding last node
+        {
+            while(iter.hasNext()) //iterate to penultimate node
+            {
+                key=iter.next(); //set 'key' as the last node in the set
+            }
+        }
+        else //finding first node
+        {
+            key = iter.next();
         }
 
-        org.python.Object value = this.value.remove(key);
+        org.python.Object value = this.value.remove(key); //remove popped item from set
 
         java.util.List<org.python.Object> item_pair = new java.util.ArrayList<org.python.Object>();
         item_pair.add(key);
         item_pair.add(value);
         return new org.python.types.Tuple(item_pair);
-
     }
 
     @org.python.Method(
