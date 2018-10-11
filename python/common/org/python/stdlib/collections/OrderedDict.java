@@ -152,7 +152,6 @@ public class OrderedDict extends org.python.types.Dict {
     )
     public static org.python.Object fromkeys(org.python.Object iterable, org.python.Object value) {
         org.python.stdlib.collections.OrderedDict result = new org.python.stdlib.collections.OrderedDict();
-
         try {
             org.python.Object iter = iterable.__iter__();
             java.util.Iterator<org.python.Object> iterator = ((org.python.types.Iterator) iter).getIterator();
@@ -165,7 +164,6 @@ public class OrderedDict extends org.python.types.Dict {
         } catch (org.python.exceptions.AttributeError e) {
             throw new org.python.exceptions.TypeError("'" + iterable.typeName() + "' object is not iterable");
         }
-
         return result;
     }
 
@@ -235,57 +233,51 @@ public class OrderedDict extends org.python.types.Dict {
             if (kwargs != null) {
                 // kwargs is not recommended prior to Python version 3.6 as order of keyword argument is not preserved
                 org.python.Object iterator = org.Python.iter(kwargs);
-                while (true) {
-                    try {
-                        org.python.Object key = iterator.__next__();
-                        org.python.Object value = kwargs.value.get(key);
-                        this.value.put(key, value);
-                    } catch (org.python.exceptions.StopIteration si) {
-                        break;
-                    }
+                java.util.Iterator<org.python.Object> iter = ((org.python.types.Iterator) iterator).getIterator();
+                while(iter.hasNext()) {
+                    org.python.Object key = iter.next();
+                    org.python.Object value = kwargs.value.get(key);
+                    this.value.put(key, value);
                 }
+
             }
         } else if (iterable instanceof org.python.types.Dict) {
             org.python.Object iterator = org.Python.iter(iterable);
-            while (true) {
-                try {
-                    org.python.Object key = iterator.__next__();
-                    org.python.Object value = iterable.__getitem__(key);
-                    this.value.put(key, value);
-                } catch (org.python.exceptions.StopIteration si) {
-                    break;
-                }
+            java.util.Iterator<org.python.Object> iter = ((org.python.types.Iterator) iterator).getIterator();
+            while(iter.hasNext()) {
+                org.python.Object key = iter.next();
+                org.python.Object value = iterable.__getitem__(key);
+                this.value.put(key, value);
             }
+
         } else {
             org.python.Object iterator = org.Python.iter(iterable);
+            java.util.Iterator<org.python.Object> iter = ((org.python.types.Iterator) iterator).getIterator();
             java.util.List<org.python.Object> pair;
-            while (true) {
-                try {
-                    org.python.Object next = iterator.__next__();
-                    if (next instanceof org.python.types.List) {
-                        pair = ((org.python.types.List) next).value;
-                    } else if (next instanceof org.python.types.Tuple) {
-                        pair = ((org.python.types.Tuple) next).value;
-                    } else if (next instanceof org.python.types.Str) {
-                        throw new org.python.exceptions.ValueError("need more than 1 value to unpack");
-                    } else {
-                        throw new org.python.exceptions.TypeError(
+
+            while(iter.hasNext()) {
+                org.python.Object next = iter.next();
+                if (next instanceof org.python.types.List) {
+                    pair = ((org.python.types.List) next).value;
+                } else if (next instanceof org.python.types.Tuple) {
+                    pair = ((org.python.types.Tuple) next).value;
+                } else if (next instanceof org.python.types.Str) {
+                    throw new org.python.exceptions.ValueError("need more than 1 value to unpack");
+                } else {
+                    throw new org.python.exceptions.TypeError(
                             "'" + next.typeName() + "' object is not iterable"
-                        );
-                    }
-
-                    if (pair.size() > 2) {
-                        throw new org.python.exceptions.ValueError("too many values to unpack (expected 2)");
-                    } else if (pair.size() < 2) {
-                        throw new org.python.exceptions.ValueError("need more than 1 value to unpack");
-                    }
-
-                    org.python.Object key = pair.get(0);
-                    org.python.Object value = pair.get(1);
-                    this.value.put(key, value);
-                } catch (org.python.exceptions.StopIteration si) {
-                    break;
+                    );
                 }
+
+                if (pair.size() > 2) {
+                    throw new org.python.exceptions.ValueError("too many values to unpack (expected 2)");
+                } else if (pair.size() < 2) {
+                    throw new org.python.exceptions.ValueError("need more than 1 value to unpack");
+                }
+
+                org.python.Object key = pair.get(0);
+                org.python.Object value = pair.get(1);
+                this.value.put(key, value);
             }
         }
 
