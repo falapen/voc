@@ -54,7 +54,7 @@ public class Main {
 
         for(int i = 0; i < (X/2); i++) {
             for(int j = 0; j < Y; j++) {
-                dict_array[i].popitem();
+                dict_array[i].popitem(org.python.types.Bool.FALSE);
             }
         }
 
@@ -65,7 +65,7 @@ public class Main {
 
         for(int i = (X/2); i < X; i++) {
             for(int j = 0; j < Y; j++) {
-                dict_array[i].popitem();
+                dict_array[i].popitem(org.python.types.Bool.TRUE);
             }
         }
 
